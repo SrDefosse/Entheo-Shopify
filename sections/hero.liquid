@@ -282,21 +282,9 @@
     --hero-height-offset: var(--header-group-height, 0);
   }
 
-  /* Remove offset when header is in fixed position (sticky mode) */
-  body:has(> #header-group > .header-section[style*='position: fixed']) .hero-wrapper:first-child,
-  body:has(> #header-group .header-section:has(> #header-component[sticky='always'])) .hero-wrapper:first-child {
-    --hero-height-offset: 0px;
-  }
-
   .hero {
     position: relative;
-    min-height: calc(var(--hero-min-height) - var(--hero-height-offset));
-    height: var(--hero-min-height);
-  }
-
-  /* Full screen hero styling */
-  .hero[style*='100svh'] {
-    height: 100svh;
+    min-height: var(--hero-min-height);
   }
 
   .hero[data-shopify-visual-preview] {
@@ -404,10 +392,6 @@
     --blurred-reflection-filter-blur: blur(20px);
     --blurred-reflection-scale: scale(2, 1.25);
     --blurred-reflection-padding-block-end: 60px;
-  }
-
-  .hero[data-blur-shadow='true'] .hero__container {
-    overflow: inherit;
   }
 
   .hero[data-blur-shadow='true'] .hero__container::before {
