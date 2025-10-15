@@ -4,6 +4,7 @@
 {% endcomment %}
 
 {% liquid
+  assign layout_orientation = section.settings.layout_orientation
 %}
 
 <div
@@ -11,100 +12,82 @@
   style="{% render 'spacing-style', settings: section.settings %}"
 >
   <div class="about-philosophy-container page-width">
-    {%- comment -%} First Row: Image Left, Text Right {%- endcomment -%}
-    <div class="about-philosophy-row about-philosophy-row--first">
-      <div class="about-philosophy-image-wrapper">
-        {% if section.settings.image != blank %}
-          <div class="about-philosophy-image-container">
-            {{
-              section.settings.image
-              | image_url: width: 800
-              | image_tag: loading: "lazy", class: "about-philosophy-image", widths: "400, 600, 800", sizes: "(min-width: 750px) 50vw, 100vw"
-            }}
-          </div>
-        {% else %}
-          <div class="about-philosophy-placeholder">
-            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
-          </div>
-        {% endif %}
-      </div>
-
-      <div class="about-philosophy-content {% if section.settings.enable_backdrop_blur %}glass-card-light{% endif %}">
-        <div class="about-philosophy-content-inner">
-          {% if section.settings.text != blank %}
-            <div class="about-philosophy-text rte">
-              {{ section.settings.text }}
+    <div class="about-philosophy-grid about-philosophy-grid--{{ layout_orientation }}">
+      {%- comment -%} First Column {%- endcomment -%}
+      {% if layout_orientation == 'image-left' %}
+        <div class="about-philosophy-image-wrapper">
+          {% if section.settings.image != blank %}
+            <div class="about-philosophy-image-container">
+              {{
+                section.settings.image
+                | image_url: width: 800
+                | image_tag: loading: "lazy", class: "about-philosophy-image", widths: "400, 600, 800", sizes: "(min-width: 750px) 50vw, 100vw"
+              }}
+            </div>
+          {% else %}
+            <div class="about-philosophy-placeholder">
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
             </div>
           {% endif %}
-
-          {% if section.settings.button_label != blank and section.settings.button_link != blank %}
-            <a
-              href="{{ section.settings.button_link }}"
-              class="about-philosophy-button {% if section.settings.enable_backdrop_blur %}glass-button{% else %}button button--secondary{% endif %}"
-            >
-              {{ section.settings.button_label }}
-            </a>
-          {% endif %}
         </div>
-      </div>
-    </div>
+      {% else %}
+        <div class="about-philosophy-content">
+          <div class="about-philosophy-content-inner">
+            {% if section.settings.text != blank %}
+              <div class="about-philosophy-text rte">
+                {{ section.settings.text }}
+              </div>
+            {% endif %}
 
-    {%- comment -%} Second Row: Text Left, Image Right {%- endcomment -%}
-    <div class="about-philosophy-row about-philosophy-row--second">
-      <div class="about-philosophy-content {% if section.settings.enable_backdrop_blur %}glass-card-light{% endif %}">
-        <div class="about-philosophy-content-inner">
-          {% if section.settings.second_text != blank %}
-            <div class="about-philosophy-text rte">
-              {{ section.settings.second_text }}
+            {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+              <a
+                href="{{ section.settings.button_link }}"
+                class="about-philosophy-button button button--secondary"
+              >
+                {{ section.settings.button_label }}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+
+      {%- comment -%} Second Column {%- endcomment -%}
+      {% if layout_orientation == 'image-left' %}
+        <div class="about-philosophy-content">
+          <div class="about-philosophy-content-inner">
+            {% if section.settings.text != blank %}
+              <div class="about-philosophy-text rte">
+                {{ section.settings.text }}
+              </div>
+            {% endif %}
+
+            {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+              <a
+                href="{{ section.settings.button_link }}"
+                class="about-philosophy-button button button--secondary"
+              >
+                {{ section.settings.button_label }}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      {% else %}
+        <div class="about-philosophy-image-wrapper">
+          {% if section.settings.image != blank %}
+            <div class="about-philosophy-image-container">
+              {{
+                section.settings.image
+                | image_url: width: 800
+                | image_tag: loading: "lazy", class: "about-philosophy-image", widths: "400, 600, 800", sizes: "(min-width: 750px) 50vw, 100vw"
+              }}
+            </div>
+          {% else %}
+            <div class="about-philosophy-placeholder">
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
             </div>
           {% endif %}
-
-          {% if section.settings.second_button_label != blank and section.settings.second_button_link != blank %}
-            <a
-              href="{{ section.settings.second_button_link }}"
-              class="about-philosophy-button {% if section.settings.enable_backdrop_blur %}glass-button{% else %}button button--secondary{% endif %}"
-            >
-              {{ section.settings.second_button_label }}
-            </a>
-          {% endif %}
         </div>
-      </div>
-
-      <div class="about-philosophy-image-wrapper">
-        {% if section.settings.second_image != blank %}
-          <div class="about-philosophy-image-container">
-            {{
-              section.settings.second_image
-              | image_url: width: 800
-              | image_tag: loading: "lazy", class: "about-philosophy-image", widths: "400, 600, 800", sizes: "(min-width: 750px) 50vw, 100vw"
-            }}
-          </div>
-        {% else %}
-          <div class="about-philosophy-placeholder">
-            {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
-          </div>
-        {% endif %}
-      </div>
-    </div>
-
-    {%- comment -%} Third Section: Shadow Container with Text {%- endcomment -%}
-    <div class="about-philosophy-shadow-section">
-      <div class="about-philosophy-shadow-content glass-card">
-        {% if section.settings.shadow_heading != blank %}
-          <h2 class="about-philosophy-shadow-heading {{ section.settings.shadow_heading_size | default: 'h2' }}">
-            {{ section.settings.shadow_heading }}
-          </h2>
-        {% endif %}
-
-        {% if section.settings.shadow_button_label != blank and section.settings.shadow_button_link != blank %}
-          <a
-            href="{{ section.settings.shadow_button_link }}"
-            class="about-philosophy-shadow-button glass-button"
-          >
-            {{ section.settings.shadow_button_label }}
-          </a>
-        {% endif %}
-      </div>
+      {% endif %}
     </div>
   </div>
 </div>
@@ -118,27 +101,18 @@
     width: 100%;
   }
 
-  .about-philosophy-row {
+  .about-philosophy-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
     align-items: center;
-    margin-bottom: 4rem;
   }
 
   @media screen and (min-width: 750px) {
-    .about-philosophy-row {
+    .about-philosophy-grid {
       grid-template-columns: repeat(2, 1fr);
       gap: 3rem;
     }
-  }
-
-  .about-philosophy-row--second {
-    direction: rtl;
-  }
-
-  .about-philosophy-row--second > * {
-    direction: ltr;
   }
 
   .about-philosophy-image-wrapper {
@@ -151,16 +125,7 @@
     width: 100%;
     overflow: hidden;
     border-radius: 16px;
-  }
-
-  .parallax-container {
-    height: 600px;
-  }
-
-  @media screen and (max-width: 749px) {
-    .parallax-container {
-      height: 400px;
-    }
+    background: rgba(var(--color-background-rgb), 0.02);
   }
 
   .about-philosophy-image {
@@ -176,39 +141,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(var(--color-foreground-rgb), 0.05);
+    background: rgba(var(--color-background-rgb), 0.05);
     border-radius: 16px;
-  }
-
-  .about-philosophy-shadow-section {
-    margin-top: 4rem;
-    text-align: center;
-  }
-
-  .about-philosophy-shadow-content {
-    display: inline-block;
-    padding: 3rem 4rem;
-    max-width: 800px;
-    text-align: center;
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
-  }
-
-
-  .about-philosophy-shadow-heading {
-    margin: 0 0 1.5rem 0;
-    line-height: 1.2;
-    color: var(--color-foreground);
-    text-align: center;
-  }
-
-  .about-philosophy-shadow-button {
-    display: inline-block;
-    margin-top: 1rem;
   }
 
   .about-philosophy-content {
     padding: 2rem;
     border-radius: 16px;
+    background: rgba(var(--color-background-rgb), 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
   }
 
   @media screen and (min-width: 750px) {
@@ -221,11 +163,10 @@
     margin-top: 1.5rem;
   }
 
-
   .about-philosophy-text {
     font-size: 1.1rem;
     line-height: 1.7;
-    color: rgba(var(--color-foreground-rgb), 0.8);
+    color: var(--color-foreground);
   }
 
   .about-philosophy-button {
@@ -247,70 +188,23 @@
     {
       "type": "richtext",
       "id": "text",
-      "label": "Text content",
+      "label": "Text",
       "default": "<p>We believe in creating timeless pieces that transcend trends. Each design is carefully crafted to embody our commitment to quality, sustainability, and mindful living.</p>"
     },
     {
-      "type": "header",
-      "content": "Second Row Content"
-    },
-    {
-      "type": "richtext",
-      "id": "second_text",
-      "label": "Second text content",
-      "default": "<p>Every piece begins with carefully selected materials and skilled artisans who bring decades of experience to each creation. We combine traditional techniques with modern innovation.</p>"
-    },
-    {
-      "type": "image_picker",
-      "id": "second_image",
-      "label": "Second image"
-    },
-    {
-      "type": "text",
-      "id": "second_button_label",
-      "label": "Second button label"
-    },
-    {
-      "type": "url",
-      "id": "second_button_link",
-      "label": "Second button link"
-    },
-    {
-      "type": "header",
-      "content": "Shadow Section"
-    },
-    {
-      "type": "text",
-      "id": "shadow_heading",
-      "label": "Shadow section heading",
-      "default": "Discover More"
-    },
-    {
       "type": "select",
-      "id": "shadow_heading_size",
-      "label": "Shadow heading size",
+      "id": "layout_orientation",
+      "label": "Layout orientation",
       "options": [
-        { "value": "h3", "label": "Small" },
-        { "value": "h2", "label": "Medium" },
-        { "value": "h1", "label": "Large" }
+        { "value": "image-left", "label": "Image - Text" },
+        { "value": "text-left", "label": "Text - Image" }
       ],
-      "default": "h2"
-    },
-    {
-      "type": "text",
-      "id": "shadow_button_label",
-      "label": "Shadow button label",
-      "default": "Explore Collection"
-    },
-    {
-      "type": "url",
-      "id": "shadow_button_link",
-      "label": "Shadow button link"
+      "default": "image-left"
     },
     {
       "type": "image_picker",
       "id": "image",
-      "label": "First image (left side)"
+      "label": "Image"
     },
     {
       "type": "header",

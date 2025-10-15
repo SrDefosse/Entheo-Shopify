@@ -266,23 +266,15 @@
     left: 0;
     right: 0;
     z-index: var(--layer-sticky);
-    /* Ensure proper stacking for glassmorphism */
-    isolation: isolate;
   }
 
   .header[data-sticky-state] {
-    transition: opacity var(--animation-speed) var(--animation-easing),
-                backdrop-filter var(--animation-speed) var(--animation-easing);
+    transition: opacity var(--animation-speed) var(--animation-easing);
     opacity: 1;
-    /* Optimize for sticky performance */
-    contain: layout style paint;
   }
 
   .header[data-sticky-state='active'] {
     view-transition-name: sticky-header;
-    /* Ensure glassmorphism works in sticky state */
-    backdrop-filter: blur(12px) saturate(180%);
-    -webkit-backdrop-filter: blur(12px) saturate(180%);
   }
 
   .header[data-sticky-state='idle'],
@@ -290,57 +282,23 @@
     opacity: 0;
   }
 
-  /* Enhanced mobile sticky behavior */
-  @media screen and (max-width: 749px) {
-    .header[data-sticky-state='active'] {
-      backdrop-filter: blur(8px) saturate(160%);
-      -webkit-backdrop-filter: blur(8px) saturate(160%);
-    }
-  }
-
   .header {
-    /* Glassmorphism effect - Enhanced for better mobile support */
-    backdrop-filter: blur(12px) saturate(180%);
-    -webkit-backdrop-filter: blur(12px) saturate(180%);
-    /* Performance optimization */
-    will-change: backdrop-filter;
-    transform: translateZ(0); /* Force hardware acceleration */
+    /* Glassmorphism effect */
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
   }
 
   .header__row {
     position: relative;
     background-color: rgba(255, 255, 255, 0.25);
-    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
     border: none;
-    /* Ensure proper stacking context */
-    isolation: isolate;
   }
 
-  /* Enhanced fallback for browsers that don't support backdrop-filter */
+  /* Fallback for browsers that don't support backdrop-filter */
   @supports not (backdrop-filter: blur(10px)) {
     .header__row {
       background-color: rgba(255, 255, 255, 0.95);
-      box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
-    }
-  }
-
-  /* Mobile-specific glassmorphism improvements */
-  @media screen and (max-width: 749px) {
-    .header {
-      backdrop-filter: blur(8px) saturate(160%);
-      -webkit-backdrop-filter: blur(8px) saturate(160%);
-    }
-
-    .header__row {
-      background-color: rgba(255, 255, 255, 0.3);
-      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.06);
-    }
-
-    @supports not (backdrop-filter: blur(5px)) {
-      .header__row {
-        background-color: rgba(255, 255, 255, 0.98);
-        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.08);
-      }
     }
   }
 
@@ -348,26 +306,12 @@
   @media (prefers-color-scheme: dark) {
     .header__row {
       background-color: rgba(0, 0, 0, 0.25);
-      box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.3);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
     }
 
     @supports not (backdrop-filter: blur(10px)) {
       .header__row {
         background-color: rgba(0, 0, 0, 0.95);
-      }
-    }
-
-    /* Mobile dark mode adjustments */
-    @media screen and (max-width: 749px) {
-      .header__row {
-        background-color: rgba(0, 0, 0, 0.3);
-        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.4);
-      }
-
-      @supports not (backdrop-filter: blur(5px)) {
-        .header__row {
-          background-color: rgba(0, 0, 0, 0.98);
-        }
       }
     }
   }
@@ -430,74 +374,77 @@
   }
 
   .header__columns {
-    /* Simplified responsive layout */
-    display: grid;
-    align-items: center;
-    gap: var(--gap-xl);
-
-    /* Desktop layout (default) */
-    grid-template-columns: 1fr auto 1fr;
-    grid-template-areas: 'left center right';
+    /* Three column layout */
+    --header-left: 1fr;
+    --header-center: auto;
+    --header-right: 1fr;
+    --header-template-columns: var(--header-left) var(--header-center) var(--header-right);
 
     /* Mobile layout */
-    @media screen and (max-width: 749px) {
-      /* Simplified mobile grid */
-      grid-template-columns: 44px auto 1fr 44px;
-      grid-template-areas: 'left center content right';
-      padding-inline: var(--padding-3xs);
-      gap: var(--gap-sm);
+    --header-mobile-bookend: 44px;
 
-      /* Logo always in center for mobile */
-      .header-logo {
-        grid-area: center;
-        justify-self: center;
+    display: grid;
+    grid-template-areas: 'left center right';
+    grid-gap: var(--gap-xl);
+    grid-template-columns: var(--header-template-columns);
+
+    /* If menu is in center column */
+    &:has(.header__column--center header-menu) {
+      --header-center: auto;
+      --header-left: minmax(max-content, 1fr);
+      --header-right: minmax(max-content, 1fr);
+    }
+
+    /* If there is no center column, make the column the menu is in grow eagerly */
+    &:where(:not(:has(.header__column--center))) {
+      @media screen and (min-width: 750px) {
+        --header-template-columns: var(--header-left) var(--header-right);
+
+        grid-template-areas: 'left right';
       }
 
-      /* Actions and search in side areas */
+      /* If the header-menu is in the right column */
+      &:has(.header__column--right header-menu) {
+        --header-right: auto;
+        --header-left: minmax(max-content, 1fr);
+      }
+
+      /* If the header-menu is in the left column */
+      &:has(.header__column--left header-menu) {
+        --header-left: auto;
+        --header-right: minmax(max-content, 1fr);
+      }
+    }
+
+    @media screen and (max-width: 749px) {
+      --header-template-columns: var(--header-mobile-bookend) var(--header-mobile-bookend) 1fr
+        var(--header-mobile-bookend) var(--header-mobile-bookend);
+
+      grid-template-areas: 'leftA leftB center rightA rightB';
+      grid-column: span 3;
+      column-gap: 0;
+      align-items: center;
+      padding-block: 0;
+      padding-inline: 0 var(--padding-3xs);
+
+      .header-logo {
+        grid-area: center;
+      }
+
+      &:not(:has(header-actions)) .search-action {
+        grid-area: leftB;
+      }
+
+      &:not(:has(.account-actions)) .search-action {
+        grid-area: rightA;
+      }
+
       .search-action {
-        grid-area: left;
+        grid-area: leftB;
       }
 
       header-actions {
-        grid-area: right;
-      }
-
-      /* Menu spans full width when present */
-      header-menu {
-        grid-area: content;
-        justify-self: stretch;
-      }
-
-      /* Hide secondary elements on very small screens */
-      &:not(:has(.header__column--center)) {
-        grid-template-columns: 44px 1fr 44px;
-        grid-template-areas: 'left content right';
-
-        .header-logo {
-          grid-area: content;
-          justify-self: center;
-        }
-      }
-    }
-
-    /* Adaptive behavior based on content */
-    &:has(.header__column--center header-menu) {
-      @media screen and (min-width: 750px) {
-        grid-template-columns: minmax(max-content, 1fr) auto minmax(max-content, 1fr);
-      }
-    }
-
-    &:has(.header__column--right header-menu) {
-      @media screen and (min-width: 750px) {
-        grid-template-columns: 1fr auto;
-        grid-template-areas: 'left right';
-      }
-    }
-
-    &:has(.header__column--left header-menu) {
-      @media screen and (min-width: 750px) {
-        grid-template-columns: auto 1fr;
-        grid-template-areas: 'left right';
+        grid-area: rightB;
       }
     }
   }
