@@ -337,6 +337,12 @@
     }
   }
 
+  /* Subtle backdrop blur even when transparent */
+  .header[transparent] .header__row {
+    backdrop-filter: blur(8px) saturate(120%);
+    -webkit-backdrop-filter: blur(8px) saturate(120%);
+  }
+
   :is(.header[transparent]:not([data-sticky-state='active']), .header[transparent='always'][data-sticky-state='active'])
     .header__row:not(
       :has(
@@ -397,6 +403,13 @@
     view-transition-name: sticky-header;
   }
 
+  .header[data-sticky-state='active'] .header__row {
+    /* Enhanced backdrop blur when sticky */
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+  }
+
   .header[data-sticky-state='idle'],
   .header[data-sticky-state='active'][data-animating] {
     opacity: 0;
@@ -406,7 +419,11 @@
     position: relative;
 
     /* will default to bg from its color scheme unless --header-bg-color is transparent */
-    background-color: var(--header-bg-color, var(--color-background));
+    background-color: var(--header-bg-color, rgba(var(--color-background-rgb), 0.85));
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    transition: background-color var(--animation-speed) var(--animation-easing),
+                backdrop-filter var(--animation-speed) var(--animation-easing);
   }
 
   .header__row--top:not(.divider--page-width),
