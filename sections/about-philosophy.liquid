@@ -1,0 +1,316 @@
+{% comment %}
+  About Philosophy Section
+  Image + text layout with GSAP animations and backdrop blur
+{% endcomment %}
+
+{% liquid
+  assign image_position = section.settings.image_position
+  assign enable_parallax = section.settings.enable_parallax
+%}
+
+<div
+  class="about-philosophy-section section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="about-philosophy-container page-width">
+    <div class="about-philosophy-grid about-philosophy-grid--{{ image_position }}">
+      {%- comment -%} Image Side {%- endcomment -%}
+      <div
+        class="about-philosophy-image-wrapper"
+        data-gsap-animation="{% if image_position == 'left' %}slide-right{% else %}slide-left{% endif %}"
+      >
+        {% if section.settings.image != blank %}
+          <div class="about-philosophy-image-container {% if enable_parallax %}parallax-container{% endif %}">
+            {{
+              section.settings.image
+              | image_url: width: 1200
+              | image_tag: loading: "lazy", class: "about-philosophy-image", widths: "600, 800, 1000, 1200", sizes: "(min-width: 750px) 50vw, 100vw"
+            }}
+          </div>
+        {% else %}
+          <div class="about-philosophy-placeholder">
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        {% endif %}
+      </div>
+
+      {%- comment -%} Content Side {%- endcomment -%}
+      <div
+        class="about-philosophy-content {% if section.settings.enable_backdrop_blur %}glass-card-light{% endif %}"
+        data-gsap-animation="fade-in"
+      >
+        <div class="about-philosophy-content-inner">
+          {% if section.settings.eyebrow != blank %}
+            <p class="about-philosophy-eyebrow">{{ section.settings.eyebrow }}</p>
+          {% endif %}
+
+          {% if section.settings.heading != blank %}
+            <h2 class="about-philosophy-heading {{ section.settings.heading_size }}">
+              {{ section.settings.heading }}
+            </h2>
+          {% endif %}
+
+          {% if section.settings.text != blank %}
+            <div class="about-philosophy-text rte">
+              {{ section.settings.text }}
+            </div>
+          {% endif %}
+
+          {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+            <a
+              href="{{ section.settings.button_link }}"
+              class="about-philosophy-button {% if section.settings.enable_backdrop_blur %}glass-button{% else %}button button--secondary{% endif %}"
+            >
+              {{ section.settings.button_label }}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .about-philosophy-section {
+    position: relative;
+  }
+
+  .about-philosophy-container {
+    width: 100%;
+  }
+
+  .about-philosophy-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  @media screen and (min-width: 750px) {
+    .about-philosophy-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4rem;
+    }
+
+    .about-philosophy-grid--right {
+      direction: rtl;
+    }
+
+    .about-philosophy-grid--right > * {
+      direction: ltr;
+    }
+  }
+
+  .about-philosophy-image-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  .about-philosophy-image-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 16px;
+  }
+
+  .parallax-container {
+    height: 600px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .parallax-container {
+      height: 400px;
+    }
+  }
+
+  .about-philosophy-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .about-philosophy-placeholder {
+    width: 100%;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(var(--color-foreground-rgb), 0.05);
+    border-radius: 16px;
+  }
+
+  .about-philosophy-content {
+    padding: 2rem;
+    border-radius: 16px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .about-philosophy-content {
+      padding: 3rem;
+    }
+  }
+
+  .about-philosophy-content-inner > * + * {
+    margin-top: 1.5rem;
+  }
+
+  .about-philosophy-eyebrow {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(var(--color-foreground-rgb), 0.6);
+    font-weight: 600;
+  }
+
+  .about-philosophy-heading {
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .about-philosophy-text {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: rgba(var(--color-foreground-rgb), 0.8);
+  }
+
+  .about-philosophy-button {
+    display: inline-block;
+    text-decoration: none;
+    margin-top: 2rem;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "About - Philosophy",
+  "tag": "section",
+  "class": "about-philosophy-wrapper section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Our Philosophy"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Crafted with Purpose"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        { "value": "h3", "label": "Small" },
+        { "value": "h2", "label": "Medium" },
+        { "value": "h1", "label": "Large" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>We believe in creating timeless pieces that transcend trends. Each design is carefully crafted to embody our commitment to quality, sustainability, and mindful living.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_parallax",
+      "label": "Enable parallax effect",
+      "default": true,
+      "info": "Image moves on scroll for depth"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_backdrop_blur",
+      "label": "Enable backdrop blur",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        { "value": "page-width", "label": "Page width" },
+        { "value": "full-width", "label": "Full width" }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "About - Philosophy"
+    }
+  ]
+}
+{% endschema %}
+

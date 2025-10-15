@@ -41,10 +41,16 @@ declare global {
 
   interface Window {
     Shopify: Shopify;
+    lenis?: any;
   }
 
   declare const Shopify: Shopify;
   declare const Theme: Theme;
+
+  // GSAP & Animation Libraries
+  declare const gsap: any;
+  declare const ScrollTrigger: any;
+  declare const Lenis: any;
 
   type LoadCallback = (error: Error | undefined) => void;
 

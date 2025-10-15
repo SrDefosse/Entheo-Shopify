@@ -1,0 +1,123 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "settings": {
+            "text": "<h1>Coming Soon</h1>",
+            "type_preset": "h1",
+            "max_width": "normal",
+            "padding-block-end": 16
+          }
+        },
+        "description": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Get an exclusive preview of our upcoming collections</p>",
+            "type_preset": "rte",
+            "max_width": "narrow"
+          }
+        }
+      },
+      "block_order": ["heading", "description"],
+      "settings": {
+        "media_type_1": "image",
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 16,
+        "section_height": "medium",
+        "color_scheme": "scheme-5",
+        "toggle_overlay": true,
+        "overlay_color": "#00000040",
+        "overlay_style": "gradient",
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
+    },
+    "future_collections_main": {
+      "type": "future-collections",
+      "blocks": {
+        "fc_collection_1": {
+          "type": "collection_preview",
+          "settings": {
+            "collection_name": "Winter 2025",
+            "season": "Winter",
+            "year": "2025",
+            "release_date": "December 2024",
+            "short_description": "A celebration of minimalist design and winter elegance",
+            "teaser_text": "Inspired by the quiet beauty of winter landscapes and the warmth of meaningful connections",
+            "show_badge": true,
+            "badge_text": "Coming Soon",
+            "notify_button": true,
+            "notify_text": "Notify Me"
+          }
+        },
+        "fc_collection_2": {
+          "type": "collection_preview",
+          "settings": {
+            "collection_name": "Spring 2025",
+            "season": "Spring",
+            "year": "2025",
+            "release_date": "March 2025",
+            "short_description": "Fresh beginnings meet timeless craftsmanship",
+            "teaser_text": "Blooming with new possibilities, this collection celebrates renewal and growth",
+            "show_badge": true,
+            "badge_text": "Coming Soon",
+            "notify_button": true,
+            "notify_text": "Notify Me"
+          }
+        },
+        "fc_collection_3": {
+          "type": "collection_preview",
+          "settings": {
+            "collection_name": "Summer 2025",
+            "season": "Summer",
+            "year": "2025",
+            "release_date": "June 2025",
+            "short_description": "Light, airy designs for warm days ahead",
+            "teaser_text": "Embrace the effortless beauty of summer with pieces designed for long, golden days",
+            "show_badge": true,
+            "badge_text": "Coming Soon",
+            "notify_button": true,
+            "notify_text": "Notify Me"
+          }
+        }
+      },
+      "block_order": ["fc_collection_1", "fc_collection_2", "fc_collection_3"],
+      "settings": {
+        "heading": "Future Collections",
+        "heading_size": "h2",
+        "description": "<p>Be the first to know when these collections launch. Sign up for notifications below.</p>",
+        "columns_desktop": 3,
+        "columns_mobile": "1",
+        "gap": 24,
+        "footer_text": "<p>Want early access? <strong>Join our VIP list</strong> to receive exclusive previews and launch notifications.</p>",
+        "section_width": "page-width",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 60,
+        "padding-block-end": 80
+      }
+    },
+    "philosophy_teaser": {
+      "type": "about-philosophy",
+      "settings": {
+        "eyebrow": "What to Expect",
+        "heading": "The Future of Design",
+        "heading_size": "h2",
+        "text": "<p>Each upcoming collection is thoughtfully designed to push boundaries while honoring our commitment to timeless beauty. We're exploring new materials, innovative techniques, and fresh perspectives that stay true to our values.</p>",
+        "image_position": "right",
+        "enable_parallax": true,
+        "enable_backdrop_blur": true,
+        "button_label": "Learn More About Us",
+        "section_width": "page-width",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 40,
+        "padding-block-end": 60
+      }
+    }
+  },
+  "order": ["hero", "future_collections_main", "philosophy_teaser"]
+}
+

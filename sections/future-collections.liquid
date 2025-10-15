@@ -1,0 +1,545 @@
+{% comment %}
+  Future Collections Preview Section
+  Preview cards for upcoming collections with "Coming Soon" badges
+{% endcomment %}
+
+<div
+  class="future-collections-section section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="future-collections-container page-width">
+    {% if section.settings.heading != blank %}
+      <div class="future-collections-header" data-gsap-animation="fade-in">
+        <h2 class="future-collections-heading {{ section.settings.heading_size }}">
+          {{ section.settings.heading }}
+        </h2>
+        {% if section.settings.description != blank %}
+          <div class="future-collections-description rte">
+            {{ section.settings.description }}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div
+      class="future-collections-grid"
+      style="
+        --fc-columns-desktop: {{ section.settings.columns_desktop }};
+        --fc-columns-mobile: {{ section.settings.columns_mobile }};
+        --fc-gap: {{ section.settings.gap }}px;
+      "
+      data-gsap-animation="stagger"
+    >
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'collection_preview' %}
+            <div class="future-collection-card" {{ block.shopify_attributes }}>
+              <div class="future-collection-card-inner minimal-card">
+                {%- comment -%} Image {%- endcomment -%}
+                <div class="future-collection-image-wrapper">
+                  {% if block.settings.image != blank %}
+                    {% assign sizes_value = '(min-width: 750px) calc(100vw / ' | append: section.settings.columns_desktop | append: '), calc(100vw / ' | append: section.settings.columns_mobile | append: ')' %}
+                    {{
+                      block.settings.image
+                      | image_url: width: 800
+                      | image_tag: loading: "lazy", class: "future-collection-image", widths: "400, 600, 800", sizes: sizes_value
+                    }}
+                  {% else %}
+                    <div class="future-collection-placeholder">
+                      {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                    </div>
+                  {% endif %}
+
+                  {%- comment -%} Coming Soon Badge {%- endcomment -%}
+                  {% if block.settings.show_badge %}
+                    <div class="future-collection-badge glass-card">
+                      <span class="future-collection-badge-text">
+                        {{ block.settings.badge_text | default: 'Coming Soon' }}
+                      </span>
+                    </div>
+                  {% endif %}
+
+                  {%- comment -%} Hover Overlay {%- endcomment -%}
+                  <div class="future-collection-overlay backdrop-blur">
+                    <div class="future-collection-overlay-content">
+                      {% if block.settings.collection_name != blank %}
+                        <h3 class="future-collection-name">{{ block.settings.collection_name }}</h3>
+                      {% endif %}
+                      {% if block.settings.season != blank or block.settings.year != blank %}
+                        <p class="future-collection-season">
+                          {{ block.settings.season }}
+                          {% if block.settings.season != blank and block.settings.year != blank %}/{% endif %}
+                          {{ block.settings.year }}
+                        </p>
+                      {% endif %}
+                      {% if block.settings.teaser_text != blank %}
+                        <p class="future-collection-teaser">{{ block.settings.teaser_text }}</p>
+                      {% endif %}
+                      {% if block.settings.notify_button %}
+                        <button class="future-collection-notify-btn glass-button" data-collection-notify>
+                          {{ block.settings.notify_text | default: 'Notify Me' }}
+                        </button>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+
+                {%- comment -%} Card Content {%- endcomment -%}
+                <div class="future-collection-content">
+                  {% if block.settings.collection_name != blank %}
+                    <h3 class="future-collection-title">{{ block.settings.collection_name }}</h3>
+                  {% endif %}
+
+                  {% if block.settings.release_date != blank %}
+                    <p class="future-collection-date">
+                      <svg class="future-collection-date-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path
+                          d="M5.33333 1.33334V3.33334M10.6667 1.33334V3.33334M2.66667 6.66668H13.3333M3.33333 2.66668H12.6667C13.403 2.66668 14 3.26363 14 4.00001V13.3333C14 14.0697 13.403 14.6667 12.6667 14.6667H3.33333C2.59695 14.6667 2 14.0697 2 13.3333V4.00001C2 3.26363 2.59695 2.66668 3.33333 2.66668Z"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                      {{ block.settings.release_date }}
+                    </p>
+                  {% endif %}
+
+                  {% if block.settings.short_description != blank %}
+                    <p class="future-collection-description">{{ block.settings.short_description }}</p>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+        {% endcase %}
+      {% endfor %}
+    </div>
+
+    {% if section.settings.footer_text != blank %}
+      <div class="future-collections-footer" data-gsap-animation="fade-in">
+        <div class="future-collections-footer-content glass-card">
+          {{ section.settings.footer_text }}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .future-collections-section {
+    position: relative;
+  }
+
+  .future-collections-container {
+    width: 100%;
+  }
+
+  .future-collections-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .future-collections-heading {
+    margin-bottom: 1rem;
+  }
+
+  .future-collections-description {
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    color: rgba(var(--color-foreground-rgb), 0.7);
+  }
+
+  .future-collections-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--fc-columns-mobile), 1fr);
+    gap: var(--fc-gap);
+  }
+
+  @media screen and (min-width: 750px) {
+    .future-collections-grid {
+      grid-template-columns: repeat(var(--fc-columns-desktop), 1fr);
+    }
+  }
+
+  .future-collection-card {
+    position: relative;
+  }
+
+  .future-collection-card-inner {
+    height: 100%;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .future-collection-card:hover .future-collection-card-inner {
+    transform: translateY(-4px);
+  }
+
+  .future-collection-image-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: rgba(var(--color-foreground-rgb), 0.02);
+  }
+
+  .future-collection-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+
+  .future-collection-card:hover .future-collection-image {
+    transform: scale(1.05);
+  }
+
+  .future-collection-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(var(--color-foreground-rgb), 0.05);
+  }
+
+  .future-collection-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.5rem 1rem;
+    z-index: 2;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  .future-collection-badge-text {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-foreground);
+  }
+
+  .future-collection-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    padding: 2rem;
+    z-index: 1;
+  }
+
+  .future-collection-card:hover .future-collection-overlay {
+    opacity: 1;
+  }
+
+  .future-collection-overlay-content {
+    text-align: center;
+    width: 100%;
+  }
+
+  .future-collection-name {
+    font-size: 1.5rem;
+    margin: 0 0 0.5rem 0;
+    color: var(--color-foreground);
+  }
+
+  .future-collection-season {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(var(--color-foreground-rgb), 0.8);
+    margin: 0 0 1rem 0;
+  }
+
+  .future-collection-teaser {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: rgba(var(--color-foreground-rgb), 0.9);
+    margin: 0 0 1.5rem 0;
+  }
+
+  .future-collection-notify-btn {
+    display: inline-block;
+    cursor: pointer;
+    border: none;
+    font-size: 0.875rem;
+  }
+
+  .future-collection-content {
+    padding: 1.5rem;
+  }
+
+  .future-collection-title {
+    font-size: 1.2rem;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .future-collection-date {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: rgba(var(--color-foreground-rgb), 0.6);
+    margin: 0 0 0.75rem 0;
+  }
+
+  .future-collection-date-icon {
+    flex-shrink: 0;
+  }
+
+  .future-collection-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(var(--color-foreground-rgb), 0.7);
+    margin: 0;
+  }
+
+  .future-collections-footer {
+    margin-top: 4rem;
+    text-align: center;
+  }
+
+  .future-collections-footer-content {
+    display: inline-block;
+    padding: 1.5rem 2.5rem;
+    font-size: 1.05rem;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Future Collections",
+  "tag": "section",
+  "class": "future-collections-wrapper section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Coming Soon"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        { "value": "h3", "label": "Small" },
+        { "value": "h2", "label": "Medium" },
+        { "value": "h1", "label": "Large" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Get a sneak peek at our upcoming collections</p>"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns (desktop)",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns (mobile)",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Gap between cards",
+      "min": 8,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "richtext",
+      "id": "footer_text",
+      "label": "Footer text",
+      "info": "Optional text shown below collections"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        { "value": "page-width", "label": "Page width" },
+        { "value": "full-width", "label": "Full width" }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_preview",
+      "name": "Collection Preview",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Preview image"
+        },
+        {
+          "type": "text",
+          "id": "collection_name",
+          "label": "Collection name",
+          "default": "Winter 2025"
+        },
+        {
+          "type": "text",
+          "id": "season",
+          "label": "Season",
+          "default": "Winter"
+        },
+        {
+          "type": "text",
+          "id": "year",
+          "label": "Year",
+          "default": "2025"
+        },
+        {
+          "type": "text",
+          "id": "release_date",
+          "label": "Release date",
+          "default": "December 2024"
+        },
+        {
+          "type": "text",
+          "id": "short_description",
+          "label": "Short description",
+          "default": "A celebration of minimalist design and winter elegance"
+        },
+        {
+          "type": "textarea",
+          "id": "teaser_text",
+          "label": "Teaser text (hover overlay)",
+          "default": "Inspired by the quiet beauty of winter landscapes"
+        },
+        {
+          "type": "header",
+          "content": "Badge"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_badge",
+          "label": "Show coming soon badge",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Badge text",
+          "default": "Coming Soon"
+        },
+        {
+          "type": "header",
+          "content": "Notify Button"
+        },
+        {
+          "type": "checkbox",
+          "id": "notify_button",
+          "label": "Show notify button",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "notify_text",
+          "label": "Notify button text",
+          "default": "Notify Me"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Future Collections",
+      "blocks": [
+        {
+          "type": "collection_preview",
+          "settings": {
+            "collection_name": "Winter 2025",
+            "season": "Winter",
+            "year": "2025"
+          }
+        },
+        {
+          "type": "collection_preview",
+          "settings": {
+            "collection_name": "Spring 2025",
+            "season": "Spring",
+            "year": "2025"
+          }
+        },
+        {
+          "type": "collection_preview",
+          "settings": {
+            "collection_name": "Summer 2025",
+            "season": "Summer",
+            "year": "2025"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

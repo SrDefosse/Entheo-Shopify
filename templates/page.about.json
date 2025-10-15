@@ -1,0 +1,129 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "settings": {
+            "text": "<h1>About Us</h1>",
+            "type_preset": "h1",
+            "max_width": "normal",
+            "padding-block-end": 16
+          }
+        },
+        "description": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Discover our story, philosophy, and the people behind the brand</p>",
+            "type_preset": "rte",
+            "max_width": "narrow"
+          }
+        }
+      },
+      "block_order": ["heading", "description"],
+      "settings": {
+        "media_type_1": "image",
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 16,
+        "section_height": "medium",
+        "color_scheme": "scheme-5",
+        "toggle_overlay": true,
+        "overlay_color": "#00000026",
+        "overlay_style": "gradient",
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
+    },
+    "philosophy": {
+      "type": "about-philosophy",
+      "settings": {
+        "eyebrow": "Our Philosophy",
+        "heading": "Crafted with Purpose",
+        "heading_size": "h2",
+        "text": "<p>We believe in creating timeless pieces that transcend trends. Each design is carefully crafted to embody our commitment to quality, sustainability, and mindful living.</p>",
+        "image_position": "left",
+        "enable_parallax": true,
+        "enable_backdrop_blur": true,
+        "section_width": "page-width",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 80,
+        "padding-block-end": 40
+      }
+    },
+    "founder": {
+      "type": "about-founder",
+      "settings": {
+        "heading": "Meet the Founder",
+        "heading_size": "h2",
+        "founder_name": "Your Name",
+        "founder_title": "Founder & Creative Director",
+        "quote": "Design is not just what it looks like and feels like. Design is how it works.",
+        "bio": "<p>With over a decade of experience in design, I've dedicated my career to creating pieces that tell a story. Every collection is born from a passion for craftsmanship and a deep respect for traditional techniques merged with modern sensibilities.</p>",
+        "section_width": "page-width",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
+    },
+    "story": {
+      "type": "about-story",
+      "blocks": {
+        "story_1": {
+          "type": "story_item",
+          "settings": {
+            "year": "2018",
+            "title": "The Beginning",
+            "text": "<p>It all started with a simple idea and a passion for creating beautiful, meaningful pieces that would stand the test of time.</p>"
+          }
+        },
+        "story_2": {
+          "type": "story_item",
+          "settings": {
+            "year": "2020",
+            "title": "Growing Together",
+            "text": "<p>As our community grew, so did our commitment to quality and sustainability. We began partnering with local artisans and ethical suppliers.</p>"
+          }
+        },
+        "milestone_1": {
+          "type": "milestone",
+          "settings": {
+            "icon": "✨",
+            "number": "5000+",
+            "label": "Pieces Crafted"
+          }
+        },
+        "story_3": {
+          "type": "story_item",
+          "settings": {
+            "year": "2022",
+            "title": "Expanding Horizons",
+            "text": "<p>We launched our online platform, making our designs accessible to customers around the world while maintaining our commitment to personalized service.</p>"
+          }
+        },
+        "story_4": {
+          "type": "story_item",
+          "settings": {
+            "year": "2024",
+            "title": "Today",
+            "text": "<p>We continue to evolve while staying true to our core values and vision. Each day brings new inspiration and opportunities to create.</p>"
+          }
+        }
+      },
+      "block_order": ["story_1", "story_2", "milestone_1", "story_3", "story_4"],
+      "settings": {
+        "heading": "Our Story",
+        "heading_size": "h2",
+        "description": "<p>Every brand has a story to tell. Here's ours.</p>",
+        "show_timeline": true,
+        "section_width": "page-width",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 40,
+        "padding-block-end": 80
+      }
+    }
+  },
+  "order": ["hero", "philosophy", "founder", "story"]
+}
+
