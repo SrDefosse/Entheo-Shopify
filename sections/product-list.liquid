@@ -29,7 +29,6 @@
         {% for product in section.settings.collection.products limit: max_items %}
           <div
             class="resource-list__item"
-            style="box-shadow: 0 4px 12px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.12) !important; border-radius: 12px !important; overflow: hidden !important;"
           >
             {% # theme-check-disable UniqueStaticBlockId %}
               {% content_for 'block', type: '_product-card', id: 'static-product-card', closest.product: product %}
@@ -45,7 +44,6 @@
       {% for i in (1..max_items) %}
         <div
           class="resource-list__item"
-          style="box-shadow: 0 4px 12px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.12) !important; border-radius: 12px !important; overflow: hidden !important;"
         >
           {% # theme-check-disable UniqueStaticBlockId %}
             {% content_for 'block', type: '_product-card', id: 'static-product-card', closest.product: null %}
@@ -80,25 +78,6 @@
     {%- content_for 'blocks' -%}
   </div>
 </div>
-
-<style>
-  .resource-list__item {
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
-  }
-
-  .resource-list__item:hover {
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15), 0 12px 36px rgba(0,0,0,0.18) !important;
-    transform: translateY(-4px);
-  }
-
-  .resource-list__item img {
-    transition: transform 0.5s ease;
-  }
-
-  .resource-list__item:hover img {
-    transform: scale(1.05);
-  }
-</style>
 
 {% schema %}
 {

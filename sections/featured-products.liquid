@@ -1,0 +1,134 @@
+{%- liquid
+  assign show_products = false
+  if section.settings.product_1 != blank or section.settings.product_2 != blank or section.settings.product_3 != blank or section.settings.product_4 != blank
+    assign show_products = true
+  endif
+-%}
+
+{{ 'section-featured-products.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+
+<div class="featured-products isolate color-{{ section.settings.color_scheme }}">
+  <div class="page-width">
+    {% if section.settings.title != blank %}
+      <h2 class="featured-products__title h2 text-align-center">{{ section.settings.title | escape }}</h2>
+    {% endif %}
+    <div class="featured-products__grid">
+      {% if show_products %}
+        {% if section.settings.product_1 != blank %}
+          <div class="featured-products__card">
+            {% render 'product-card',
+              product_card_product: section.settings.product_1,
+              show_vendor: section.settings.show_vendor,
+              media_aspect_ratio: 'square'
+            %}
+          </div>
+        {% endif %}
+        {% if section.settings.product_2 != blank %}
+          <div class="featured-products__card">
+            {% render 'product-card',
+              product_card_product: section.settings.product_2,
+              show_vendor: section.settings.show_vendor,
+              media_aspect_ratio: 'square'
+            %}
+          </div>
+        {% endif %}
+        {% if section.settings.product_3 != blank %}
+          <div class="featured-products__card">
+            {% render 'product-card',
+              product_card_product: section.settings.product_3,
+              show_vendor: section.settings.show_vendor,
+              media_aspect_ratio: 'square'
+            %}
+          </div>
+        {% endif %}
+        {% if section.settings.product_4 != blank %}
+          <div class="featured-products__card">
+            {% render 'product-card',
+              product_card_product: section.settings.product_4,
+              show_vendor: section.settings.show_vendor,
+              media_aspect_ratio: 'square'
+            %}
+          </div>
+        {% endif %}
+      {% else %}
+        {% for i in (1..4) %}
+          <div class="featured-products__card onboarding-card">
+            <div class="card-wrapper">
+              <div class="card__media">
+                <div class="media media--square">
+                  {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+              </div>
+              <div class="card__content">
+                <div class="card__information">
+                  <h3 class="card__heading h5">
+                      {{ 'onboarding.product_title' | t }}
+                  </h3>
+                  <div class="card-information">
+                    {% comment %} Placeholder for price {% endcomment %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Featured products",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Featured products"
+    },
+    {
+      "type": "product",
+      "id": "product_1",
+      "label": "Product 1"
+    },
+    {
+      "type": "product",
+      "id": "product_2",
+      "label": "Product 2"
+    },
+    {
+      "type": "product",
+      "id": "product_3",
+      "label": "Product 3"
+    },
+    {
+      "type": "product",
+      "id": "product_4",
+      "label": "Product 4"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show vendor",
+      "default": false
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured products",
+      "category": "Products"
+    }
+  ]
+}
+{% endschema %}
