@@ -110,7 +110,7 @@
                   "type": "text",
                   "name": "Heading",
                   "settings": {
-                    "text": "<p>Join our email list</p>",
+                    "text": "<p>Suscríbete a  la lista de correos.</p>",
                     "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
@@ -136,7 +136,7 @@
                   "type": "text",
                   "name": "Text",
                   "settings": {
-                    "text": "<p>Get exclusive deals and early access to new products. </p>",
+                    "text": "<p>Obtén ofertas exclusivas y acceso a nuevos productos.</p>",
                     "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
@@ -170,7 +170,7 @@
               "settings": {
                 "width": "custom",
                 "custom_width": 50,
-                "inherit_color_scheme": true,
+                "inherit_color_scheme": false,
                 "heading": "",
                 "heading_preset": "h3",
                 "color_scheme": "scheme-1",
@@ -209,7 +209,7 @@
               "type": "_footer-copyright",
               "static": true,
               "settings": {
-                "show_powered_by": true,
+                "show_powered_by": false,
                 "font_size": "0.75rem",
                 "case": "none"
               },

@@ -29,6 +29,10 @@
     padding: 20px 0;
   }
 
+  .ai-product-carousel__track-{{ ai_gen_id }}.is-dragging {
+    touch-action: pan-y pinch-zoom;
+  }
+
   .ai-product-carousel__track-{{ ai_gen_id }}:active {
     cursor: grabbing;
   }
@@ -45,9 +49,11 @@
     border: {{ block.settings.card_border_width }}px solid {{ block.settings.card_border_color }};
   }
 
-  .ai-product-card-{{ ai_gen_id }}:hover {
-    transform: translateY(-{{ block.settings.hover_lift }}px);
-    box-shadow: {{ block.settings.shadow_x }}px {{ block.settings.shadow_y | plus: block.settings.hover_lift }}px {{ block.settings.shadow_blur | plus: 5 }}px {{ block.settings.shadow_spread }}px {{ block.settings.shadow_color }};
+  @media (hover: hover) {
+    .ai-product-card-{{ ai_gen_id }}:hover {
+      transform: translateY(-{{ block.settings.hover_lift }}px);
+      box-shadow: {{ block.settings.shadow_x }}px {{ block.settings.shadow_y | plus: block.settings.hover_lift }}px {{ block.settings.shadow_blur | plus: 5 }}px {{ block.settings.shadow_spread }}px {{ block.settings.shadow_color }};
+    }
   }
 
   .ai-product-card__image-{{ ai_gen_id }} {
@@ -66,8 +72,10 @@
     transition: transform 0.3s ease;
   }
 
-  .ai-product-card-{{ ai_gen_id }}:hover .ai-product-card__image-{{ ai_gen_id }} img {
-    transform: scale(1.05);
+  @media (hover: hover) {
+    .ai-product-card-{{ ai_gen_id }}:hover .ai-product-card__image-{{ ai_gen_id }} img {
+      transform: scale(1.05);
+    }
   }
 
   .ai-product-card__image-placeholder-{{ ai_gen_id }} {
@@ -124,39 +132,13 @@
     text-align: center;
   }
 
-  .ai-product-card__button-{{ ai_gen_id }}:hover {
-    background: {{ block.settings.button_hover_background }};
+  @media (hover: hover) {
+    .ai-product-card__button-{{ ai_gen_id }}:hover {
+      background: {{ block.settings.button_hover_background }};
+    }
   }
 
-  .ai-product-carousel__navigation-{{ ai_gen_id }} {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 20px;
-  }
 
-  .ai-product-carousel__nav-dot-{{ ai_gen_id }} {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: {{ block.settings.nav_dot_color }};
-    opacity: 0.3;
-    cursor: pointer;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-
-  .ai-product-carousel__nav-dot-{{ ai_gen_id }}.active {
-    opacity: 1;
-    transform: scale(1.2);
-  }
-
-  .ai-product-carousel__counter-{{ ai_gen_id }} {
-    text-align: center;
-    margin-top: 15px;
-    font-size: 14px;
-    color: {{ block.settings.nav_dot_color }};
-    opacity: 0.7;
-  }
 
   .ai-product-carousel__empty-state-{{ ai_gen_id }} {
     text-align: center;
@@ -210,6 +192,7 @@
       %}
     {% endfor %}
 
+
     {% if has_products %}
       <div class="ai-product-carousel__track-{{ ai_gen_id }}" data-track>
         {% for i in (1..6) %}
@@ -248,17 +231,6 @@
         {% endfor %}
       </div>
 
-      {% if product_count > 1 %}
-        <div class="ai-product-carousel__navigation-{{ ai_gen_id }}" data-navigation>
-          {% for i in (1..product_count) %}
-            <div class="ai-product-carousel__nav-dot-{{ ai_gen_id }}" data-dot="{{ forloop.index0 }}"></div>
-          {% endfor %}
-        </div>
-
-        <div class="ai-product-carousel__counter-{{ ai_gen_id }}" data-counter>
-          <span data-current>1</span> / <span data-total>{{ product_count }}</span>
-        </div>
-      {% endif %}
     {% else %}
       <div class="ai-product-carousel__empty-state-{{ ai_gen_id }}">
         <div class="ai-product-carousel__empty-title-{{ ai_gen_id }}">Add products to your carousel</div>
@@ -275,33 +247,40 @@
         super();
         this.track = null;
         this.cards = [];
-        this.dots = [];
-        this.counter = null;
-        this.currentCounter = null;
-        this.totalCounter = null;
         this.currentIndex = 0;
-        this.cardWidth = {{ block.settings.card_width }};
-        this.cardGap = {{ block.settings.card_gap }};
+        this.cardWidth = 0; // Will be calculated from CSS
+        this.cardGap = 0; // Will be calculated from CSS
         this.isDragging = false;
         this.startX = 0;
         this.currentX = 0;
         this.initialTransform = 0;
         this.totalCards = 0;
+        this.resizeTimeout = null;
       }
 
       connectedCallback() {
         this.track = this.querySelector('[data-track]');
         this.cards = Array.from(this.querySelectorAll('[data-card]'));
-        this.dots = Array.from(this.querySelectorAll('[data-dot]'));
-        this.counter = this.querySelector('[data-counter]');
-        this.currentCounter = this.querySelector('[data-current]');
-        this.totalCounter = this.querySelector('[data-total]');
         this.totalCards = this.cards.length;
 
         if (!this.track || this.cards.length === 0) return;
 
+        this.calculateDimensions();
         this.setupEventListeners();
-        this.updateNavigation();
+        this.updateMaxIndex();
+      }
+
+      calculateDimensions() {
+        // Get actual card dimensions from computed styles
+        if (this.cards.length > 0) {
+          const firstCard = this.cards[0];
+          const cardStyles = window.getComputedStyle(firstCard);
+          this.cardWidth = parseFloat(cardStyles.flexBasis) || firstCard.offsetWidth;
+
+          // Get gap from track styles
+          const trackStyles = window.getComputedStyle(this.track);
+          this.cardGap = parseFloat(trackStyles.gap) || {{ block.settings.card_gap }};
+        }
       }
 
       setupEventListeners() {
@@ -312,23 +291,21 @@
 
         // Touch events
         this.track.addEventListener('touchstart', this.handleStart.bind(this));
-        document.addEventListener('touchmove', this.handleMove.bind(this));
+        document.addEventListener('touchmove', this.handleMove.bind(this), { passive: false });
         document.addEventListener('touchend', this.handleEnd.bind(this));
-
-        // Navigation dots
-        this.dots.forEach((dot, index) => {
-          dot.addEventListener('click', () => {
-            this.goToSlide(index);
-          });
-        });
 
         // Prevent default drag behavior
         this.track.addEventListener('dragstart', (e) => e.preventDefault());
 
-        // Window resize
-        window.addEventListener('resize', () => {
-          this.updatePosition();
-        });
+        // Throttled window resize
+        window.addEventListener('resize', this.handleResize.bind(this));
+      }
+
+      disconnectedCallback() {
+        // Clean up event listeners
+        if (this.resizeTimeout) {
+          clearTimeout(this.resizeTimeout);
+        }
       }
 
       handleStart(e) {
@@ -336,6 +313,7 @@
         this.startX = this.getEventX(e);
         this.initialTransform = this.getCurrentTransform();
         this.track.style.transition = 'none';
+        this.track.classList.add('is-dragging');
       }
 
       handleMove(e) {
@@ -354,6 +332,7 @@
 
         this.isDragging = false;
         this.track.style.transition = 'transform 0.3s ease';
+        this.track.classList.remove('is-dragging');
 
         const deltaX = this.currentX - this.startX;
         const threshold = this.cardWidth * 0.3;
@@ -367,7 +346,6 @@
         }
 
         this.updatePosition();
-        this.updateNavigation();
       }
 
       getEventX(e) {
@@ -382,8 +360,19 @@
       }
 
       getVisibleCards() {
-        const containerWidth = this.track.parentElement.offsetWidth - 40; // Account for padding
-        return Math.floor(containerWidth / (this.cardWidth + this.cardGap));
+        if (!this.track || !this.track.parentElement) return 1;
+
+        const containerStyles = window.getComputedStyle(this.track.parentElement);
+        const containerPadding = parseFloat(containerStyles.paddingLeft) + parseFloat(containerStyles.paddingRight);
+        const containerWidth = this.track.parentElement.offsetWidth - containerPadding;
+
+        // Use actual calculated dimensions
+        if (this.cardWidth === 0) this.calculateDimensions();
+
+        const cardTotalWidth = this.cardWidth + this.cardGap;
+        const visibleCards = Math.floor(containerWidth / cardTotalWidth);
+
+        return Math.max(1, visibleCards);
       }
 
       getMaxIndex() {
@@ -394,7 +383,6 @@
       goToSlide(index) {
         this.currentIndex = Math.max(0, Math.min(index, this.getMaxIndex()));
         this.updatePosition();
-        this.updateNavigation();
       }
 
       updatePosition() {
@@ -402,17 +390,18 @@
         this.track.style.transform = `translateX(${translateX}px)`;
       }
 
-      updateNavigation() {
-        // Update dots
-        this.dots.forEach((dot, index) => {
-          dot.classList.toggle('active', index === this.currentIndex);
-        });
-
-        // Update counter
-        if (this.currentCounter) {
-          this.currentCounter.textContent = this.currentIndex + 1;
+      handleResize() {
+        if (this.resizeTimeout) {
+          clearTimeout(this.resizeTimeout);
         }
+
+        this.resizeTimeout = setTimeout(() => {
+          this.calculateDimensions();
+          this.updateMaxIndex();
+          this.updatePosition();
+        }, 100);
       }
+
     }
 
     customElements.define('product-carousel-{{ ai_gen_id }}', ProductCarousel{{ ai_gen_id }});
@@ -698,16 +687,6 @@
       "label": "Button border radius",
       "default": 8
     },
-    {
-      "type": "header",
-      "content": "Navigation"
-    },
-    {
-      "type": "color",
-      "id": "nav_dot_color",
-      "label": "Navigation dot color",
-      "default": "#000000"
-    }
   ],
   "presets": [
     {
