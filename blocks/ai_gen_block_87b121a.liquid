@@ -140,6 +140,87 @@
 
 
 
+  .ai-product-carousel__navigation-{{ ai_gen_id }} {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+    padding-bottom: 10px;
+  }
+
+  .ai-product-carousel__nav-arrow-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #000000;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 18px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    /* Eliminar estilos de enfoque en móviles */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  .ai-product-carousel__nav-arrow-{{ ai_gen_id }}:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: scale(1.05);
+    border-color: rgba(0, 0, 0, 0.3);
+  }
+
+  .ai-product-carousel__nav-arrow-{{ ai_gen_id }}.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .ai-product-carousel__nav-arrow-{{ ai_gen_id }}:focus {
+    outline: none;
+    box-shadow: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .ai-product-carousel__nav-arrow-{{ ai_gen_id }}:focus-visible {
+    outline: none;
+    box-shadow: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .ai-product-carousel__nav-arrow-{{ ai_gen_id }}:active {
+    outline: none;
+    box-shadow: none;
+    -webkit-tap-highlight-color: transparent;
+    transform: scale(0.95); /* Feedback visual sutil durante el toque */
+  }
+
+  /* Media query específico para dispositivos táctiles */
+  @media (pointer: coarse) {
+    .ai-product-carousel__nav-arrow-{{ ai_gen_id }} {
+      -webkit-tap-highlight-color: transparent !important;
+      outline: none !important;
+      box-shadow: none !important;
+    }
+
+    .ai-product-carousel__nav-arrow-{{ ai_gen_id }}:focus,
+    .ai-product-carousel__nav-arrow-{{ ai_gen_id }}:focus-visible,
+    .ai-product-carousel__nav-arrow-{{ ai_gen_id }}:active {
+      -webkit-tap-highlight-color: transparent !important;
+      outline: none !important;
+      box-shadow: none !important;
+      transform: scale(0.95) !important; /* Feedback visual sutil durante el toque */
+    }
+  }
+
   .ai-product-carousel__empty-state-{{ ai_gen_id }} {
     text-align: center;
     padding: 60px 20px;
@@ -165,11 +246,35 @@
     .ai-product-carousel__container-{{ ai_gen_id }} {
       padding: 0 15px;
     }
+
+    .ai-product-carousel__nav-arrow-{{ ai_gen_id }} {
+      width: 40px;
+      height: 40px;
+      font-size: 16px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .ai-product-carousel__navigation-{{ ai_gen_id }} {
+      gap: 15px;
+      margin-top: 15px;
+    }
   }
 
   @media screen and (max-width: 480px) {
     .ai-product-card-{{ ai_gen_id }} {
       flex: 0 0 {{ block.settings.card_width | times: 0.7 }}px;
+    }
+
+    .ai-product-carousel__nav-arrow-{{ ai_gen_id }} {
+      width: 36px;
+      height: 36px;
+      font-size: 14px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .ai-product-carousel__navigation-{{ ai_gen_id }} {
+      gap: 12px;
+      margin-top: 12px;
     }
   }
 {% endstyle %}
@@ -231,6 +336,15 @@
         {% endfor %}
       </div>
 
+      <div class="ai-product-carousel__navigation-{{ ai_gen_id }}" data-navigation>
+        <button class="ai-product-carousel__nav-arrow-{{ ai_gen_id }}" data-prev aria-label="Previous products" disabled>
+          &#8249;
+        </button>
+        <button class="ai-product-carousel__nav-arrow-{{ ai_gen_id }}" data-next aria-label="Next products">
+          &#8250;
+        </button>
+      </div>
+
     {% else %}
       <div class="ai-product-carousel__empty-state-{{ ai_gen_id }}">
         <div class="ai-product-carousel__empty-title-{{ ai_gen_id }}">Add products to your carousel</div>
@@ -247,6 +361,8 @@
         super();
         this.track = null;
         this.cards = [];
+        this.prevButton = null;
+        this.nextButton = null;
         this.currentIndex = 0;
         this.cardWidth = 0; // Will be calculated from CSS
         this.cardGap = 0; // Will be calculated from CSS
@@ -261,6 +377,8 @@
       connectedCallback() {
         this.track = this.querySelector('[data-track]');
         this.cards = Array.from(this.querySelectorAll('[data-card]'));
+        this.prevButton = this.querySelector('[data-prev]');
+        this.nextButton = this.querySelector('[data-next]');
         this.totalCards = this.cards.length;
 
         if (!this.track || this.cards.length === 0) return;
@@ -268,6 +386,7 @@
         this.calculateDimensions();
         this.setupEventListeners();
         this.updateMaxIndex();
+        this.updateArrows();
       }
 
       calculateDimensions() {
@@ -293,6 +412,14 @@
         this.track.addEventListener('touchstart', this.handleStart.bind(this));
         document.addEventListener('touchmove', this.handleMove.bind(this), { passive: false });
         document.addEventListener('touchend', this.handleEnd.bind(this));
+
+        // Arrow navigation
+        if (this.prevButton) {
+          this.prevButton.addEventListener('click', () => this.goToPrevSlide());
+        }
+        if (this.nextButton) {
+          this.nextButton.addEventListener('click', () => this.goToNextSlide());
+        }
 
         // Prevent default drag behavior
         this.track.addEventListener('dragstart', (e) => e.preventDefault());
@@ -346,6 +473,7 @@
         }
 
         this.updatePosition();
+        this.updateArrows();
       }
 
       getEventX(e) {
@@ -383,11 +511,40 @@
       goToSlide(index) {
         this.currentIndex = Math.max(0, Math.min(index, this.getMaxIndex()));
         this.updatePosition();
+        this.updateArrows();
       }
 
       updatePosition() {
         const translateX = -this.currentIndex * (this.cardWidth + this.cardGap);
         this.track.style.transform = `translateX(${translateX}px)`;
+      }
+
+      goToPrevSlide() {
+        if (this.currentIndex > 0) {
+          this.currentIndex--;
+          this.updatePosition();
+          this.updateArrows();
+        }
+      }
+
+      goToNextSlide() {
+        if (this.currentIndex < this.getMaxIndex()) {
+          this.currentIndex++;
+          this.updatePosition();
+          this.updateArrows();
+        }
+      }
+
+      updateArrows() {
+        if (this.prevButton) {
+          this.prevButton.classList.toggle('disabled', this.currentIndex === 0);
+          this.prevButton.disabled = this.currentIndex === 0;
+        }
+
+        if (this.nextButton) {
+          this.nextButton.classList.toggle('disabled', this.currentIndex >= this.getMaxIndex());
+          this.nextButton.disabled = this.currentIndex >= this.getMaxIndex();
+        }
       }
 
       handleResize() {
@@ -399,6 +556,7 @@
           this.calculateDimensions();
           this.updateMaxIndex();
           this.updatePosition();
+          this.updateArrows();
         }, 100);
       }
 
