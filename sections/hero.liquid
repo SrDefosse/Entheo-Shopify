@@ -285,6 +285,12 @@
   .hero {
     position: relative;
     min-height: calc(var(--hero-min-height) - var(--hero-height-offset));
+    height: var(--hero-min-height);
+  }
+
+  /* Full screen hero styling */
+  .hero[style*='100svh'] {
+    height: 100svh;
   }
 
   .hero[data-shopify-visual-preview] {

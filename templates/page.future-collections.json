@@ -27,7 +27,7 @@
         "horizontal_alignment_flex_direction_column": "center",
         "vertical_alignment_flex_direction_column": "center",
         "gap": 16,
-        "section_height": "medium",
+        "section_height": "full-screen",
         "color_scheme": "scheme-5",
         "toggle_overlay": true,
         "overlay_color": "#00000040",

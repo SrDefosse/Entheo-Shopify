@@ -14,25 +14,14 @@
     assign search_style = 'modal'
   endif
 
-  if section.settings.enable_transparent_header_home and template.name == 'index'
-    assign transparent = 'always'
-    assign transparent_color_scheme = section.settings.home_color_scheme
-  elsif section.settings.enable_transparent_header_product and template.name == 'product'
-    assign transparent = 'always'
-    assign transparent_color_scheme = section.settings.product_color_scheme
-  elsif section.settings.enable_transparent_header_collection and template.name == 'collection'
-    assign transparent = 'always'
-    assign transparent_color_scheme = section.settings.collection_color_scheme
-  endif
+  assign transparent = 'always'
+  assign transparent_color_scheme = 'color-' | append: section.settings.color_scheme_top
+
 
   if section.settings.enable_sticky_header == 'always'
     assign sticky = 'always'
   elsif section.settings.enable_sticky_header == 'scroll-up'
     assign sticky = 'scroll-up'
-  endif
-
-  if transparent and sticky
-    assign transparent = 'not-sticky'
   endif
 
   if transparent
@@ -341,6 +330,13 @@
   .header[transparent] .header__row {
     backdrop-filter: blur(8px) saturate(120%);
     -webkit-backdrop-filter: blur(8px) saturate(120%);
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+
+  /* Enhanced backdrop blur for full-screen hero */
+  .hero[style*='100svh'] ~ #header-group .header[transparent] .header__row {
+    backdrop-filter: blur(10px) saturate(150%);
+    -webkit-backdrop-filter: blur(10px) saturate(150%);
   }
 
   :is(.header[transparent]:not([data-sticky-state='active']), .header[transparent='always'][data-sticky-state='active'])
@@ -405,8 +401,6 @@
 
   .header[data-sticky-state='active'] .header__row {
     /* Enhanced backdrop blur when sticky */
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
   }
 
@@ -419,7 +413,7 @@
     position: relative;
 
     /* will default to bg from its color scheme unless --header-bg-color is transparent */
-    background-color: var(--header-bg-color, rgba(var(--color-background-rgb), 0.85));
+    background-color: var(--header-bg-color, rgba(255, 255, 255, 0.5));
     backdrop-filter: blur(12px) saturate(180%);
     -webkit-backdrop-filter: blur(12px) saturate(180%);
     transition: background-color var(--animation-speed) var(--animation-easing),
@@ -999,7 +993,7 @@
       "type": "color_scheme",
       "id": "color_scheme_top",
       "label": "t:settings.default",
-      "default": "primary"
+      "default": "scheme-1"
     },
     {
       "type": "color_scheme",
@@ -1007,94 +1001,6 @@
       "label": "t:settings.bottom_row",
       "default": "primary",
       "visible_if": "{{ section.settings.menu_row == 'bottom' or section.settings.localization_row == 'bottom' or section.settings.search_row == 'bottom' }}"
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme_transparent",
-      "label": "t:settings.inverse",
-      "default": "primary",
-      "visible_if": "{{ section.settings.enable_transparent_header_home or section.settings.enable_transparent_header_product or section.settings.enable_transparent_header_collection }}"
-    },
-    {
-      "type": "header",
-      "content": "t:content.home_page"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_transparent_header_home",
-      "label": "t:settings.transparent_background",
-      "default": false
-    },
-    {
-      "type": "select",
-      "id": "home_color_scheme",
-      "label": "t:settings.color_scheme",
-      "options": [
-        {
-          "value": "default",
-          "label": "t:options.default"
-        },
-        {
-          "value": "inverse",
-          "label": "t:options.inverse"
-        }
-      ],
-      "default": "default",
-      "visible_if": "{{ section.settings.enable_transparent_header_home }}"
-    },
-    {
-      "type": "header",
-      "content": "t:content.product_page"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_transparent_header_product",
-      "label": "t:settings.transparent_background",
-      "default": false
-    },
-    {
-      "type": "select",
-      "id": "product_color_scheme",
-      "label": "t:settings.color_scheme",
-      "options": [
-        {
-          "value": "default",
-          "label": "t:options.default"
-        },
-        {
-          "value": "inverse",
-          "label": "t:options.inverse"
-        }
-      ],
-      "default": "default",
-      "visible_if": "{{ section.settings.enable_transparent_header_product }}"
-    },
-    {
-      "type": "header",
-      "content": "t:content.collection_page"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_transparent_header_collection",
-      "label": "t:settings.transparent_background",
-      "default": false
-    },
-    {
-      "type": "select",
-      "id": "collection_color_scheme",
-      "label": "t:settings.color_scheme",
-      "options": [
-        {
-          "value": "default",
-          "label": "t:options.default"
-        },
-        {
-          "value": "inverse",
-          "label": "t:options.inverse"
-        }
-      ],
-      "default": "default",
-      "visible_if": "{{ section.settings.enable_transparent_header_collection }}"
     }
   ],
   "presets": []
