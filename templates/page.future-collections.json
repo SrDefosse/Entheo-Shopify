@@ -1,99 +1,79 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "hero": {
-      "type": "hero",
-      "blocks": {
-        "heading": {
-          "type": "text",
-          "settings": {
-            "text": "<h1>Coming Soon</h1>",
-            "type_preset": "h1",
-            "max_width": "normal",
-            "padding-block-end": 16
-          }
-        },
-        "description": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Get an exclusive preview of our upcoming collections</p>",
-            "type_preset": "rte",
-            "max_width": "narrow"
-          }
-        }
-      },
-      "block_order": ["heading", "description"],
-      "settings": {
-        "media_type_1": "image",
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 16,
-        "section_height": "full-screen",
-        "color_scheme": "scheme-5",
-        "toggle_overlay": true,
-        "overlay_color": "#00000040",
-        "overlay_style": "gradient",
-        "padding-block-start": 40,
-        "padding-block-end": 40
-      }
-    },
     "future_collections_main": {
       "type": "future-collections",
       "blocks": {
         "fc_collection_1": {
           "type": "collection_preview",
           "settings": {
-            "collection_name": "Winter 2025",
-            "season": "Winter",
+            "image": "shopify://shop_images/upcoming1.png",
+            "collection_name": "Sustancias - Las Llaves Prohibidas",
+            "season": "",
             "year": "2025",
-            "release_date": "December 2024",
-            "short_description": "A celebration of minimalist design and winter elegance",
-            "teaser_text": "Inspired by the quiet beauty of winter landscapes and the warmth of meaningful connections",
-            "show_badge": true,
+            "release_date": "",
+            "short_description": "Las plantas sagradas despiertan la puerta a lo desconocido",
+            "teaser_text": "Ayahuasca. Hongos. DMT. Peyote. Bufo. La primera colección es el inicio del sacrilegio: ingerir lo sagrado y permitir que lo humano se rompa. Cada pieza es un talismán de esas llaves que destrozan la mente para abrir universos. No es joyería. Es un recordatorio de que un solo respiro puede borrarlo todo",
+            "show_badge": false,
             "badge_text": "Coming Soon",
-            "notify_button": true,
+            "notify_button": false,
             "notify_text": "Notify Me"
           }
         },
         "fc_collection_2": {
           "type": "collection_preview",
           "settings": {
-            "collection_name": "Spring 2025",
-            "season": "Spring",
-            "year": "2025",
-            "release_date": "March 2025",
-            "short_description": "Fresh beginnings meet timeless craftsmanship",
-            "teaser_text": "Blooming with new possibilities, this collection celebrates renewal and growth",
-            "show_badge": true,
+            "image": "shopify://shop_images/upcoming2.png",
+            "collection_name": "Unwrap Your Mind - El Desgarro",
+            "season": "",
+            "year": "",
+            "release_date": "",
+            "short_description": "La mente se abre y lo surreal envuelve cada pensamiento",
+            "teaser_text": "Las puertas se quiebran. De pronto, lo real ya no es real. Lo familiar se derrumba y lo imposible se vuelve inevitable. Las piezas nacen de ese desgarro: fracturas, luces líquidas, símbolos que sangran belleza. No abres tu mente: la desgarras hasta que grita.",
+            "show_badge": false,
             "badge_text": "Coming Soon",
-            "notify_button": true,
+            "notify_button": false,
             "notify_text": "Notify Me"
           }
         },
         "fc_collection_3": {
           "type": "collection_preview",
           "settings": {
-            "collection_name": "Summer 2025",
-            "season": "Summer",
-            "year": "2025",
-            "release_date": "June 2025",
-            "short_description": "Light, airy designs for warm days ahead",
-            "teaser_text": "Embrace the effortless beauty of summer with pieces designed for long, golden days",
-            "show_badge": true,
+            "image": "shopify://shop_images/upcoming3.png",
+            "collection_name": "Peak - Disolución del Ego",
+            "season": "",
+            "year": "",
+            "release_date": "",
+            "short_description": "El ego se disuelve, el laberinto interno se recorre y el cosmos se revela",
+            "teaser_text": "El ego se disuelve, el laberinto interno se recorre y el cosmos se revela",
+            "show_badge": false,
             "badge_text": "Coming Soon",
-            "notify_button": true,
+            "notify_button": false,
             "notify_text": "Notify Me"
           }
         }
       },
-      "block_order": ["fc_collection_1", "fc_collection_2", "fc_collection_3"],
+      "block_order": [
+        "fc_collection_1",
+        "fc_collection_2",
+        "fc_collection_3"
+      ],
       "settings": {
-        "heading": "Future Collections",
+        "heading": "Próximas Colecciones",
         "heading_size": "h2",
-        "description": "<p>Be the first to know when these collections launch. Sign up for notifications below.</p>",
+        "description": "<p>No son solo colecciones.<br/>Son capítulos de un rito.<br/>Una odisea que cada año abre otra puerta, hasta deshacerte y rehacerte.</p>",
         "columns_desktop": 3,
         "columns_mobile": "1",
         "gap": 24,
-        "footer_text": "<p>Want early access? <strong>Join our VIP list</strong> to receive exclusive previews and launch notifications.</p>",
+        "footer_text": "<p>¿Quieres acceso anticipado? Únete a nuestra lista para recibir previews exclusivos y notificaciones de lanzamiento.</p>",
         "section_width": "page-width",
         "color_scheme": "scheme-1",
         "padding-block-start": 60,
@@ -111,6 +91,7 @@
         "enable_parallax": true,
         "enable_backdrop_blur": true,
         "button_label": "Learn More About Us",
+        "button_link": "",
         "section_width": "page-width",
         "color_scheme": "scheme-1",
         "padding-block-start": 40,
@@ -118,6 +99,8 @@
       }
     }
   },
-  "order": ["hero", "future_collections_main", "philosophy_teaser"]
+  "order": [
+    "future_collections_main",
+    "philosophy_teaser"
+  ]
 }
-

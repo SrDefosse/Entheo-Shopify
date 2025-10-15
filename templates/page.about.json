@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -6,38 +15,89 @@
         "heading": {
           "type": "text",
           "settings": {
-            "text": "<h1>About Us</h1>",
-            "type_preset": "h1",
+            "text": "<h1>Sobre Entheo</h1>",
+            "width": "fit-content",
             "max_width": "normal",
-            "padding-block-end": 16
-          }
+            "alignment": "left",
+            "type_preset": "h1",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 16,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         },
         "description": {
           "type": "text",
           "settings": {
-            "text": "<p>Discover our story, philosophy, and the people behind the brand</p>",
+            "text": "<p>The Journey of Your Mind</p>",
+            "width": "fit-content",
+            "max_width": "narrow",
+            "alignment": "left",
             "type_preset": "rte",
-            "max_width": "narrow"
-          }
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         }
       },
-      "block_order": ["heading", "description"],
+      "block_order": [
+        "heading",
+        "description"
+      ],
       "settings": {
         "media_type_1": "image",
+        "image_1": "shopify://shop_images/IMG_4083_53494b5b-1641-4f68-bc46-bf524e4c5087.jpg",
+        "media_type_2": "image",
+        "link": "",
+        "open_in_new_tab": false,
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
         "horizontal_alignment_flex_direction_column": "center",
         "vertical_alignment_flex_direction_column": "center",
         "gap": 16,
+        "section_width": "page-width",
         "section_height": "full-screen",
+        "section_height_custom": 50,
         "color_scheme": "scheme-5",
         "toggle_overlay": true,
         "overlay_color": "#00000026",
         "overlay_style": "gradient",
+        "gradient_direction": "to top",
+        "blurred_reflection": false,
+        "reflection_opacity": 75,
         "padding-block-start": 40,
         "padding-block-end": 40
       }
     },
     "philosophy": {
       "type": "about-philosophy",
+      "name": "About Section",
       "settings": {
         "eyebrow": "Our Philosophy",
         "heading": "Crafted with Purpose",
@@ -46,6 +106,8 @@
         "image_position": "left",
         "enable_parallax": true,
         "enable_backdrop_blur": true,
+        "button_label": "",
+        "button_link": "",
         "section_width": "page-width",
         "color_scheme": "scheme-1",
         "padding-block-start": 80,
@@ -111,7 +173,13 @@
           }
         }
       },
-      "block_order": ["story_1", "story_2", "milestone_1", "story_3", "story_4"],
+      "block_order": [
+        "story_1",
+        "story_2",
+        "milestone_1",
+        "story_3",
+        "story_4"
+      ],
       "settings": {
         "heading": "Our Story",
         "heading_size": "h2",
@@ -124,6 +192,10 @@
       }
     }
   },
-  "order": ["hero", "philosophy", "founder", "story"]
+  "order": [
+    "hero",
+    "philosophy",
+    "founder",
+    "story"
+  ]
 }
-
