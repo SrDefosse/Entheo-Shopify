@@ -1,5 +1,3 @@
-
-
 {% liquid
   assign order = 'logo,menu,localization,search,mobile_search,actions'
 
@@ -14,22 +12,10 @@
     assign search_style = 'modal'
   endif
 
-  assign transparent = 'always'
-  assign transparent_color_scheme = 'color-' | append: section.settings.color_scheme_top
-
-
   if section.settings.enable_sticky_header == 'always'
     assign sticky = 'always'
   elsif section.settings.enable_sticky_header == 'scroll-up'
     assign sticky = 'scroll-up'
-  endif
-
-  if transparent
-    if transparent_color_scheme == 'inverse'
-      assign transparent_color_scheme = 'color-' | append: section.settings.color_scheme_transparent
-    else
-      assign transparent_color_scheme = 'color-' | append: section.settings.color_scheme_top
-    endif
   endif
 
   capture logo
@@ -143,15 +129,7 @@
     assign collapse_header_paddings_class = 'header--collapse-row-paddings'
   endif
 
-  assign class = 'header'
-
-  if transparent_color_scheme
-    assign class = class | append: ' ' | append: transparent_color_scheme
-  endif
-
-  if section.settings.color_scheme_top.settings.background.alpha != 1
-    assign class = class | append: ' ' | append: 'header--inherit-color-scheme-on-menu-open'
-  endif
+  assign class = 'header color-' | append: section.settings.color_scheme_top
 
   if header_height_class
     assign class = class | append: ' ' | append: header_height_class
@@ -177,9 +155,6 @@
 <header-component
   id="header-component"
   class="{{ class }}"
-  {% if transparent %}
-    transparent="{{ transparent }}"
-  {% endif %}
   {% if sticky %}
     sticky="{{ sticky }}"
   {% endif %}
@@ -265,7 +240,6 @@
   body {
     --header-height: 0px;
     --header-group-height: var(--header-height);
-    --transparent-header-offset-boolean: 0; /* stylelint-disable-line declaration-property-value-disallowed-list */
   }
 
   body:has(> #header-group > header) {
@@ -276,102 +250,6 @@
     --header-group-height: 0px;
   }
 
-  .header[transparent] {
-    --language-button-background-color: transparent;
-    --language-button-border-color: transparent;
-
-    /* used to apply transparency to .header__row, will only ever be transparent or unset */
-    --header-bg-color: transparent;
-
-    /* used to display the appropriate logo based on transparency state */
-    --header-logo-display: none;
-    --header-logo-inverse-display: block;
-
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-
-    /* transparent color scheme on .header should never apply its background color */
-    background-color: transparent;
-    z-index: var(--layer-overlay);
-
-    &[transparent='not-sticky'][data-sticky-state='active'],
-    /* Only show opaque background when hovering over menu items with children (mega menu)
-       Multiple selectors for performance: each simple :has() check is faster than one complex selector with multiple conditions */
-    &:has(.mega-menu__list:hover),
-    &:has(.menu-list__link[aria-haspopup]:is(:hover, [aria-expanded='true'], [data-animating])),
-    &:has(.menu-list__list-item[slot='overflow'] .menu-list__link:is(:hover, [aria-expanded='true'], [data-animating])) {
-      --header-logo-display: unset;
-      --header-logo-inverse-display: unset;
-      --header-bg-color: unset;
-      --color-foreground: inherit;
-      --color-foreground-rgb: inherit;
-      --color-background: inherit;
-      --color-background-rgb: inherit;
-      --color-border: inherit;
-      --color-border-rgb: inherit;
-
-      .header__row {
-        /* Faster transition for "in" animation */
-        transition: color var(--animation-values-fast), border-color var(--animation-values-fast),
-          background-color var(--animation-values-fast);
-      }
-    }
-
-    .header__row {
-      /* Slower transition for "out" animation */
-      transition: color var(--animation-values-slow), border-color var(--animation-values-slow),
-        background-color var(--animation-values-slow);
-    }
-  }
-
-  /* Subtle backdrop blur even when transparent */
-  .header[transparent] .header__row {
-    backdrop-filter: blur(8px) saturate(120%);
-    -webkit-backdrop-filter: blur(8px) saturate(120%);
-    background-color: rgba(255, 255, 255, 0.5);
-  }
-
-  /* Enhanced backdrop blur for full-screen hero */
-  .hero[style*='100svh'] ~ #header-group .header[transparent] .header__row {
-    backdrop-filter: blur(10px) saturate(150%);
-    -webkit-backdrop-filter: blur(10px) saturate(150%);
-  }
-
-  :is(.header[transparent]:not([data-sticky-state='active']), .header[transparent='always'][data-sticky-state='active'])
-    .header__row:not(
-      :has(
-          .mega-menu__list:hover,
-          .menu-list__link[aria-haspopup]:is(:hover, [aria-expanded='true'], [data-animating]),
-          .menu-list__list-item[slot='overflow'] .menu-list__link:is(:hover, [aria-expanded='true'], [data-animating])
-        )
-    ) {
-    /* while transparent, header-row ignores its color-scheme settings, pull from the header-component */
-    --color-foreground: inherit;
-    --color-foreground-rgb: inherit;
-    --color-border: inherit;
-    --color-border-rgb: inherit;
-    --color-primary-button-background: inherit;
-    --color-primary-button-text: inherit;
-  }
-
-  .header--inherit-color-scheme-on-menu-open:has(.mega-menu__list:hover) .header__row,
-  .header--inherit-color-scheme-on-menu-open:has(
-      .menu-list__link[aria-haspopup]:is(:hover, [aria-expanded='true'], [data-animating])
-    )
-    .header__row,
-  .header--inherit-color-scheme-on-menu-open:has(
-      .menu-list__list-item[slot='overflow'] .menu-list__link:is(:hover, [aria-expanded='true'], [data-animating])
-    )
-    .header__row {
-    --color-foreground: inherit;
-    --color-foreground-rgb: inherit;
-    --color-background: inherit;
-    --color-background-rgb: inherit;
-    --color-border: inherit;
-    --color-border-rgb: inherit;
-  }
 
   .header-section {
     position: relative;
@@ -383,10 +261,10 @@
 
   .header-section:has(> #header-component[sticky='always']),
   .header-section:has(> #header-component[sticky='scroll-up'][data-sticky-state='active']) {
-    position: sticky;
-
-    /* Use -1 instead of 0 so intersection observer can track sticky state */
-    top: -1px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     z-index: var(--layer-sticky);
   }
 
@@ -399,25 +277,43 @@
     view-transition-name: sticky-header;
   }
 
-  .header[data-sticky-state='active'] .header__row {
-    /* Enhanced backdrop blur when sticky */
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
-  }
-
   .header[data-sticky-state='idle'],
   .header[data-sticky-state='active'][data-animating] {
     opacity: 0;
   }
 
+  .header {
+    /* Glassmorphism effect */
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+  }
+
   .header__row {
     position: relative;
+    background-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
+    border: none;
+  }
 
-    /* will default to bg from its color scheme unless --header-bg-color is transparent */
-    background-color: var(--header-bg-color, rgba(255, 255, 255, 0.5));
-    backdrop-filter: blur(12px) saturate(180%);
-    -webkit-backdrop-filter: blur(12px) saturate(180%);
-    transition: background-color var(--animation-speed) var(--animation-easing),
-                backdrop-filter var(--animation-speed) var(--animation-easing);
+  /* Fallback for browsers that don't support backdrop-filter */
+  @supports not (backdrop-filter: blur(10px)) {
+    .header__row {
+      background-color: rgba(255, 255, 255, 0.95);
+    }
+  }
+
+  /* Dark mode support for glassmorphism */
+  @media (prefers-color-scheme: dark) {
+    .header__row {
+      background-color: rgba(0, 0, 0, 0.25);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    @supports not (backdrop-filter: blur(10px)) {
+      .header__row {
+        background-color: rgba(0, 0, 0, 0.95);
+      }
+    }
   }
 
   .header__row--top:not(.divider--page-width),
@@ -561,7 +457,7 @@
   /* Check for hover support to avoid unnecessary expensive recalculations when tapping on mobile */
   @media (hover: hover) {
     /* Column-specific dimming effect when any interactive element is hovered
-      Multiple selectors for performance: each simple :has() check is faster than one complex selector with multiple conditions */
+        Multiple selectors for performance: each simple :has() check is faster than one complex selector with multiple conditions */
     .header__column:has(header-menu:hover),
     .header__column:has(.header-actions__action:hover),
     .header__column:has(.dropdown-localization__button:hover),
@@ -623,19 +519,15 @@
     }
   }
 
-  /* When the header is transparent, add a margin to a potential header-section below it */
-  .header-section:has(.header[transparent]) + .shopify-section {
-    margin-top: var(--header-height);
-  }
 
   /* When the header is transparent, and when there is no header-section below it, offset the first main-section with
-   * the height of the header
-   */
+    * the height of the header
+    */
 
   main > .shopify-section:first-child .section:not(.disable-section-top-offset) {
     &.spacing-style,
     .spacing-style {
-      --section-top-offset: calc(var(--header-height) * var(--transparent-header-offset-boolean));
+      --section-top-offset: var(--header-height);
 
       /* Any nested sections should not be offset */
       :is(.spacing-style, .inherit-spacing) {
@@ -645,7 +537,7 @@
 
     /* Make sticky content immediately stick to the top of the page */
     .sticky-content {
-      margin-top: calc(var(--header-height) * var(--transparent-header-offset-boolean) * -1);
+      margin-top: calc(var(--header-height) * -1);
     }
   }
 {% endstylesheet %}
