@@ -286,7 +286,7 @@
   <div class="ai-product-carousel__container-{{ ai_gen_id }}">
     {% assign has_products = false %}
     {% assign product_count = 0 %}
-    {% for i in (1..6) %}
+    {% for i in (1..15) %}
       {% liquid
         assign product_key = 'product_' | append: i
         assign product = block.settings[product_key]
@@ -300,7 +300,7 @@
 
     {% if has_products %}
       <div class="ai-product-carousel__track-{{ ai_gen_id }}" data-track>
-        {% for i in (1..6) %}
+        {% for i in (1..15) %}
           {% liquid
             assign product_key = 'product_' | append: i
             assign product = block.settings[product_key]
@@ -348,7 +348,7 @@
     {% else %}
       <div class="ai-product-carousel__empty-state-{{ ai_gen_id }}">
         <div class="ai-product-carousel__empty-title-{{ ai_gen_id }}">Add products to your carousel</div>
-        <div class="ai-product-carousel__empty-text-{{ ai_gen_id }}">Select up to 6 products to display in this draggable carousel</div>
+        <div class="ai-product-carousel__empty-text-{{ ai_gen_id }}">Select up to 15 products to display in this draggable carousel</div>
       </div>
     {% endif %}
   </div>
@@ -604,6 +604,51 @@
       "type": "product",
       "id": "product_6",
       "label": "Product 6"
+    },
+    {
+      "type": "product",
+      "id": "product_7",
+      "label": "Product 7"
+    },
+    {
+      "type": "product",
+      "id": "product_8",
+      "label": "Product 8"
+    },
+    {
+      "type": "product",
+      "id": "product_9",
+      "label": "Product 9"
+    },
+    {
+      "type": "product",
+      "id": "product_10",
+      "label": "Product 10"
+    },
+    {
+      "type": "product",
+      "id": "product_11",
+      "label": "Product 11"
+    },
+    {
+      "type": "product",
+      "id": "product_12",
+      "label": "Product 12"
+    },
+    {
+      "type": "product",
+      "id": "product_13",
+      "label": "Product 13"
+    },
+    {
+      "type": "product",
+      "id": "product_14",
+      "label": "Product 14"
+    },
+    {
+      "type": "product",
+      "id": "product_15",
+      "label": "Product 15"
     },
     {
       "type": "header",
