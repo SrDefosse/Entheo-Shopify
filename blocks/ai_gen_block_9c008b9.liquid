@@ -1,0 +1,458 @@
+{% doc %}
+  @prompt
+    Centered text that reveals word by word with a blur effect using GSAP.
+    
+    With multiple configuration settings., Use GSAP ScrollTrigger so the text progressively reveals itself as the user scrolls. The reveal animation must be word-by-word using a 'blur-to-clear' effect., Use GSAP ScrollTrigger so the text progressively reveals itself as the user scrolls. The reveal animation must be word-by-word using a 'blur-to-clear' effect.
+    
+    Background must be transparent., Use GSAP ScrollTrigger so the text progressively reveals itself as the user scrolls. The reveal animation must be word-by-word using a 'blur-to-clear' effect.
+    
+    Background must be transparent., Add word spacing setting
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-scroll-text-{{ ai_gen_id }} {
+    background: transparent;
+    padding: {{ block.settings.padding_top }}px {{ block.settings.padding_horizontal }}px {{ block.settings.padding_bottom }}px;
+    min-height: {{ block.settings.min_height }}vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-scroll-text__container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.max_width }}px;
+    width: 100%;
+  }
+
+  .ai-scroll-text__content-{{ ai_gen_id }} {
+    font-size: {{ block.settings.font_size }}px;
+    font-weight: {{ block.settings.font_weight }};
+    line-height: {{ block.settings.line_height }};
+    letter-spacing: {{ block.settings.letter_spacing }}em;
+    word-spacing: {{ block.settings.word_spacing }}px;
+    text-align: center;
+    color: {{ block.settings.text_color }};
+    text-transform: {{ block.settings.text_transform }};
+  }
+
+  .ai-scroll-text__word-{{ ai_gen_id }} {
+    display: inline-block;
+    filter: blur({{ block.settings.initial_blur }}px);
+    opacity: {{ block.settings.initial_opacity }};
+    transform: translateY({{ block.settings.initial_y_offset }}px) scale({{ block.settings.initial_scale }});
+    will-change: filter, opacity, transform;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-scroll-text-{{ ai_gen_id }} {
+      padding: {{ block.settings.mobile_padding_top }}px {{ block.settings.mobile_padding_horizontal }}px {{ block.settings.mobile_padding_bottom }}px;
+      min-height: {{ block.settings.mobile_min_height }}vh;
+    }
+
+    .ai-scroll-text__container-{{ ai_gen_id }} {
+      max-width: {{ block.settings.mobile_max_width }}px;
+    }
+
+    .ai-scroll-text__content-{{ ai_gen_id }} {
+      font-size: {{ block.settings.mobile_font_size }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-scroll-text-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-scroll-text__container-{{ ai_gen_id }}">
+    <div class="ai-scroll-text__content-{{ ai_gen_id }}" data-scroll-text-{{ ai_gen_id }}>
+      {{ block.settings.text }}
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+<script>
+  (function() {
+    const initScrollText{{ ai_gen_id }} = function() {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+        setTimeout(initScrollText{{ ai_gen_id }}, 100);
+        return;
+      }
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      const textElement = document.querySelector('[data-scroll-text-{{ ai_gen_id }}]');
+      if (!textElement) return;
+
+      const text = textElement.textContent.trim();
+      const words = text.split(/\s+/);
+      
+      textElement.innerHTML = words.map(word => 
+        `<span class="ai-scroll-text__word-{{ ai_gen_id }}">${word}</span>`
+      ).join(' ');
+
+      const wordElements = textElement.querySelectorAll('.ai-scroll-text__word-{{ ai_gen_id }}');
+
+      gsap.to(wordElements, {
+        filter: 'blur(0px)',
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: {{ block.settings.animation_duration }},
+        ease: '{{ block.settings.animation_easing }}',
+        stagger: {{ block.settings.stagger_amount }},
+        scrollTrigger: {
+          trigger: textElement,
+          start: '{{ block.settings.scroll_start }}',
+          end: '{{ block.settings.scroll_end }}',
+          scrub: {% if block.settings.scrub_enabled %}{{ block.settings.scrub_smoothness }}{% else %}false{% endif %},
+          markers: {{ block.settings.show_markers }}
+        }
+      });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initScrollText{{ ai_gen_id }});
+    } else {
+      initScrollText{{ ai_gen_id }}();
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Scroll reveal text",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Discover the power of progressive text reveal as you scroll through this immersive experience"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Scroll animation"
+    },
+    {
+      "type": "checkbox",
+      "id": "scrub_enabled",
+      "label": "Enable scrub mode",
+      "info": "Links animation progress directly to scroll position",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "scrub_smoothness",
+      "min": 0,
+      "max": 3,
+      "step": 0.5,
+      "label": "Scrub smoothness",
+      "default": 1,
+      "info": "Higher values create smoother, delayed animation"
+    },
+    {
+      "type": "text",
+      "id": "scroll_start",
+      "label": "Scroll start trigger",
+      "default": "top 80%",
+      "info": "When animation starts (e.g., 'top center', 'top 80%')"
+    },
+    {
+      "type": "text",
+      "id": "scroll_end",
+      "label": "Scroll end trigger",
+      "default": "bottom 20%",
+      "info": "When animation completes (e.g., 'bottom center', 'bottom 20%')"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_markers",
+      "label": "Show debug markers",
+      "default": false,
+      "info": "Display ScrollTrigger markers for debugging"
+    },
+    {
+      "type": "header",
+      "content": "Initial state"
+    },
+    {
+      "type": "range",
+      "id": "initial_blur",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Blur amount",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "initial_opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "label": "Opacity",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "initial_y_offset",
+      "min": -100,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Vertical offset",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "initial_scale",
+      "min": 0.5,
+      "max": 1.5,
+      "step": 0.1,
+      "label": "Scale",
+      "default": 0.9
+    },
+    {
+      "type": "header",
+      "content": "Animation timing"
+    },
+    {
+      "type": "range",
+      "id": "stagger_amount",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "label": "Stagger between words",
+      "default": 0.1
+    },
+    {
+      "type": "range",
+      "id": "animation_duration",
+      "min": 0.5,
+      "max": 3,
+      "step": 0.5,
+      "label": "Duration",
+      "default": 1
+    },
+    {
+      "type": "select",
+      "id": "animation_easing",
+      "label": "Easing",
+      "options": [
+        { "value": "power1.out", "label": "Power 1" },
+        { "value": "power2.out", "label": "Power 2" },
+        { "value": "power3.out", "label": "Power 3" },
+        { "value": "power4.out", "label": "Power 4" },
+        { "value": "back.out(1.7)", "label": "Back" },
+        { "value": "elastic.out(1, 0.3)", "label": "Elastic" },
+        { "value": "bounce.out", "label": "Bounce" },
+        { "value": "none", "label": "Linear" }
+      ],
+      "default": "power2.out"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "min": 16,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Font size",
+      "default": 48
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Font weight",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "range",
+      "id": "line_height",
+      "min": 1,
+      "max": 2,
+      "step": 0.1,
+      "label": "Line height",
+      "default": 1.3
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing",
+      "min": -0.1,
+      "max": 0.2,
+      "step": 0.1,
+      "label": "Letter spacing",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "word_spacing",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "label": "Word spacing",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "text_transform",
+      "label": "Text transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Horizontal padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "label": "Minimum height",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 400,
+      "max": 1400,
+      "step": 50,
+      "unit": "px",
+      "label": "Maximum width",
+      "default": 1000
+    },
+    {
+      "type": "header",
+      "content": "Mobile layout"
+    },
+    {
+      "type": "range",
+      "id": "mobile_font_size",
+      "min": 16,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Font size",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "min": 0,
+      "max": 150,
+      "step": 10,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "min": 0,
+      "max": 150,
+      "step": 10,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_horizontal",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Horizontal padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "mobile_min_height",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "label": "Minimum height",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "mobile_max_width",
+      "min": 280,
+      "max": 600,
+      "step": 20,
+      "unit": "px",
+      "label": "Maximum width",
+      "default": 500
+    }
+  ],
+  "presets": [
+    {
+      "name": "Scroll reveal text"
+    }
+  ]
+}
+{% endschema %}

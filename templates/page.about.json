@@ -95,107 +95,153 @@
         "padding-block-end": 40
       }
     },
-    "philosophy": {
-      "type": "about-philosophy",
-      "name": "About Section",
-      "settings": {
-        "eyebrow": "Our Philosophy",
-        "heading": "Crafted with Purpose",
-        "heading_size": "h2",
-        "text": "<p>We believe in creating timeless pieces that transcend trends. Each design is carefully crafted to embody our commitment to quality, sustainability, and mindful living.</p>",
-        "image_position": "left",
-        "enable_parallax": true,
-        "enable_backdrop_blur": true,
-        "button_label": "",
-        "button_link": "",
-        "section_width": "page-width",
-        "color_scheme": "scheme-1",
-        "padding-block-start": 80,
-        "padding-block-end": 40
-      }
-    },
-    "founder": {
-      "type": "about-founder",
-      "settings": {
-        "heading": "Meet the Founder",
-        "heading_size": "h2",
-        "founder_name": "Your Name",
-        "founder_title": "Founder & Creative Director",
-        "quote": "Design is not just what it looks like and feels like. Design is how it works.",
-        "bio": "<p>With over a decade of experience in design, I've dedicated my career to creating pieces that tell a story. Every collection is born from a passion for craftsmanship and a deep respect for traditional techniques merged with modern sensibilities.</p>",
-        "section_width": "page-width",
-        "color_scheme": "scheme-1",
-        "padding-block-start": 40,
-        "padding-block-end": 40
-      }
-    },
-    "story": {
-      "type": "about-story",
+    "1760555444abd45152": {
+      "type": "_blocks",
       "blocks": {
-        "story_1": {
-          "type": "story_item",
+        "ai_gen_block_31d07e7_F43tzG": {
+          "type": "ai_gen_block_31d07e7",
           "settings": {
-            "year": "2018",
-            "title": "The Beginning",
-            "text": "<p>It all started with a simple idea and a passion for creating beautiful, meaningful pieces that would stand the test of time.</p>"
-          }
+            "color_scheme": "scheme-5",
+            "first_block_orientation": "image_text",
+            "image_border_radius": 16,
+            "block_1_image": "shopify://shop_images/upcoming1.png",
+            "block_1_heading": "¿Qué pasa cuando dejas de ver el mundo con los mismos ojos?",
+            "block_1_text": "<p> ¿Y si te dijera que hay un camino para conectar con tu yo interior, un lugar donde la realidad cambia y el universo te habla? Entheo es más que una marca de joyería; es una experiencia, una invitación a romper los límites de tu mente y explorar lo desconocido.<br/><br/></p>",
+            "block_2_image": "shopify://shop_images/upcoming2.png",
+            "block_2_heading": "Transformación a través de la joyería",
+            "block_2_text": "<p>Inspirado en los enteógenos y en el concepto griego de entheos (lo divino dentro), Entheo busca guiarte en un viaje profundo y personal donde cada pieza refleja las etapas de un viaje psicodélico. No se trata solo de lo que ves, sino de quién eres, de en quién puedes convertirte cuando te atreves a cambiar tu perspectiva. Cada colección es una historia que te acompaña durante el proceso, desde el ascenso hasta el pico, el descenso, el aterrizaje y el post-viaje — un ciclo que te transforma y desafía todo lo que alguna vez creíste \"real.\"</p>",
+            "title_box_heading": "¿Estás listo para descubrir lo que hay más allá?",
+            "title_box_text": "",
+            "title_box_border_radius": 8,
+            "title_box_border_width": 1,
+            "heading_size": 32,
+            "text_size": 16,
+            "title_box_heading_size": 40,
+            "title_box_text_size": 16
+          },
+          "blocks": {}
         },
-        "story_2": {
-          "type": "story_item",
+        "ai_gen_block_31d07e7_9GYpGH": {
+          "type": "ai_gen_block_31d07e7",
           "settings": {
-            "year": "2020",
-            "title": "Growing Together",
-            "text": "<p>As our community grew, so did our commitment to quality and sustainability. We began partnering with local artisans and ethical suppliers.</p>"
-          }
-        },
-        "milestone_1": {
-          "type": "milestone",
-          "settings": {
-            "icon": "✨",
-            "number": "5000+",
-            "label": "Pieces Crafted"
-          }
-        },
-        "story_3": {
-          "type": "story_item",
-          "settings": {
-            "year": "2022",
-            "title": "Expanding Horizons",
-            "text": "<p>We launched our online platform, making our designs accessible to customers around the world while maintaining our commitment to personalized service.</p>"
-          }
-        },
-        "story_4": {
-          "type": "story_item",
-          "settings": {
-            "year": "2024",
-            "title": "Today",
-            "text": "<p>We continue to evolve while staying true to our core values and vision. Each day brings new inspiration and opportunities to create.</p>"
-          }
+            "color_scheme": "scheme-3",
+            "first_block_orientation": "image_text",
+            "image_border_radius": 16,
+            "block_1_image": "shopify://shop_images/upcoming3.png",
+            "block_1_heading": "Entheo es un portal.",
+            "block_1_text": "<p>Una puerta que solo tú puedes abrir. Cada pieza es una llave, una manifestación del viaje interior que todos llevamos dentro. La primera colección, Origins, es solo el comienzo: una introducción a todo lo que puedes llegar a ser, al despertar de tu conciencia. En futuras colecciones, iremos más profundo, explorando cada etapa del viaje psicodélico mediante piezas únicas y hechas a mano, elaboradas con piedras naturales y materiales de primera, en edición limitada.<br/><br/></p>",
+            "block_2_image": "shopify://shop_images/upcoming4.png",
+            "block_2_heading": "Más que solo joyería.",
+            "block_2_text": "<p>Cada pieza de Entheo es una obra de arte, llena de simbolismo — una invitación a ir más allá de lo conocido y abrirte al misterio del universo. Porque Entheo no solo te invita a una comunidad: te invita a un viaje personal, uno que te dejará con una perspectiva completamente nueva.<br/><br/></p>",
+            "title_box_heading": "¿Te atreves a abrir tu mente?",
+            "title_box_text": "",
+            "title_box_border_radius": 8,
+            "title_box_border_width": 1,
+            "heading_size": 32,
+            "text_size": 16,
+            "title_box_heading_size": 40,
+            "title_box_text_size": 16
+          },
+          "blocks": {}
         }
       },
       "block_order": [
-        "story_1",
-        "story_2",
-        "milestone_1",
-        "story_3",
-        "story_4"
+        "ai_gen_block_31d07e7_F43tzG",
+        "ai_gen_block_31d07e7_9GYpGH"
       ],
       "settings": {
-        "heading": "Our Story",
-        "heading_size": "h2",
-        "description": "<p>Every brand has a story to tell. Here's ours.</p>",
-        "show_timeline": true,
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
         "section_width": "page-width",
-        "color_scheme": "scheme-1",
-        "padding-block-start": 40,
-        "padding-block-end": 80
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-4",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "17605596651dadcf3e": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_ec8ccac_wUjX8w": {
+          "type": "ai_gen_block_ec8ccac",
+          "settings": {
+            "artist_image": "shopify://shop_images/artist.png",
+            "image_width": 600,
+            "image_aspect_ratio": "4/3",
+            "image_border_radius": 15,
+            "shadow_horizontal": 0,
+            "shadow_vertical": 10,
+            "shadow_blur": 25,
+            "shadow_color": "#333333",
+            "description": "<p>Emilio Marmolejo nació el 10 de febrero de 2001 en Guanajuato, México. Su vida dio un giro inesperado cuando, a una edad temprana, enfrentó el cáncer. Durante ese momento de fragilidad, descubrió la profundidad de su ser y su conexión con algo más grande. En su proceso de sanación, los enteógenos desempeñaron un papel clave, ayudándolo a liberar la mente y a encontrar respuestas a preguntas que ni siquiera sabía que tenía. A través de estos viajes, comprendió que su propósito no era solo sobrevivir, sino trascender, y encontró su llamado en el diseño de joyería. Después de estudiar en Nueva York, en el prestigioso Gemological Institute of America (GIA), y perfeccionar su oficio en HTF, Emilio comenzó a forjar su estilo único. Sus diseños están profundamente influenciados por sus experiencias personales y su curiosidad por el mundo interior y la espiritualidad. Estas experiencias transformadoras dieron lugar a la creación de Entheo, una marca de joyería que trasciende el adorno. Para Emilio, Entheo es más que joyería — es una forma de compartir su despertar e inspirar el autodescubrimiento en los demás. Entheo no trata solamente de la belleza; es un llamado a conectar con el propio interior, a cuestionar la realidad y a ver más allá de lo que creemos saber. Cada pieza refleja el viaje de Emilio, alentando a otros a expandir la mente y despertar a la magia que habita dentro y a nuestro alrededor. Hoy, la obra de Emilio simboliza no solo transformación y belleza, sino también conexión y autoconciencia. Sus diseños se exhiben en eventos internacionales como Rome Jewelry Week (RJW) y en exposiciones nacionales, resonando con quienes buscan sentido y profundidad. A través de cada pieza, Emilio ofrece una experiencia — una oportunidad de crecimiento personal y transformación<br/><br/></p>",
+            "description_width": 800,
+            "text_size": 16,
+            "text_alignment": "center",
+            "text_color": "#000000",
+            "max_width": 800,
+            "spacing": 30,
+            "padding_top": 40,
+            "padding_bottom": 40,
+            "padding_horizontal": 20,
+            "background_color": "#f5ede1"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_ec8ccac_wUjX8w"
+      ],
+      "name": "About Artist",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-4",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
       }
     }
   },
   "order": [
     "hero",
-    "philosophy",
-    "founder",
-    "story"
+    "1760555444abd45152",
+    "17605596651dadcf3e"
   ]
 }

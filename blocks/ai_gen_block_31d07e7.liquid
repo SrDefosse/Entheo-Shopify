@@ -1,0 +1,381 @@
+{% doc %}
+  @prompt
+    Create a section with 3 blocks: image then text, text then image, and a central title box after. Controls should configure texts and images per block, the first block's orientation, and the background color automatically adjusts with the Shopify color scheme, the title box must have a shadow. 
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-content-blocks-{{ ai_gen_id }} {
+    background-color: rgb(var(--color-background));
+    color: rgb(var(--color-foreground));
+    padding: 60px 20px;
+  }
+
+  .ai-content-blocks-container-{{ ai_gen_id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+  }
+
+  .ai-content-block-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .ai-content-block-image-{{ ai_gen_id }} {
+    width: 100%;
+    border-radius: {{ block.settings.image_border_radius }}px;
+    overflow: hidden;
+  }
+
+  .ai-content-block-image-{{ ai_gen_id }} img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ai-content-block-image-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: {{ block.settings.image_border_radius }}px;
+  }
+
+  .ai-content-block-image-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 300px;
+    max-height: 300px;
+  }
+
+  .ai-content-block-text-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .ai-content-block-heading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.heading_size }}px;
+    font-weight: 700;
+    margin: 0;
+    color: rgb(var(--color-foreground-heading));
+  }
+
+  .ai-content-block-description-{{ ai_gen_id }} {
+    font-size: {{ block.settings.text_size }}px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .ai-content-block-reverse-{{ ai_gen_id }} {
+    direction: rtl;
+  }
+
+  .ai-content-block-reverse-{{ ai_gen_id }} .ai-content-block-text-{{ ai_gen_id }} {
+    direction: ltr;
+  }
+
+  .ai-title-box-{{ ai_gen_id }} {
+    text-align: center;
+    padding: 60px 40px;
+    background-color: rgb(var(--color-background));
+    border-radius: {{ block.settings.title_box_border_radius }}px;
+    border: {{ block.settings.title_box_border_width }}px solid rgba(var(--color-border), 0.2);
+    box-shadow: 0 4px 12px rgba(var(--color-shadow), 0.1);
+  }
+
+  .ai-title-box-heading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_box_heading_size }}px;
+    font-weight: 700;
+    margin: 0 0 16px;
+    color: rgb(var(--color-foreground-heading));
+  }
+
+  .ai-title-box-text-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_box_text_size }}px;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-content-blocks-{{ ai_gen_id }} {
+      padding: 40px 16px;
+    }
+
+    .ai-content-blocks-container-{{ ai_gen_id }} {
+      gap: 50px;
+    }
+
+    .ai-content-block-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .ai-content-block-reverse-{{ ai_gen_id }} {
+      direction: ltr;
+    }
+
+    .ai-content-block-heading-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.heading_size }}px * 0.8);
+    }
+
+    .ai-title-box-{{ ai_gen_id }} {
+      padding: 40px 24px;
+    }
+
+    .ai-title-box-heading-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.title_box_heading_size }}px * 0.8);
+    }
+  }
+{% endstyle %}
+
+<div
+  class="ai-content-blocks-{{ ai_gen_id }} color-{{ block.settings.color_scheme }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-content-blocks-container-{{ ai_gen_id }}">
+    <div class="ai-content-block-{{ ai_gen_id }} {% if block.settings.first_block_orientation == 'text_image' %}ai-content-block-reverse-{{ ai_gen_id }}{% endif %}">
+      <div class="ai-content-block-image-{{ ai_gen_id }}">
+        {% if block.settings.block_1_image %}
+          <img
+            src="{{ block.settings.block_1_image | image_url: width: 1200 }}"
+            alt="{{ block.settings.block_1_image.alt | escape }}"
+            loading="lazy"
+            width="{{ block.settings.block_1_image.width }}"
+            height="{{ block.settings.block_1_image.height }}"
+          >
+        {% else %}
+          <div class="ai-content-block-image-placeholder-{{ ai_gen_id }}">
+            {{ 'image' | placeholder_svg_tag }}
+          </div>
+        {% endif %}
+      </div>
+      <div class="ai-content-block-text-{{ ai_gen_id }}">
+        {% if block.settings.block_1_heading != blank %}
+          <h2 class="ai-content-block-heading-{{ ai_gen_id }}">{{ block.settings.block_1_heading }}</h2>
+        {% endif %}
+        {% if block.settings.block_1_text != blank %}
+          <div class="ai-content-block-description-{{ ai_gen_id }}">{{ block.settings.block_1_text }}</div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="ai-content-block-{{ ai_gen_id }} ai-content-block-reverse-{{ ai_gen_id }}">
+      <div class="ai-content-block-image-{{ ai_gen_id }}">
+        {% if block.settings.block_2_image %}
+          <img
+            src="{{ block.settings.block_2_image | image_url: width: 1200 }}"
+            alt="{{ block.settings.block_2_image.alt | escape }}"
+            loading="lazy"
+            width="{{ block.settings.block_2_image.width }}"
+            height="{{ block.settings.block_2_image.height }}"
+          >
+        {% else %}
+          <div class="ai-content-block-image-placeholder-{{ ai_gen_id }}">
+            {{ 'image' | placeholder_svg_tag }}
+          </div>
+        {% endif %}
+      </div>
+      <div class="ai-content-block-text-{{ ai_gen_id }}">
+        {% if block.settings.block_2_heading != blank %}
+          <h2 class="ai-content-block-heading-{{ ai_gen_id }}">{{ block.settings.block_2_heading }}</h2>
+        {% endif %}
+        {% if block.settings.block_2_text != blank %}
+          <div class="ai-content-block-description-{{ ai_gen_id }}">{{ block.settings.block_2_text }}</div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="ai-title-box-{{ ai_gen_id }}">
+      {% if block.settings.title_box_heading != blank %}
+        <h2 class="ai-title-box-heading-{{ ai_gen_id }}">{{ block.settings.title_box_heading }}</h2>
+      {% endif %}
+      {% if block.settings.title_box_text != blank %}
+        <div class="ai-title-box-text-{{ ai_gen_id }}">{{ block.settings.title_box_text }}</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Content blocks",
+  "tag": null,
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "first_block_orientation",
+      "label": "First block orientation",
+      "options": [
+        {
+          "value": "image_text",
+          "label": "Image then text"
+        },
+        {
+          "value": "text_image",
+          "label": "Text then image"
+        }
+      ],
+      "default": "image_text"
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Image border radius",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "First block"
+    },
+    {
+      "type": "image_picker",
+      "id": "block_1_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "block_1_heading",
+      "label": "Heading",
+      "default": "First block heading"
+    },
+    {
+      "type": "richtext",
+      "id": "block_1_text",
+      "label": "Text",
+      "default": "<p>Add descriptive text for your first content block. This appears alongside the image.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Second block"
+    },
+    {
+      "type": "image_picker",
+      "id": "block_2_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "block_2_heading",
+      "label": "Heading",
+      "default": "Second block heading"
+    },
+    {
+      "type": "richtext",
+      "id": "block_2_text",
+      "label": "Text",
+      "default": "<p>Add descriptive text for your second content block. This appears alongside the image.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Title box"
+    },
+    {
+      "type": "text",
+      "id": "title_box_heading",
+      "label": "Heading",
+      "default": "Central title box"
+    },
+    {
+      "type": "richtext",
+      "id": "title_box_text",
+      "label": "Text",
+      "default": "<p>Add a centered message or call-to-action in this prominent title box.</p>"
+    },
+    {
+      "type": "range",
+      "id": "title_box_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "title_box_border_width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "label": "Border width",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 16,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Block heading size",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Block text size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "title_box_heading_size",
+      "min": 20,
+      "max": 56,
+      "step": 2,
+      "unit": "px",
+      "label": "Title box heading size",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "title_box_text_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Title box text size",
+      "default": 16
+    }
+  ],
+  "presets": [
+    {
+      "name": "Content blocks"
+    }
+  ]
+}
+{% endschema %}

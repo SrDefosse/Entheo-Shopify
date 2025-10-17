@@ -9,98 +9,106 @@
  */
 {
   "sections": {
-    "future_collections_main": {
-      "type": "future-collections",
+    "176056637758c175d9": {
+      "type": "_blocks",
       "blocks": {
-        "fc_collection_1": {
-          "type": "collection_preview",
+        "ai_gen_block_85bbf08_y6n9rz": {
+          "type": "ai_gen_block_85bbf08",
           "settings": {
-            "image": "shopify://shop_images/upcoming1.png",
-            "collection_name": "Sustancias - Las Llaves Prohibidas",
-            "season": "",
-            "year": "2025",
-            "release_date": "",
-            "short_description": "Las plantas sagradas despiertan la puerta a lo desconocido",
-            "teaser_text": "Ayahuasca. Hongos. DMT. Peyote. Bufo. La primera colección es el inicio del sacrilegio: ingerir lo sagrado y permitir que lo humano se rompa. Cada pieza es un talismán de esas llaves que destrozan la mente para abrir universos. No es joyería. Es un recordatorio de que un solo respiro puede borrarlo todo",
-            "show_badge": false,
-            "badge_text": "Coming Soon",
-            "notify_button": false,
-            "notify_text": "Notify Me"
-          }
-        },
-        "fc_collection_2": {
-          "type": "collection_preview",
-          "settings": {
-            "image": "shopify://shop_images/upcoming2.png",
-            "collection_name": "Unwrap Your Mind - El Desgarro",
-            "season": "",
-            "year": "",
-            "release_date": "",
-            "short_description": "La mente se abre y lo surreal envuelve cada pensamiento",
-            "teaser_text": "Las puertas se quiebran. De pronto, lo real ya no es real. Lo familiar se derrumba y lo imposible se vuelve inevitable. Las piezas nacen de ese desgarro: fracturas, luces líquidas, símbolos que sangran belleza. No abres tu mente: la desgarras hasta que grita.",
-            "show_badge": false,
-            "badge_text": "Coming Soon",
-            "notify_button": false,
-            "notify_text": "Notify Me"
-          }
-        },
-        "fc_collection_3": {
-          "type": "collection_preview",
-          "settings": {
-            "image": "shopify://shop_images/upcoming3.png",
-            "collection_name": "Peak - Disolución del Ego",
-            "season": "",
-            "year": "",
-            "release_date": "",
-            "short_description": "El ego se disuelve, el laberinto interno se recorre y el cosmos se revela",
-            "teaser_text": "El ego se disuelve, el laberinto interno se recorre y el cosmos se revela",
-            "show_badge": false,
-            "badge_text": "Coming Soon",
-            "notify_button": false,
-            "notify_text": "Notify Me"
-          }
+            "main_title": "<p>Las Colecciones de Entheo</p>",
+            "main_subtitle": "<p>No son solo colecciones.<br/><br/><strong>Son capítulos de un rito.</strong><br/><br/>Una odisea que cada año abre otra puerta, hasta deshacerte y rehacerte.</p>",
+            "title_size": 54,
+            "subtitle_size": 16,
+            "title_color": "#ffffff",
+            "subtitle_color": "#ffffff",
+            "card_count": 11,
+            "card_background": "#00000021",
+            "card_border_radius": 12,
+            "number_size": 48,
+            "number_color": "#ffffff",
+            "card_title_size": 26,
+            "card_title_color": "#ffffff",
+            "card_subtitle_size": 18,
+            "card_subtitle_color": "#ffffff",
+            "card_description_size": 14,
+            "card_description_color": "#ffffff",
+            "card_1_title": "<p><strong>Sustancias – Las llaves prohibidas</strong></p>",
+            "card_1_subtitle": "<p><em><strong>Ayahuasca. Hongos. DMT. Peyote. Bufo.</strong></em></p>",
+            "card_1_description": "<p>La primera colección es el inicio del sacrilegio: ingerir lo sagrado y permitir que lo humano se rompa.</p><p>Cada pieza es un talismán de esas llaves que destrozan la mente para abrir universos.</p><p>No es joyería. Es un recordatorio de que un solo respiro puede borrarlo todo.</p>",
+            "card_2_title": "<p>Unwrap Your Mind – El desgarro</p>",
+            "card_2_subtitle": "<p><em><strong>Las puertas se quiebran.</strong></em></p>",
+            "card_2_description": "<p>De pronto, lo real ya no es real. Lo familiar se derrumba y lo imposible se vuelve inevitable.</p><p>Las piezas nacen de ese desgarro: fracturas, luces líquidas, símbolos que sangran belleza.</p><p>No abres tu mente: la desgarras hasta que grita.</p>",
+            "card_3_title": "<p>Peak – Disolución del Ego</p>",
+            "card_3_subtitle": "<p><em><strong>Aquí mueres.</strong></em></p>",
+            "card_3_description": "<p>El \"yo\" se hace polvo. No hay identidad, no hay nombre, no hay cuerpo.</p><p>Las joyas de esta colección son cenizas de ego fundidas con destellos de infinito.</p><p>Morir para entender que nunca exististe.</p>",
+            "card_4_title": "<p><strong>Peak – Laberinto</strong></p>",
+            "card_4_subtitle": "<p><em><strong>El viaje no es recto. Es espiral.</strong></em></p>",
+            "card_4_description": "<p>Sombras, espejos, pasajes imposibles. Cada mente crea su propio infierno y su propio paraíso.</p><p>Esta colección encarna la geometría del extravío. Piezas que giran, se cruzan, se pierden.</p><p>El centro existe, pero tendrás que sangrar para llegar.</p>",
+            "card_5_title": "<p>Peak – Cosmos</p>",
+            "card_5_subtitle": "<p><em><strong>De pronto eres galaxia.</strong></em></p>",
+            "card_5_description": "<p>Estrellas brotan en tu piel, el tiempo estalla. No miras el universo: lo eres.</p><p>Las piezas son fragmentos de explosiones cósmicas, talismanes de expansión.</p><p>El clímax absoluto: perderte en el todo para recordar que eres todo.</p>",
+            "card_6_title": "<p>Descenso – El golpe de volver</p>",
+            "card_6_subtitle": "<p><em><strong>Lo eterno exige regreso.</strong></em></p>",
+            "card_6_description": "<p>Caes. Pesas. Vuelves al cuerpo como si fuera una prisión recién estrenada.</p><p>Esta colección es transición: carne mezclada con lo etéreo, tierra con chispa de cielo.</p><p>Volver… con la certeza de que el regreso ya no existe</p>",
+            "card_7_title": "<p>Resaca – La sombra después de la luz</p>",
+            "card_7_subtitle": "<p><em><strong>El precio del viaje.</strong></em></p>",
+            "card_7_description": "<p>Ansiedad. Confusión. El vacío de haber visto demasiado.</p><p>Las piezas son fragmentos rotos, espejos incompletos. Un rompecabezas que nadie termina.</p><p>Aquí entiendes que la claridad no siempre llega al amanecer.</p>",
+            "card_8_title": "<p>Post Trip – El rompecabezas se arma</p>",
+            "card_8_subtitle": "<p><em><strong>Después del caos, el orden oculto.</strong></em></p>",
+            "card_8_description": "<p>La mente se aquieta, las piezas encajan, lo aprendido respira.</p><p>Esta colección son pulsos suaves, geometrías que vibran en ascenso.</p><p>El viaje no terminó: apenas comienza a revelarse.</p>",
+            "card_9_title": "<p>Renacimiento – La nueva carne del alma</p>",
+            "card_9_subtitle": "<p><em><strong>Muerto, pero vivo.</strong></em></p>",
+            "card_9_description": "<p>De la ceniza surge otra versión de ti, más fresca, más feroz, más real.</p><p>Las joyas aquí son semillas abiertas: símbolos de la vida que renace tras la quema.</p><p>El verdadero nacimiento nunca es el primero.</p>",
+            "card_10_title": "<p>Conexión Infinita – Todo late al mismo pulso</p>",
+            "card_10_subtitle": "<p><em><strong>No hay separación.</strong></em></p>",
+            "card_10_description": "<p>El aire que respiras, la mano que toca, la piedra que vibra: todo es uno.</p><p>Las piezas se enlazan en redes infinitas, geometrías que no terminan.</p><p>No llevas joyas: llevas el mapa de la unidad tatuado en metal.</p>",
+            "card_11_title": "<p>Luz Interior – El eterno retorno</p>",
+            "card_11_subtitle": "<p><em><strong>La última revelación: la joya eres tú.</strong></em></p>",
+            "card_11_description": "<p>La paz ya no se busca, se habita.</p><p>Las piezas son espejos de claridad, cristales que no brillan por sí mismos, sino porque devuelven tu propia luz.</p><p>El viaje no acaba. Ahora se vive.</p>",
+            "card_12_title": "",
+            "card_12_subtitle": "",
+            "card_12_description": "",
+            "footer_message": "<p><em>El viaje continúa...</em></p>",
+            "footer_size": 20,
+            "footer_color": "#666666"
+          },
+          "blocks": {}
         }
       },
       "block_order": [
-        "fc_collection_1",
-        "fc_collection_2",
-        "fc_collection_3"
+        "ai_gen_block_85bbf08_y6n9rz"
       ],
       "settings": {
-        "heading": "Próximas Colecciones",
-        "heading_size": "h2",
-        "description": "<p>No son solo colecciones.<br/>Son capítulos de un rito.<br/>Una odisea que cada año abre otra puerta, hasta deshacerte y rehacerte.</p>",
-        "columns_desktop": 3,
-        "columns_mobile": "1",
-        "gap": 24,
-        "footer_text": "<p>¿Quieres acceso anticipado? Únete a nuestra lista para recibir previews exclusivos y notificaciones de lanzamiento.</p>",
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
         "section_width": "page-width",
-        "color_scheme": "scheme-1",
-        "padding-block-start": 60,
-        "padding-block-end": 80
-      }
-    },
-    "philosophy_teaser": {
-      "type": "about-philosophy",
-      "settings": {
-        "eyebrow": "What to Expect",
-        "heading": "The Future of Design",
-        "heading_size": "h2",
-        "text": "<p>Each upcoming collection is thoughtfully designed to push boundaries while honoring our commitment to timeless beauty. We're exploring new materials, innovative techniques, and fresh perspectives that stay true to our values.</p>",
-        "image_position": "right",
-        "enable_parallax": true,
-        "enable_backdrop_blur": true,
-        "button_label": "Learn More About Us",
-        "button_link": "",
-        "section_width": "page-width",
-        "color_scheme": "scheme-1",
-        "padding-block-start": 40,
-        "padding-block-end": 60
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-4",
+        "background_media": "image",
+        "video_position": "cover",
+        "background_image": "shopify://shop_images/IMG_4452_05df6231-87a1-46bf-af73-5ad8712d86fc.jpg",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 24,
+        "padding-block-end": 0
       }
     }
   },
   "order": [
-    "future_collections_main",
-    "philosophy_teaser"
+    "176056637758c175d9"
   ]
 }

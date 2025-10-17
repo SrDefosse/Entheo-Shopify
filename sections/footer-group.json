@@ -62,8 +62,8 @@
             "gradient_direction": "to top",
             "padding-block-start": 0,
             "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "padding-inline-start": 25,
+            "padding-inline-end": 25
           },
           "blocks": {
             "group_4aCyy7": {
@@ -201,8 +201,8 @@
           "name": "t:names.footer_utilities",
           "settings": {
             "divider_thickness": 0,
-            "padding-block-start": 12,
-            "padding-block-end": 0
+            "padding-block-start": 25,
+            "padding-block-end": 25
           },
           "blocks": {
             "copyright": {
@@ -296,15 +296,16 @@
         "align_baseline": false,
         "horizontal_alignment_flex_direction_column": "center",
         "vertical_alignment_flex_direction_column": "center",
-        "gap": 48,
-        "section_width": "page-width",
+        "gap": 45,
+        "section_width": "full-width",
         "section_height": "",
         "color_scheme": "scheme-4",
-        "background_media": "none",
+        "background_media": "image",
         "video_position": "cover",
+        "background_image": "shopify://shop_images/IMG_4319.jpg",
         "background_image_position": "cover",
         "padding-block-start": 0,
-        "padding-block-end": 30
+        "padding-block-end": 40
       }
     }
   },
