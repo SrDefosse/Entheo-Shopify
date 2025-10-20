@@ -125,19 +125,6 @@
     assign sizes_single = sizes_single | strip
   endif
 
-  # Set max width for image sizing (used in CSS)
-  assign image_max_width = 1600
-  case block_settings.image_size_preset
-    when 'small'
-      assign image_max_width = 600
-    when 'medium'
-      assign image_max_width = 1000
-    when 'large'
-      assign image_max_width = 1600
-    when 'custom'
-      assign image_max_width = block_settings.custom_image_width
-  endcase
-
   # Calculate sizes value for regular grid/carousel items
   capture sizes
     render 'util-product-media-sizes-attr', block: block, section: section, settings: settings, is_first_image: false, is_single_column: is_single_column, needs_both_sizes: needs_both_sizes
@@ -351,25 +338,6 @@
       background-color: var(--color-background);
     }
   {% endif %}
-
-  /* Image size controls based on user settings */
-  .product-media-container {
-    --image-max-width: {{ image_max_width }}px;
-  }
-
-  /* Apply max-width to images based on size preset */
-  .product-media-container .product-media__image {
-    max-width: var(--image-max-width);
-    width: 100%;
-    height: auto;
-  }
-
-  /* Ensure images don't exceed container size on small screens */
-  @media screen and (max-width: 749px) {
-    .product-media-container .product-media__image {
-      max-width: min(var(--image-max-width), 100vw);
-    }
-  }
 {% endstyle %}
 
 {% liquid
@@ -989,45 +957,6 @@
       "unit": "px",
       "default": 64,
       "visible_if": "{{ block.settings.media_presentation == 'carousel' and block.settings.slideshow_controls_style == 'thumbnails' }}"
-    },
-    {
-      "type": "header",
-      "content": "Tamaño de imagen"
-    },
-    {
-      "type": "select",
-      "id": "image_size_preset",
-      "label": "Tamaño de imagen",
-      "options": [
-        {
-          "value": "small",
-          "label": "Pequeño"
-        },
-        {
-          "value": "medium",
-          "label": "Mediano"
-        },
-        {
-          "value": "large",
-          "label": "Grande"
-        },
-        {
-          "value": "custom",
-          "label": "Personalizado"
-        }
-      ],
-      "default": "large"
-    },
-    {
-      "type": "range",
-      "id": "custom_image_width",
-      "label": "Ancho máximo personalizado",
-      "min": 200,
-      "max": 2000,
-      "step": 50,
-      "unit": "px",
-      "default": 800,
-      "visible_if": "{{ block.settings.image_size_preset == 'custom' }}"
     },
     {
       "type": "header",
