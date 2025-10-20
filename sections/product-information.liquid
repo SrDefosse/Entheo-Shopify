@@ -296,6 +296,14 @@
   body:has(#header-group #header-component[data-sticky-state='active']) .product-details.sticky-content--desktop {
     --sticky-header-offset: var(--header-height);
   }
+
+  /* Ensure glassmorphism product details work correctly in grid layout */
+  .product-information__grid .product-details--glassmorphism {
+    /* Reset any grid positioning that might interfere with glassmorphism margins */
+    grid-column: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 {% endstylesheet %}
 
 {% schema %}
