@@ -106,79 +106,9 @@
         "padding-block-start": 24,
         "padding-block-end": 0
       }
-    },
-    "future_collections_J6t8qi": {
-      "type": "future-collections",
-      "blocks": {
-        "collection_preview_WcQihB": {
-          "type": "collection_preview",
-          "settings": {
-            "collection_name": "Winter 2025",
-            "season": "Winter",
-            "year": "2025",
-            "release_date": "December 2024",
-            "short_description": "A celebration of minimalist design and winter elegance",
-            "teaser_text": "Inspired by the quiet beauty of winter landscapes",
-            "show_badge": true,
-            "badge_text": "Coming Soon",
-            "notify_button": true,
-            "notify_text": "Notify Me"
-          }
-        },
-        "collection_preview_FqG6CR": {
-          "type": "collection_preview",
-          "settings": {
-            "collection_name": "Spring 2025",
-            "season": "Spring",
-            "year": "2025",
-            "release_date": "December 2024",
-            "short_description": "A celebration of minimalist design and winter elegance",
-            "teaser_text": "Inspired by the quiet beauty of winter landscapes",
-            "show_badge": true,
-            "badge_text": "Coming Soon",
-            "notify_button": true,
-            "notify_text": "Notify Me"
-          }
-        },
-        "collection_preview_PtcCth": {
-          "type": "collection_preview",
-          "settings": {
-            "collection_name": "Summer 2025",
-            "season": "Summer",
-            "year": "2025",
-            "release_date": "December 2024",
-            "short_description": "A celebration of minimalist design and winter elegance",
-            "teaser_text": "Inspired by the quiet beauty of winter landscapes",
-            "show_badge": true,
-            "badge_text": "Coming Soon",
-            "notify_button": true,
-            "notify_text": "Notify Me"
-          }
-        }
-      },
-      "block_order": [
-        "collection_preview_WcQihB",
-        "collection_preview_FqG6CR",
-        "collection_preview_PtcCth"
-      ],
-      "name": "Future Collections",
-      "settings": {
-        "heading": "Coming Soon",
-        "heading_size": "h2",
-        "description": "<p>Get a sneak peek at our upcoming collections</p>",
-        "columns_desktop": 3,
-        "columns_mobile": "1",
-        "gap": 24,
-        "footer_text": "",
-        "section_width": "page-width",
-        "color_scheme": "scheme-1",
-        "padding-block-start": 60,
-        "padding-block-end": 60
-      }
     }
   },
   "order": [
-    "176056637758c175d9",
-    "future_collections_J6t8qi"
+    "176056637758c175d9"
   ]
 }
