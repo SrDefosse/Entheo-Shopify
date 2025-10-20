@@ -149,8 +149,10 @@
     box-shadow:
       0 8px 32px 0 rgba(0, 0, 0, 0.1),
       inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    position: relative;
-    overflow: hidden;
+    /* Removed position: relative to preserve sticky behavior */
+    /* Using transform instead for proper layering */
+    transform: translateZ(0);
+    will-change: transform;
   }
 
   /* Dark mode adjustments */
@@ -171,6 +173,8 @@
     -webkit-backdrop-filter: blur(5px);
     border-radius: 8px;
     padding: 8px 12px;
+    position: relative;
+    z-index: 2;
   }
 
   .media-gallery--glassmorphism .slideshow-arrows {
@@ -181,6 +185,8 @@
     border-radius: 50%;
     width: 44px;
     height: 44px;
+    position: relative;
+    z-index: 2;
   }
 
   /* Grid layout glassmorphism styles */
