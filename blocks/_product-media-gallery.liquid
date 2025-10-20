@@ -125,29 +125,17 @@
     assign sizes_single = sizes_single | strip
   endif
 
-  # Calculate image widths based on user settings
-  assign image_widths = '240, 352, 832, 1200, 1600, 1920, 2560, 3840'
+  # Set max width for image sizing (used in CSS)
+  assign image_max_width = 1600
   case block_settings.image_size_preset
     when 'small'
-      assign max_width = 600
-      assign image_widths = '240, 352, 480, 600'
+      assign image_max_width = 600
     when 'medium'
-      assign max_width = 1000
-      assign image_widths = '240, 352, 832, 1000'
+      assign image_max_width = 1000
     when 'large'
-      assign max_width = 1600
-      assign image_widths = '240, 352, 832, 1200, 1600'
+      assign image_max_width = 1600
     when 'custom'
-      assign max_width = block_settings.custom_image_width
-      if max_width <= 600
-        assign image_widths = '240, 352, 480, ' | append: max_width
-      elsif max_width <= 1000
-        assign image_widths = '240, 352, 832, ' | append: max_width
-      elsif max_width <= 1600
-        assign image_widths = '240, 352, 832, 1200, ' | append: max_width
-      else
-        assign image_widths = '240, 352, 832, 1200, 1600, ' | append: max_width
-      endif
+      assign image_max_width = block_settings.custom_image_width
   endcase
 
   # Calculate sizes value for regular grid/carousel items
@@ -365,28 +353,13 @@
   {% endif %}
 
   /* Image size controls based on user settings */
-  {% case block_settings.image_size_preset %}
-    {% when 'small' %}
-      .product-media-container {
-        --image-max-width: 600px;
-      }
-    {% when 'medium' %}
-      .product-media-container {
-        --image-max-width: 1000px;
-      }
-    {% when 'large' %}
-      .product-media-container {
-        --image-max-width: 1600px;
-      }
-    {% when 'custom' %}
-      .product-media-container {
-        --image-max-width: {{ block_settings.custom_image_width }}px;
-      }
-  {% endcase %}
+  .product-media-container {
+    --image-max-width: {{ image_max_width }}px;
+  }
 
   /* Apply max-width to images based on size preset */
   .product-media-container .product-media__image {
-    max-width: var(--image-max-width, 100%);
+    max-width: var(--image-max-width);
     width: 100%;
     height: auto;
   }
@@ -394,7 +367,7 @@
   /* Ensure images don't exceed container size on small screens */
   @media screen and (max-width: 749px) {
     .product-media-container .product-media__image {
-      max-width: min(var(--image-max-width, 100%), 100vw);
+      max-width: min(var(--image-max-width), 100vw);
     }
   }
 {% endstyle %}
@@ -462,10 +435,10 @@
         -%}
         {% if block_settings.aspect_ratio != 'adapt' and block_settings.constrain_to_viewport %}
           <div class="product-media-constraint-wrapper">
-            {%- render 'product-media', media: media, widths: image_widths, sizes: media_sizes, is_main_product_media: forloop.first -%}
+            {%- render 'product-media', media: media, sizes: media_sizes, is_main_product_media: forloop.first -%}
           </div>
         {% else %}
-          {%- render 'product-media', media: media, widths: image_widths, sizes: media_sizes, is_main_product_media: forloop.first -%}
+          {%- render 'product-media', media: media, sizes: media_sizes, is_main_product_media: forloop.first -%}
         {% endif %}
       {% endcapture %}
       {% capture class %}
@@ -568,10 +541,10 @@
           -%}
           {% if block_settings.aspect_ratio != 'adapt' and block_settings.constrain_to_viewport %}
             <div class="product-media-constraint-wrapper">
-              {%- render 'product-media', media: media, widths: image_widths, sizes: media_sizes, is_main_product_media: forloop.first -%}
+              {%- render 'product-media', media: media, sizes: media_sizes, is_main_product_media: forloop.first -%}
             </div>
           {% else %}
-            {%- render 'product-media', media: media, widths: image_widths, sizes: media_sizes, is_main_product_media: forloop.first -%}
+            {%- render 'product-media', media: media, sizes: media_sizes, is_main_product_media: forloop.first -%}
           {% endif %}
         </li>
       {% endfor %}
@@ -660,7 +633,6 @@
                 <drag-zoom-wrapper class="product-media__drag-zoom-wrapper">
                   {%- render 'product-media',
                     media: media,
-                    widths: image_widths,
                     sizes: '100vw',
                     loading: 'lazy',
                     is_main_product_media: forloop.first
@@ -669,7 +641,6 @@
               {% else %}
                 {%- render 'product-media',
                   media: media,
-                  widths: image_widths,
                   sizes: '100vw',
                   loading: 'lazy',
                   is_main_product_media: forloop.first
