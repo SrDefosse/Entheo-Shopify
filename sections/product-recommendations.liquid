@@ -36,7 +36,18 @@
   data-recommendations-performed="{{ recommendations.performed }}"
   {{ section.shopify_attributes }}
 >
-  <div class="section-background color-{{ section.settings.color_scheme }}"></div>
+  <div class="section-background color-{{ section.settings.color_scheme }}">
+    {% if section.settings.background_image %}
+      <div
+        class="section-background-image"
+        style="
+          background-image: url('{{ section.settings.background_image | image_url: width: 1920 }}');
+          background-position: {{ section.settings.background_position }};
+          opacity: {{ section.settings.background_opacity | divided_by: 100.0 }};
+        "
+      ></div>
+    {% endif %}
+  </div>
   <div
     class="
       section
@@ -184,6 +195,29 @@
 
   product-recommendations:has([data-has-recommendations='false']) {
     display: none;
+  }
+
+  .section-background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+    opacity: 0.3;
+  }
+
+  .section-background {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-resource-list__content {
+    position: relative;
+    z-index: 1;
   }
 {% endstylesheet %}
 
@@ -425,6 +459,68 @@
       "id": "color_scheme",
       "label": "t:settings.color_scheme",
       "default": "scheme-1"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image",
+      "info": "Add a background image for the section"
+    },
+    {
+      "type": "range",
+      "id": "background_opacity",
+      "label": "Background image opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 30,
+      "visible_if": "{{ section.settings.background_image != blank }}"
+    },
+    {
+      "type": "select",
+      "id": "background_position",
+      "label": "Background position",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        },
+        {
+          "value": "top-left",
+          "label": "Top left"
+        },
+        {
+          "value": "top-right",
+          "label": "Top right"
+        },
+        {
+          "value": "bottom-left",
+          "label": "Bottom left"
+        },
+        {
+          "value": "bottom-right",
+          "label": "Bottom right"
+        }
+      ],
+      "default": "center",
+      "visible_if": "{{ section.settings.background_image != blank }}"
     },
     {
       "type": "header",
