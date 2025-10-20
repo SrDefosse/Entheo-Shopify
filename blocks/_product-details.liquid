@@ -32,13 +32,12 @@
 </div>
 
 {% stylesheet %}
-  /* Clear padding on mobile, if not full-width - but preserve glassmorphism margins */
+  /* Mobile padding adjustments */
   @media screen and (max-width: 749px) {
+    /* Don't clear padding - let it work naturally */
     .product-information.section--page-width .product-details > .group-block {
-      padding-inline: 0;
+      /* Padding is handled by the group component settings */
     }
-
-    /* Glassmorphism margins work correctly with group padding - handled in mobile query below */
   }
 
   .view-product-title {
@@ -81,31 +80,12 @@
     /* Use transform for proper layering without interfering with sticky behavior */
     transform: translateZ(0);
     will-change: transform;
-    /* Default: no external margins, let parent handle centering */
-    margin-left: 0;
-    margin-right: 0;
-    /* Internal padding will be handled by the group component */
-    padding-left: 0;
-    padding-right: 0;
-    /* Ensure proper width */
-    width: 100%;
-    max-width: 100%;
+    /* Base styles - no constraints */
+    box-sizing: border-box;
   }
 
-  /* Desktop glassmorphism - no extra margins needed */
-  @media screen and (min-width: 750px) {
-    .product-details--glassmorphism {
-      margin-left: 0;
-      margin-right: 0;
-      /* Ensure desktop layout works correctly */
-      width: auto;
-      max-width: none;
-    }
-  }
-
-  /* Ensure all child elements are visible */
+  /* Ensure all child elements are visible and flow naturally */
   .product-details--glassmorphism * {
-    max-width: 100%;
     box-sizing: border-box;
   }
 
@@ -123,36 +103,13 @@
   /* Mobile responsive adjustments for product details */
   @media screen and (max-width: 749px) {
     .product-details--glassmorphism {
-      /* Mobile: use calc for width with safe margins */
-      width: calc(100% - 24px);
-      max-width: calc(100vw - 24px);
+      /* Mobile: add reasonable side margins */
+      margin-left: 16px;
+      margin-right: 16px;
+      /* Let width be auto, constrained by margins */
+      width: auto;
+      max-width: calc(100vw - 32px);
       box-sizing: border-box;
-      /* Center margins will be handled by parent flexbox */
-      margin-left: auto;
-      margin-right: auto;
-
-      /* Ensure the glassmorphism container itself is visible */
-      min-height: auto;
-      overflow: visible;
-      position: relative;
-      z-index: 1;
-
-      /* Internal padding is handled by the group component, not by glassmorphism container */
-      padding-left: 0;
-      padding-right: 0;
-
-      /* Allow group component to handle its configured padding */
-      .group-block {
-        padding-left: var(--padding-inline-start, 0px);
-        padding-right: var(--padding-inline-end, 0px);
-        padding-top: var(--padding-block-start, 0px);
-        padding-bottom: var(--padding-block-end, 0px);
-        /* Ensure group content is visible */
-        min-height: auto;
-        overflow: visible;
-        position: relative;
-        z-index: 2;
-      }
     }
   }
 {% endstylesheet %}

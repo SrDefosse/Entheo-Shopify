@@ -136,16 +136,8 @@
 
     .product-details {
       grid-column: 1 / -1;
-      /* Center the glassmorphism details container on mobile */
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-    }
-
-    /* Ensure glassmorphism details are centered and properly sized on mobile */
-    .product-details--glassmorphism {
-      margin-left: auto;
-      margin-right: auto;
+      /* No flex interference - let content flow naturally */
+      width: 100%;
     }
   }
 
@@ -310,28 +302,15 @@
 
   /* Ensure glassmorphism product details work correctly in grid layout */
   .product-information__grid .product-details--glassmorphism {
-    /* Reset any grid positioning that might interfere with glassmorphism margins */
-    grid-column: auto;
-    margin-top: 0;
-    margin-bottom: 0;
-    /* Ensure proper display in grid context */
+    /* Let it flow naturally within the grid */
     display: block;
-    width: 100%;
   }
 
   /* Desktop layout improvements */
   @media screen and (min-width: 750px) {
     .product-details {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-    }
-
-    .product-details--glassmorphism {
+      /* Let content flow naturally */
       width: 100%;
-      max-width: 100%;
-      margin-left: 0;
-      margin-right: 0;
     }
   }
 {% endstylesheet %}
