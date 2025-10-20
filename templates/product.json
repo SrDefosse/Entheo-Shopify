@@ -264,7 +264,10 @@
         "equal_columns": true,
         "limit_details_width": false,
         "gap": 48,
-        "color_scheme": "scheme-3",
+        "color_scheme": "scheme-6",
+        "background_image": "shopify://shop_images/DSC00642.jpg",
+        "background_position": "bottom",
+        "background_size": "cover",
         "padding-block-start": 100,
         "padding-block-end": 40
       }
