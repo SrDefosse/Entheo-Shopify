@@ -82,8 +82,8 @@
     transform: translateZ(0);
     will-change: transform;
     /* Mobile margins for better spacing - these provide external spacing */
-    margin-left: 16px;
-    margin-right: 16px;
+    margin-left: 12px;
+    margin-right: 12px;
     /* Internal padding will be handled by the group component */
     padding-left: 0;
     padding-right: 0;
@@ -94,7 +94,16 @@
     .product-details--glassmorphism {
       margin-left: 0;
       margin-right: 0;
+      /* Ensure desktop layout works correctly */
+      width: auto;
+      max-width: none;
     }
+  }
+
+  /* Ensure all child elements are visible */
+  .product-details--glassmorphism * {
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   /* Dark mode adjustments for product details */
@@ -111,12 +120,19 @@
   /* Mobile responsive adjustments for product details */
   @media screen and (max-width: 749px) {
     .product-details--glassmorphism {
-      /* Ensure minimum margins for mobile viewport */
-      margin-left: max(16px, env(safe-area-inset-left, 0px));
-      margin-right: max(16px, env(safe-area-inset-right, 0px));
-      /* Ensure content doesn't overflow on very small screens */
-      max-width: calc(100vw - 32px);
+      /* Reduce margins for better content visibility */
+      margin-left: max(12px, env(safe-area-inset-left, 0px));
+      margin-right: max(12px, env(safe-area-inset-right, 0px));
+      /* Use a more reasonable width calculation */
+      width: calc(100vw - 24px);
+      max-width: calc(100vw - 24px);
       box-sizing: border-box;
+
+      /* Ensure the glassmorphism container itself is visible */
+      min-height: auto;
+      overflow: visible;
+      position: relative;
+      z-index: 1;
 
       /* Internal padding is handled by the group component, not by glassmorphism container */
       padding-left: 0;
@@ -126,6 +142,11 @@
       .group-block {
         padding-left: var(--padding-inline-start, 0px);
         padding-right: var(--padding-inline-end, 0px);
+        /* Ensure group content is visible */
+        min-height: auto;
+        overflow: visible;
+        position: relative;
+        z-index: 2;
       }
     }
   }
