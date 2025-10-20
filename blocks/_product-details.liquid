@@ -80,13 +80,30 @@
     /* Use transform for proper layering without interfering with sticky behavior */
     transform: translateZ(0);
     will-change: transform;
+    /* Center the entire glassmorphism container itself */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
     /* Base styles - no constraints */
     box-sizing: border-box;
+    /* Ensure proper width */
+    width: 100%;
+    max-width: 100%;
   }
 
   /* Ensure all child elements are visible and flow naturally */
   .product-details--glassmorphism * {
     box-sizing: border-box;
+  }
+
+  /* The group component should flow naturally inside the centered container */
+  .product-details--glassmorphism .group-block {
+    /* Let the group component determine its own width based on content */
+    width: auto;
+    max-width: 100%;
+    /* Don't interfere with internal content alignment */
+    margin-left: 0;
+    margin-right: 0;
   }
 
   /* Dark mode adjustments for product details */
@@ -106,8 +123,12 @@
       /* Mobile: add reasonable side margins */
       margin-left: 16px;
       margin-right: 16px;
-      /* Let width be auto, constrained by margins */
-      width: auto;
+      /* Keep flex centering for mobile too */
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      /* Constrain width for mobile viewport */
+      width: calc(100vw - 32px);
       max-width: calc(100vw - 32px);
       box-sizing: border-box;
     }
