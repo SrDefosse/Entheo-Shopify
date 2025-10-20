@@ -10,15 +10,19 @@
     flex-direction: column;
     align-items: center;
     padding: {{ block.settings.padding_top }}px {{ block.settings.padding_horizontal }}px {{ block.settings.padding_bottom }}px;
-    background-color: {{ block.settings.background_color }};
+    /* Hereda el fondo del contenedor/section padre */
+    background: inherit;
+    background-color: inherit;
     max-width: {{ block.settings.max_width }}px;
     margin: 0 auto;
   }
 
+  /* Asegura que el área de la imagen también herede el fondo */
   .ai-artist-profile__image-wrapper-{{ ai_gen_id }} {
     width: 100%;
     max-width: {{ block.settings.image_width }}px;
     margin-bottom: {{ block.settings.spacing }}px;
+    background-color: inherit;
   }
 
   .ai-artist-profile__image-{{ ai_gen_id }} {
@@ -31,10 +35,12 @@
     box-shadow: {{ block.settings.shadow_horizontal }}px {{ block.settings.shadow_vertical }}px {{ block.settings.shadow_blur }}px {{ block.settings.shadow_color }};
   }
 
+  /* Quita el gris y hereda el fondo del padre también en el placeholder */
   .ai-artist-profile__image-placeholder-{{ ai_gen_id }} {
     width: 100%;
     aspect-ratio: {{ block.settings.image_aspect_ratio }};
-    background-color: #f4f4f4;
+    background: inherit;
+    background-color: inherit;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -61,13 +67,16 @@
     pointer-events: none;
   }
 
+  /* El contenedor del texto hereda el fondo del padre */
   .ai-artist-profile__description-{{ ai_gen_id }} {
-    width: 100%;
+    width: 100%
+    ;
     max-width: {{ block.settings.description_width }}px;
     text-align: {{ block.settings.text_alignment }};
     color: {{ block.settings.text_color }};
     font-size: {{ block.settings.text_size }}px;
     line-height: 1.6;
+    background-color: inherit;
   }
 
   .ai-artist-profile__description-{{ ai_gen_id }} p {
@@ -84,6 +93,7 @@
     }
   }
 {% endstyle %}
+
 
 <div class="ai-artist-profile-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
   <div class="ai-artist-profile__image-wrapper-{{ ai_gen_id }}">

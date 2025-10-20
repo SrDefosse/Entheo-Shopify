@@ -128,7 +128,7 @@
             "title_size": 16,
             "title_color": "#ffffff",
             "price_size": 14,
-            "price_color": "#666666",
+            "price_color": "#ece9e9",
             "button_text": "Ver Producto",
             "button_background": "#ffffff",
             "button_hover_background": "#333333",
@@ -210,30 +210,10 @@
             "mobile_max_width": 500
           },
           "blocks": {}
-        },
-        "ai_gen_block_5438d00_GgaVTf": {
-          "type": "ai_gen_block_5438d00",
-          "settings": {
-            "video": "shopify://files/videos/promo-video.mp4",
-            "autoplay": true,
-            "muted": true,
-            "loop": true,
-            "controls": false,
-            "max_width": 800,
-            "container_padding": 30,
-            "border_radius": 14,
-            "shadow_horizontal": 6,
-            "shadow_vertical": 4,
-            "shadow_blur": 20,
-            "shadow_spread": 6,
-            "shadow_opacity": 50
-          },
-          "blocks": {}
         }
       },
       "block_order": [
-        "ai_gen_block_9c008b9_V4kEJg",
-        "ai_gen_block_5438d00_GgaVTf"
+        "ai_gen_block_9c008b9_V4kEJg"
       ],
       "name": "Por la causa",
       "settings": {
@@ -251,90 +231,29 @@
         "color_scheme": "scheme-4",
         "background_media": "none",
         "video_position": "cover",
+        "background_image": "shopify://shop_images/IMG_4319.jpg",
         "background_image_position": "cover",
         "border": "none",
         "border_width": 1,
         "border_opacity": 100,
         "border_radius": 0,
         "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
+        "overlay_color": "#d6bd9b",
+        "overlay_style": "gradient",
         "gradient_direction": "to top",
-        "padding-block-start": 0,
+        "padding-block-start": 40,
         "padding-block-end": 70
       }
     },
-    "blocks_a4ARGT": {
-      "type": "_blocks",
-      "name": "Text reveal",
-      "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "color_scheme": "",
-        "background_media": "none",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_radius": 0,
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
-    },
-    "blocks_GUpxJG": {
-      "type": "_blocks",
-      "name": "Scroll reveal text",
-      "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "color_scheme": "scheme-4",
-        "background_media": "none",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_radius": 0,
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
-    },
-    "section_rTbwYj": {
+    "section_qJ3fAX": {
       "type": "section",
       "blocks": {
-        "image_pa9Bmm": {
+        "image_p4Cmac": {
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/IMG_3058.jpg",
-            "link": "shopify://products/metamorphosis-necklace",
-            "image_ratio": "portrait",
+            "link": "",
+            "image_ratio": "adapt",
             "width": "fill",
             "custom_width": 100,
             "width_mobile": "fill",
@@ -344,14 +263,14 @@
             "border_width": 1,
             "border_opacity": 100,
             "border_radius": 15,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
+            "padding-block-start": 40,
+            "padding-block-end": 40,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
           "blocks": {}
         },
-        "group_x447ry": {
+        "group_yzafrk": {
           "type": "group",
           "settings": {
             "link": "",
@@ -361,18 +280,18 @@
             "horizontal_alignment": "flex-start",
             "vertical_alignment": "center",
             "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "center",
+            "horizontal_alignment_flex_direction_column": "flex-start",
             "vertical_alignment_flex_direction_column": "center",
             "gap": 12,
             "width": "custom",
             "custom_width": 100,
             "width_mobile": "fill",
             "custom_width_mobile": 100,
-            "height": "fill",
+            "height": "fit",
             "custom_height": 100,
             "inherit_color_scheme": true,
             "color_scheme": "",
-            "background_media": "image",
+            "background_media": "none",
             "video_position": "cover",
             "background_image": "shopify://shop_images/IMG_4319.jpg",
             "background_image_position": "cover",
@@ -385,36 +304,13 @@
             "overlay_color": "#00000026",
             "overlay_style": "solid",
             "gradient_direction": "to top",
-            "padding-block-start": 25,
-            "padding-block-end": 25,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "padding-block-start": 15,
+            "padding-block-end": 15,
+            "padding-inline-start": 15,
+            "padding-inline-end": 15
           },
           "blocks": {
-            "image_NycBWA": {
-              "type": "image",
-              "name": "t:names.image",
-              "settings": {
-                "image": "shopify://shop_images/Gargantilla.png",
-                "link": "",
-                "image_ratio": "square",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100,
-                "height": "fit",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 20,
-                "padding-inline-end": 20
-              },
-              "blocks": {}
-            },
-            "text_MJxmCB": {
+            "text_9HnQPz": {
               "type": "text",
               "name": "t:names.heading",
               "settings": {
@@ -432,7 +328,7 @@
                 "color": "var(--color-foreground)",
                 "background": false,
                 "background_color": "#00000026",
-                "corner_radius": 15,
+                "corner_radius": 0,
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
@@ -440,12 +336,12 @@
               },
               "blocks": {}
             },
-            "text_Y6crjQ": {
+            "text_rpAjjC": {
               "type": "text",
               "settings": {
                 "text": "<p>Un artículo verdaderamente único, tuyo para siempre. Descubre un producto único que atesorarás toda la vida.</p>",
                 "width": "fit-content",
-                "max_width": "normal",
+                "max_width": "narrow",
                 "alignment": "left",
                 "type_preset": "rte",
                 "font": "var(--font-body--family)",
@@ -457,7 +353,7 @@
                 "color": "var(--color-foreground)",
                 "background": false,
                 "background_color": "#00000026",
-                "corner_radius": 29,
+                "corner_radius": 0,
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
@@ -465,7 +361,7 @@
               },
               "blocks": {}
             },
-            "button_eBPUry": {
+            "button_zgDEJg": {
               "type": "button",
               "settings": {
                 "label": "Shop now",
@@ -481,42 +377,41 @@
             }
           },
           "block_order": [
-            "image_NycBWA",
-            "text_MJxmCB",
-            "text_Y6crjQ",
-            "button_eBPUry"
+            "text_9HnQPz",
+            "text_rpAjjC",
+            "button_zgDEJg"
           ]
         }
       },
       "block_order": [
-        "image_pa9Bmm",
-        "group_x447ry"
+        "image_p4Cmac",
+        "group_yzafrk"
       ],
-      "name": "Signature Product",
+      "name": "t:names.image_with_text",
       "settings": {
         "content_direction": "row",
         "vertical_on_mobile": true,
-        "horizontal_alignment": "center",
+        "horizontal_alignment": "flex-start",
         "vertical_alignment": "center",
         "align_baseline": false,
         "horizontal_alignment_flex_direction_column": "flex-start",
         "vertical_alignment_flex_direction_column": "center",
         "gap": 32,
         "section_width": "page-width",
-        "section_height": "",
+        "section_height": "medium",
         "section_height_custom": 50,
         "color_scheme": "scheme-3",
         "background_media": "image",
         "video_position": "cover",
-        "background_image": "shopify://shop_images/IMG_4319.jpg",
+        "background_image": "shopify://shop_images/IMG_3058.jpg",
         "background_image_position": "cover",
         "border": "none",
         "border_width": 1,
         "border_opacity": 100,
         "border_radius": 0,
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
+        "toggle_overlay": true,
+        "overlay_color": "#33333382",
+        "overlay_style": "gradient",
         "gradient_direction": "to top",
         "padding-block-start": 40,
         "padding-block-end": 40
@@ -577,12 +472,33 @@
             "overlay_opacity": 20
           },
           "blocks": {}
+        },
+        "ai_gen_block_5438d00_N3tTiU": {
+          "type": "ai_gen_block_5438d00",
+          "settings": {
+            "video": "shopify://files/videos/promo-video.mp4",
+            "autoplay": true,
+            "muted": true,
+            "loop": true,
+            "controls": false,
+            "max_width": 800,
+            "container_padding": 30,
+            "border_radius": 14,
+            "shadow_horizontal": 6,
+            "shadow_vertical": 4,
+            "shadow_blur": 20,
+            "shadow_spread": 6,
+            "shadow_opacity": 50
+          },
+          "blocks": {}
         }
       },
       "block_order": [
         "ai_gen_block_5a8d29f_DTAnhc",
-        "ai_gen_block_79b3406_kmfMAi"
+        "ai_gen_block_79b3406_kmfMAi",
+        "ai_gen_block_5438d00_N3tTiU"
       ],
+      "name": "LookBook",
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -678,7 +594,7 @@
         "gap": 24,
         "footer_text": "<p>¿Quieres acceso anticipado? Suscríbete a nuestra lista para recibir previews exclusivos y notificaciones de lanzamiento.</p>",
         "section_width": "page-width",
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-5",
         "padding-block-start": 60,
         "padding-block-end": 80
       }
@@ -689,9 +605,7 @@
     "17605083220ff59447",
     "17605015599aff6bd7",
     "17606837088c2e5812",
-    "blocks_a4ARGT",
-    "blocks_GUpxJG",
-    "section_rTbwYj",
+    "section_qJ3fAX",
     "1760506132d8e34172",
     "future_collections_4HghhX"
   ]

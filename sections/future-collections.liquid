@@ -126,10 +126,27 @@
 </div>
 
 {% stylesheet %}
+  /* === Color scheme adoption ===
+     Usa el gradiente del esquema si existe; fallback al color de fondo del esquema.
+     Evita backgrounds duros en hijos para que el esquema se vea completo.
+  */
   .future-collections-section {
     position: relative;
-    background: rgb(var(--color-background));
+    background: var(--gradient-background, rgb(var(--color-background)));
     color: rgb(var(--color-foreground));
+  }
+
+  /* Asegura que nada imponga fondo blanco */
+  .future-collections-container,
+  .future-collections-header,
+  .future-collections-grid,
+  .future-collection-card,
+  .future-collection-card-inner,
+  .future-collection-content,
+  .future-collections-footer,
+  .future-collections-footer-content {
+    background: transparent;
+    color: inherit;
   }
 
   .future-collections-container {
@@ -149,7 +166,7 @@
     max-width: 600px;
     margin: 0 auto;
     font-size: 1.1rem;
-    color: rgba(var(--color-foreground-rgb), 0.7);
+    color: rgba(var(--color-foreground-rgb), 0.75);
   }
 
   .future-collections-grid {
@@ -172,6 +189,8 @@
     height: 100%;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* Delimitado por el esquema (sutil) */
+    box-shadow: 0 0 0 1px rgba(var(--color-foreground-rgb), 0.06);
   }
 
   .future-collection-card:hover .future-collection-card-inner {
@@ -183,6 +202,7 @@
     width: 100%;
     aspect-ratio: 3 / 4;
     overflow: hidden;
+    /* Ligerísima tinta para separar sin romper el esquema */
     background: rgba(var(--color-background-rgb), 0.02);
   }
 
@@ -213,15 +233,15 @@
     padding: 0.5rem 1rem;
     z-index: 2;
     animation: pulse 2s ease-in-out infinite;
+    /* transparente para respetar el esquema */
+    background: rgba(var(--color-background-rgb), 0.35);
+    border: 1px solid rgba(var(--color-foreground-rgb), 0.2);
+    backdrop-filter: blur(6px);
   }
 
   @keyframes pulse {
-    0%, 100% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.05);
-    }
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
   }
 
   .future-collection-badge-text {
@@ -229,7 +249,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--color-foreground);
+    color: rgb(var(--color-foreground));
   }
 
   .future-collection-overlay {
@@ -242,6 +262,11 @@
     transition: opacity 0.4s ease;
     padding: 2rem;
     z-index: 1;
+    background: linear-gradient(
+      to bottom,
+      rgba(var(--color-background-rgb), 0.0),
+      rgba(var(--color-background-rgb), 0.35)
+    );
   }
 
   .future-collection-card:hover .future-collection-overlay {
@@ -256,7 +281,7 @@
   .future-collection-name {
     font-size: 1.5rem;
     margin: 0 0 0.5rem 0;
-    color: var(--color-foreground);
+    color: rgb(var(--color-foreground));
   }
 
   .future-collection-season {
@@ -277,8 +302,12 @@
   .future-collection-notify-btn {
     display: inline-block;
     cursor: pointer;
-    border: none;
+    border: 1px solid rgba(var(--color-foreground-rgb), 0.2);
     font-size: 0.875rem;
+    background: rgba(var(--color-foreground-rgb), 0.08);
+    color: rgb(var(--color-foreground));
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
   }
 
   .future-collection-content {
@@ -306,7 +335,7 @@
   .future-collection-description {
     font-size: 0.95rem;
     line-height: 1.6;
-    color: rgba(var(--color-foreground-rgb), 0.7);
+    color: rgba(var(--color-foreground-rgb), 0.75);
     margin: 0;
   }
 
@@ -319,6 +348,17 @@
     display: inline-block;
     padding: 1.5rem 2.5rem;
     font-size: 1.05rem;
+    border: 1px solid rgba(var(--color-foreground-rgb), 0.15);
+    background: rgba(var(--color-background-rgb), 0.25);
+    backdrop-filter: blur(8px);
+    border-radius: 12px;
+    color: inherit;
+  }
+
+  /* Refuerzo de scoping por si el tema encapsula variables en .color-... */
+  .color-{{ section.settings.color_scheme }} .future-collections-section {
+    background: var(--gradient-background, rgb(var(--color-background)));
+    color: rgb(var(--color-foreground));
   }
 {% endstylesheet %}
 
@@ -544,4 +584,3 @@
   ]
 }
 {% endschema %}
-

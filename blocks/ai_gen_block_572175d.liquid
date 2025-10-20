@@ -1,0 +1,564 @@
+{% doc %}
+  @prompt
+    Create a new Shopify Liquid section block named 'Glassmorphism Form'. This block must feature two primary columns on desktop. The left column should include a large title and a descriptive text area, rendered with a glassmorphism background and white text. The right column must contain the standard Shopify contact form.
+    
+    The form needs to include the standard fields (Name, Email), a textarea for 'Your Vision' (name="contact[vision]"), and a select field for 'Approximate Budget' (name="contact[approximate_budget]") with three range options.
+    
+    Apply a Glassmorphism style to the form container (right column): use a semi-transparent white background (rgba), a 'backdrop-filter: blur(10px)', rounded corners, and a subtle semi-transparent border. The entire block should gracefully inherit the color scheme and background from its parent section.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-glassmorphism-form-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding: 60px 40px;
+    width: 100%;
+  }
+
+  .ai-glassmorphism-form__left-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding: 40px;
+    background: {{ block.settings.left_background }};
+    backdrop-filter: blur({{ block.settings.blur_amount }}px);
+    border-radius: {{ block.settings.border_radius }}px;
+    border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+  }
+
+  .ai-glassmorphism-form__title-{{ ai_gen_id }} {
+    color: {{ block.settings.left_text_color }};
+    font-size: {{ block.settings.title_size }}px;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .ai-glassmorphism-form__description-{{ ai_gen_id }} {
+    color: {{ block.settings.left_text_color }};
+    font-size: {{ block.settings.description_size }}px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .ai-glassmorphism-form__right-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    background: {{ block.settings.form_background }};
+    backdrop-filter: blur({{ block.settings.blur_amount }}px);
+    border-radius: {{ block.settings.border_radius }}px;
+    border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+  }
+
+  .ai-glassmorphism-form__form-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .ai-glassmorphism-form__field-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ai-glassmorphism-form__label-{{ ai_gen_id }} {
+    font-size: 14px;
+    font-weight: 500;
+    color: {{ block.settings.form_text_color }};
+  }
+
+  .ai-glassmorphism-form__input-{{ ai_gen_id }},
+  .ai-glassmorphism-form__textarea-{{ ai_gen_id }},
+  .ai-glassmorphism-form__select-{{ ai_gen_id }} {
+    padding: 12px 16px;
+    border: 1px solid {{ block.settings.input_border_color }};
+    border-radius: {{ block.settings.input_border_radius }}px;
+    background-color: {{ block.settings.input_background }};
+    color: {{ block.settings.form_text_color }};
+    font-size: 14px;
+    width: 100%;
+  }
+
+  .ai-glassmorphism-form__input-{{ ai_gen_id }}:focus,
+  .ai-glassmorphism-form__textarea-{{ ai_gen_id }}:focus,
+  .ai-glassmorphism-form__select-{{ ai_gen_id }}:focus {
+    outline: 2px solid {{ block.settings.focus_color }};
+    outline-offset: 2px;
+  }
+
+  .ai-glassmorphism-form__textarea-{{ ai_gen_id }} {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  .ai-glassmorphism-form__button-{{ ai_gen_id }} {
+    padding: 14px 28px;
+    background-color: {{ block.settings.button_background }};
+    color: {{ block.settings.button_text_color }};
+    border: none;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .ai-glassmorphism-form__button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_background }};
+  }
+
+  .ai-glassmorphism-form__success-{{ ai_gen_id }} {
+    padding: 12px 16px;
+    background-color: {{ block.settings.success_background }};
+    color: {{ block.settings.success_text_color }};
+    border-radius: {{ block.settings.input_border_radius }}px;
+    font-size: 14px;
+  }
+
+  .ai-glassmorphism-form__error-{{ ai_gen_id }} {
+    padding: 12px 16px;
+    background-color: {{ block.settings.error_background }};
+    color: {{ block.settings.error_text_color }};
+    border-radius: {{ block.settings.input_border_radius }}px;
+    font-size: 14px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-glassmorphism-form-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding: 40px 20px;
+    }
+
+    .ai-glassmorphism-form__left-{{ ai_gen_id }},
+    .ai-glassmorphism-form__right-{{ ai_gen_id }} {
+      padding: 24px;
+    }
+
+    .ai-glassmorphism-form__title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_size | times: 0.7 }}px;
+    }
+
+    .ai-glassmorphism-form__description-{{ ai_gen_id }} {
+      font-size: {{ block.settings.description_size | times: 0.9 }}px;
+    }
+  }
+{% endstyle %}
+
+<div
+  class="ai-glassmorphism-form-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-glassmorphism-form__left-{{ ai_gen_id }}">
+    {% if block.settings.title != blank %}
+      <h2 class="ai-glassmorphism-form__title-{{ ai_gen_id }}">
+        {{ block.settings.title }}
+      </h2>
+    {% endif %}
+    {% if block.settings.description != blank %}
+      <div class="ai-glassmorphism-form__description-{{ ai_gen_id }}">
+        {{ block.settings.description }}
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="ai-glassmorphism-form__right-{{ ai_gen_id }}">
+    {% form 'contact' %}
+      <div class="ai-glassmorphism-form__form-{{ ai_gen_id }}">
+        {% if form.posted_successfully? %}
+          <div
+            class="ai-glassmorphism-form__success-{{ ai_gen_id }}"
+            id="ai-glassmorphism-form-success-{{ ai_gen_id }}"
+          >
+            {{ block.settings.success_message }}
+          </div>
+        {% endif %}
+
+        {% if form.errors %}
+          <div
+            class="ai-glassmorphism-form__error-{{ ai_gen_id }}"
+            id="ai-glassmorphism-form-error-{{ ai_gen_id }}"
+          >
+            {{ form.errors.messages | first }}
+          </div>
+        {% endif %}
+
+        <div class="ai-glassmorphism-form__field-{{ ai_gen_id }}">
+          <label
+            for="ai-glassmorphism-name-{{ ai_gen_id }}"
+            class="ai-glassmorphism-form__label-{{ ai_gen_id }}"
+          >
+            {{ block.settings.name_label }}
+          </label>
+          <input
+            type="text"
+            id="ai-glassmorphism-name-{{ ai_gen_id }}"
+            name="contact[name]"
+            class="ai-glassmorphism-form__input-{{ ai_gen_id }}"
+            value="{{ form.name }}"
+            placeholder="{{ block.settings.name_placeholder }}"
+            required
+          >
+        </div>
+
+        <div class="ai-glassmorphism-form__field-{{ ai_gen_id }}">
+          <label
+            for="ai-glassmorphism-email-{{ ai_gen_id }}"
+            class="ai-glassmorphism-form__label-{{ ai_gen_id }}"
+          >
+            {{ block.settings.email_label }}
+          </label>
+          <input
+            type="email"
+            id="ai-glassmorphism-email-{{ ai_gen_id }}"
+            name="contact[email]"
+            class="ai-glassmorphism-form__input-{{ ai_gen_id }}"
+            value="{{ form.email }}"
+            placeholder="{{ block.settings.email_placeholder }}"
+            autocomplete="email"
+            required
+            {% if form.errors %}
+              aria-invalid="true"
+              aria-describedby="ai-glassmorphism-form-error-{{ ai_gen_id }}"
+            {% endif %}
+          >
+        </div>
+
+        <div class="ai-glassmorphism-form__field-{{ ai_gen_id }}">
+          <label
+            for="ai-glassmorphism-vision-{{ ai_gen_id }}"
+            class="ai-glassmorphism-form__label-{{ ai_gen_id }}"
+          >
+            {{ block.settings.vision_label }}
+          </label>
+          <textarea
+            id="ai-glassmorphism-vision-{{ ai_gen_id }}"
+            name="contact[vision]"
+            class="ai-glassmorphism-form__textarea-{{ ai_gen_id }}"
+            placeholder="{{ block.settings.vision_placeholder }}"
+            required
+          >{{ form.vision }}</textarea>
+        </div>
+
+        <div class="ai-glassmorphism-form__field-{{ ai_gen_id }}">
+          <label
+            for="ai-glassmorphism-budget-{{ ai_gen_id }}"
+            class="ai-glassmorphism-form__label-{{ ai_gen_id }}"
+          >
+            {{ block.settings.budget_label }}
+          </label>
+          <select
+            id="ai-glassmorphism-budget-{{ ai_gen_id }}"
+            name="contact[approximate_budget]"
+            class="ai-glassmorphism-form__select-{{ ai_gen_id }}"
+            required
+          >
+            <option value="">{{ block.settings.budget_placeholder }}</option>
+            <option value="{{ block.settings.budget_option_1 }}">{{ block.settings.budget_option_1 }}</option>
+            <option value="{{ block.settings.budget_option_2 }}">{{ block.settings.budget_option_2 }}</option>
+            <option value="{{ block.settings.budget_option_3 }}">{{ block.settings.budget_option_3 }}</option>
+          </select>
+        </div>
+
+        <button
+          type="submit"
+          class="ai-glassmorphism-form__button-{{ ai_gen_id }}"
+        >
+          {{ block.settings.button_text }}
+        </button>
+      </div>
+    {% endform %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Glassmorphism form",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Left column"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "Title",
+      "default": "Let's Create Together"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Share your vision with us and we'll bring it to life. Our team is ready to transform your ideas into reality.</p>"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Title size",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Description size",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "left_background",
+      "label": "Background",
+      "default": "rgba(255, 255, 255, 0.1)"
+    },
+    {
+      "type": "color",
+      "id": "left_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Form fields"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "name_label",
+      "label": "Name label",
+      "default": "Name"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "name_placeholder",
+      "label": "Name placeholder",
+      "default": "Enter your name"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "email_label",
+      "label": "Email label",
+      "default": "Email"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "email_placeholder",
+      "label": "Email placeholder",
+      "default": "Enter your email"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "vision_label",
+      "label": "Vision label",
+      "default": "Your Vision"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "vision_placeholder",
+      "label": "Vision placeholder",
+      "default": "Tell us about your project"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "budget_label",
+      "label": "Budget label",
+      "default": "Approximate Budget"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "budget_placeholder",
+      "label": "Budget placeholder",
+      "default": "Select a budget range"
+    },
+    {
+      "type": "text",
+      "id": "budget_option_1",
+      "label": "Budget option 1",
+      "default": "$1,000 - $5,000"
+    },
+    {
+      "type": "text",
+      "id": "budget_option_2",
+      "label": "Budget option 2",
+      "default": "$5,000 - $10,000"
+    },
+    {
+      "type": "text",
+      "id": "budget_option_3",
+      "label": "Budget option 3",
+      "default": "$10,000+"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Submit"
+    },
+    {
+      "type": "richtext",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "<p>Thank you for your submission! We'll be in touch soon.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Form style"
+    },
+    {
+      "type": "color",
+      "id": "form_background",
+      "label": "Background",
+      "default": "rgba(255, 255, 255, 0.15)"
+    },
+    {
+      "type": "color",
+      "id": "form_text_color",
+      "label": "Text color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "input_background",
+      "label": "Input background",
+      "default": "rgba(255, 255, 255, 0.9)"
+    },
+    {
+      "type": "color",
+      "id": "input_border_color",
+      "label": "Input border",
+      "default": "rgba(0, 0, 0, 0.1)"
+    },
+    {
+      "type": "color",
+      "id": "focus_color",
+      "label": "Focus color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "input_border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Input border radius",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Button style"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background",
+      "label": "Hover background",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Glassmorphism effect"
+    },
+    {
+      "type": "range",
+      "id": "blur_amount",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Blur amount",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "label": "Border width",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "rgba(255, 255, 255, 0.2)"
+    },
+    {
+      "type": "header",
+      "content": "Messages"
+    },
+    {
+      "type": "color",
+      "id": "success_background",
+      "label": "Success background",
+      "default": "#d4edda"
+    },
+    {
+      "type": "color",
+      "id": "success_text_color",
+      "label": "Success text",
+      "default": "#155724"
+    },
+    {
+      "type": "color",
+      "id": "error_background",
+      "label": "Error background",
+      "default": "#f8d7da"
+    },
+    {
+      "type": "color",
+      "id": "error_text_color",
+      "label": "Error text",
+      "default": "#721c24"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Glassmorphism form"
+    }
+  ]
+}
+{% endschema %}
