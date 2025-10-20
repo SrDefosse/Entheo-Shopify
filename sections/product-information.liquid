@@ -42,7 +42,7 @@
   {{ closest.product | structured_data }}
 </script>
 
-<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div class="section-background color-{{ section.settings.color_scheme }}{% if section.settings.background_image %} has-background-image{% endif %}"{% if section.settings.background_image %} style="background-image: url('{{ section.settings.background_image | image_url }}'); background-position: {{ section.settings.background_position }}; background-size: {{ section.settings.background_size }}; background-repeat: no-repeat;"{% endif %}></div>
 <div
   class="product-information section section--{{ content_width }} spacing-style color-{{ section.settings.color_scheme }} relative"
   style="{% render 'spacing-style', settings: section.settings %} --gap: {{ section.settings.gap }}px;"
@@ -92,6 +92,21 @@
 {% stylesheet %}
   .product-information {
     gap: var(--gap) 0;
+  }
+
+  /* Background image styles */
+  .section-background.has-background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+  }
+
+  .section-background.has-background-image + .product-information {
+    position: relative;
+    z-index: 1;
   }
 
   /* Base grid layout */
@@ -359,6 +374,76 @@
       "id": "color_scheme",
       "label": "t:settings.color_scheme",
       "default": "scheme-1"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Imagen de fondo",
+      "info": "Selecciona una imagen para usar como fondo del componente"
+    },
+    {
+      "type": "select",
+      "id": "background_position",
+      "label": "Posición del fondo",
+      "options": [
+        {
+          "value": "center",
+          "label": "Centro"
+        },
+        {
+          "value": "top",
+          "label": "Arriba"
+        },
+        {
+          "value": "bottom",
+          "label": "Abajo"
+        },
+        {
+          "value": "left",
+          "label": "Izquierda"
+        },
+        {
+          "value": "right",
+          "label": "Derecha"
+        },
+        {
+          "value": "top-left",
+          "label": "Arriba izquierda"
+        },
+        {
+          "value": "top-right",
+          "label": "Arriba derecha"
+        },
+        {
+          "value": "bottom-left",
+          "label": "Abajo izquierda"
+        },
+        {
+          "value": "bottom-right",
+          "label": "Abajo derecha"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "background_size",
+      "label": "Tamaño del fondo",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Cubrir todo"
+        },
+        {
+          "value": "contain",
+          "label": "Contener"
+        },
+        {
+          "value": "auto",
+          "label": "Automático"
+        }
+      ],
+      "default": "cover"
     },
     {
       "type": "header",
