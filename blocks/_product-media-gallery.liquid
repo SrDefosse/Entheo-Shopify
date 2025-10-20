@@ -125,6 +125,31 @@
     assign sizes_single = sizes_single | strip
   endif
 
+  # Calculate image widths based on user settings
+  assign image_widths = '240, 352, 832, 1200, 1600, 1920, 2560, 3840'
+  case block_settings.image_size_preset
+    when 'small'
+      assign max_width = 600
+      assign image_widths = '240, 352, 480, 600'
+    when 'medium'
+      assign max_width = 1000
+      assign image_widths = '240, 352, 832, 1000'
+    when 'large'
+      assign max_width = 1600
+      assign image_widths = '240, 352, 832, 1200, 1600'
+    when 'custom'
+      assign max_width = block_settings.custom_image_width
+      if max_width <= 600
+        assign image_widths = '240, 352, 480, ' | append: max_width
+      elsif max_width <= 1000
+        assign image_widths = '240, 352, 832, ' | append: max_width
+      elsif max_width <= 1600
+        assign image_widths = '240, 352, 832, 1200, ' | append: max_width
+      else
+        assign image_widths = '240, 352, 832, 1200, 1600, ' | append: max_width
+      endif
+  endcase
+
   # Calculate sizes value for regular grid/carousel items
   capture sizes
     render 'util-product-media-sizes-attr', block: block, section: section, settings: settings, is_first_image: false, is_single_column: is_single_column, needs_both_sizes: needs_both_sizes
@@ -338,6 +363,40 @@
       background-color: var(--color-background);
     }
   {% endif %}
+
+  /* Image size controls based on user settings */
+  {% case block_settings.image_size_preset %}
+    {% when 'small' %}
+      .product-media-container {
+        --image-max-width: 600px;
+      }
+    {% when 'medium' %}
+      .product-media-container {
+        --image-max-width: 1000px;
+      }
+    {% when 'large' %}
+      .product-media-container {
+        --image-max-width: 1600px;
+      }
+    {% when 'custom' %}
+      .product-media-container {
+        --image-max-width: {{ block_settings.custom_image_width }}px;
+      }
+  {% endcase %}
+
+  /* Apply max-width to images based on size preset */
+  .product-media-container .product-media__image {
+    max-width: var(--image-max-width, 100%);
+    width: 100%;
+    height: auto;
+  }
+
+  /* Ensure images don't exceed container size on small screens */
+  @media screen and (max-width: 749px) {
+    .product-media-container .product-media__image {
+      max-width: min(var(--image-max-width, 100%), 100vw);
+    }
+  }
 {% endstyle %}
 
 {% liquid
@@ -403,10 +462,10 @@
         -%}
         {% if block_settings.aspect_ratio != 'adapt' and block_settings.constrain_to_viewport %}
           <div class="product-media-constraint-wrapper">
-            {%- render 'product-media', media: media, sizes: media_sizes, is_main_product_media: forloop.first -%}
+            {%- render 'product-media', media: media, widths: image_widths, sizes: media_sizes, is_main_product_media: forloop.first -%}
           </div>
         {% else %}
-          {%- render 'product-media', media: media, sizes: media_sizes, is_main_product_media: forloop.first -%}
+          {%- render 'product-media', media: media, widths: image_widths, sizes: media_sizes, is_main_product_media: forloop.first -%}
         {% endif %}
       {% endcapture %}
       {% capture class %}
@@ -509,10 +568,10 @@
           -%}
           {% if block_settings.aspect_ratio != 'adapt' and block_settings.constrain_to_viewport %}
             <div class="product-media-constraint-wrapper">
-              {%- render 'product-media', media: media, sizes: media_sizes, is_main_product_media: forloop.first -%}
+              {%- render 'product-media', media: media, widths: image_widths, sizes: media_sizes, is_main_product_media: forloop.first -%}
             </div>
           {% else %}
-            {%- render 'product-media', media: media, sizes: media_sizes, is_main_product_media: forloop.first -%}
+            {%- render 'product-media', media: media, widths: image_widths, sizes: media_sizes, is_main_product_media: forloop.first -%}
           {% endif %}
         </li>
       {% endfor %}
@@ -601,6 +660,7 @@
                 <drag-zoom-wrapper class="product-media__drag-zoom-wrapper">
                   {%- render 'product-media',
                     media: media,
+                    widths: image_widths,
                     sizes: '100vw',
                     loading: 'lazy',
                     is_main_product_media: forloop.first
@@ -609,6 +669,7 @@
               {% else %}
                 {%- render 'product-media',
                   media: media,
+                  widths: image_widths,
                   sizes: '100vw',
                   loading: 'lazy',
                   is_main_product_media: forloop.first
@@ -960,6 +1021,45 @@
     },
     {
       "type": "header",
+      "content": "Tamaño de imagen"
+    },
+    {
+      "type": "select",
+      "id": "image_size_preset",
+      "label": "Tamaño de imagen",
+      "options": [
+        {
+          "value": "small",
+          "label": "Pequeño"
+        },
+        {
+          "value": "medium",
+          "label": "Mediano"
+        },
+        {
+          "value": "large",
+          "label": "Grande"
+        },
+        {
+          "value": "custom",
+          "label": "Personalizado"
+        }
+      ],
+      "default": "large"
+    },
+    {
+      "type": "range",
+      "id": "custom_image_width",
+      "label": "Ancho máximo personalizado",
+      "min": 200,
+      "max": 2000,
+      "step": 50,
+      "unit": "px",
+      "default": 800,
+      "visible_if": "{{ block.settings.image_size_preset == 'custom' }}"
+    },
+    {
+      "type": "header",
       "content": "t:content.media"
     },
     {
@@ -1018,58 +1118,6 @@
       "step": 1,
       "unit": "px",
       "default": 4
-    },
-    {
-      "type": "select",
-      "id": "image_size_preset",
-      "label": "t:settings.size",
-      "options": [
-        {
-          "value": "small",
-          "label": "t:options.small"
-        },
-        {
-          "value": "medium",
-          "label": "t:options.medium"
-        },
-        {
-          "value": "large",
-          "label": "t:options.large"
-        },
-        {
-          "value": "extra_large",
-          "label": "t:options.extra_large"
-        },
-        {
-          "value": "custom",
-          "label": "t:options.custom"
-        }
-      ],
-      "default": "medium"
-    },
-    {
-      "type": "range",
-      "id": "max_image_width",
-      "label": "t:settings.max_width",
-      "info": "t:settings.width_desktop",
-      "min": 300,
-      "max": 1200,
-      "step": 50,
-      "unit": "px",
-      "default": 800,
-      "visible_if": "{{ block.settings.image_size_preset == 'custom' }}"
-    },
-    {
-      "type": "range",
-      "id": "max_image_width_mobile",
-      "label": "t:settings.mobile_width",
-      "info": "t:settings.width_mobile",
-      "min": 200,
-      "max": 800,
-      "step": 25,
-      "unit": "px",
-      "default": 400,
-      "visible_if": "{{ block.settings.image_size_preset == 'custom' }}"
     },
     {
       "type": "checkbox",
