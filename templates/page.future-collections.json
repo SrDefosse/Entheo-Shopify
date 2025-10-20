@@ -9,11 +9,93 @@
  */
 {
   "sections": {
+    "176099216908ed63d7": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_313a73f_mprgdt": {
+          "type": "ai_gen_block_313a73f",
+          "settings": {
+            "heading": "Próximamente",
+            "heading_size": 48,
+            "subtitle": "No son colecciones.  Son capítulos de un rito.  Una odisea que cada año abre otra puerta, hasta deshacerte y rehacerte.",
+            "subtitle_size": 16,
+            "collection_1_image": "shopify://shop_images/upcoming1.png",
+            "collection_1_name": "Sustancias",
+            "collection_1_season": "Las Llaves Prohibidas",
+            "collection_1_description": "Ayahuasca. Hongos. DMT. Peyote. Bufo. La primera colección es el inicio del sacrilegio: ingerir lo sagrado y permitir que lo humano se rompa. Cada pieza es un talismán de esas llaves que destrozan la mente para abrir universos. No es joyería. Es un recordatorio de que un solo respiro puede borrarlo todo",
+            "collection_2_image": "shopify://shop_images/upcoming2.png",
+            "collection_2_name": "Unwrap Your Mind",
+            "collection_2_season": "El Desgarro",
+            "collection_2_description": "Las puertas se quiebran. De pronto, lo real ya no es real. Lo familiar se derrumba y lo imposible se vuelve inevitable. Las piezas nacen de ese desgarro: fracturas, luces líquidas, símbolos que sangran belleza. No abres tu mente: la desgarras hasta que grita.",
+            "collection_3_image": "shopify://shop_images/upcoming3.png",
+            "collection_3_name": "Peak",
+            "collection_3_season": "Disolución del Ego",
+            "collection_3_description": "Aquí mueres. El \"yo\" se hace polvo. No hay identidad, no hay nombre, no hay cuerpo. Las joyas de esta colección son cenizas de ego fundidas con destellos de infinito. Morir para entender que nunca exististe.",
+            "collection_4_image": "shopify://shop_images/upcoming4.png",
+            "collection_4_name": "Peak",
+            "collection_4_season": "Laberinto",
+            "collection_4_description": "El viaje no es recto. Es espiral. Sombras, espejos, pasajes imposibles. Cada mente crea su propio infierno y su propio paraíso. Esta colección encarna la geometría del extravío. Piezas que giran, se cruzan, se pierden. El centro existe, pero tendrás que sangrar para llegar.",
+            "footer_text": "",
+            "blur_amount": 10,
+            "image_blur": 10,
+            "content_blur": 8,
+            "border_width": 1,
+            "card_background": "rgba(255, 255, 255, 0.25)",
+            "image_background": "rgba(255, 255, 255, 0.2)",
+            "content_background": "rgba(255, 255, 255, 0.15)",
+            "card_border_color": "rgba(255, 255, 255, 0.3)",
+            "card_shadow_color": "rgba(0, 0, 0, 0.1)",
+            "card_shadow_hover_color": "rgba(0, 0, 0, 0.2)",
+            "collection_name_size": 20,
+            "heading_color": "#ffffff",
+            "text_color": "#ffffff",
+            "overlay_color": "rgba(0, 0, 0, 0.8)",
+            "overlay_text_color": "#ffffff",
+            "card_border_radius": 16,
+            "section_padding_top": 80,
+            "section_padding_bottom": 80
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_313a73f_mprgdt"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-4",
+        "background_media": "image",
+        "video_position": "cover",
+        "background_image": "shopify://shop_images/DSC00547.jpg",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": true,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
     "176056637758c175d9": {
       "type": "_blocks",
       "blocks": {
         "ai_gen_block_85bbf08_y6n9rz": {
           "type": "ai_gen_block_85bbf08",
+          "disabled": true,
           "settings": {
             "main_title": "<p>Las Colecciones de Entheo</p>",
             "main_subtitle": "<p>No son solo colecciones.<br/><br/><strong>Son capítulos de un rito.</strong><br/><br/>Una odisea que cada año abre otra puerta, hasta deshacerte y rehacerte.</p>",
@@ -90,8 +172,8 @@
         "section_width": "page-width",
         "section_height": "",
         "section_height_custom": 50,
-        "color_scheme": "scheme-4",
-        "background_media": "image",
+        "color_scheme": "scheme-3",
+        "background_media": "none",
         "video_position": "cover",
         "background_image": "shopify://shop_images/IMG_4087_c0ad9167-6cb6-4b10-9521-036f72463117.jpg",
         "background_image_position": "cover",
@@ -109,6 +191,7 @@
     }
   },
   "order": [
+    "176099216908ed63d7",
     "176056637758c175d9"
   ]
 }
