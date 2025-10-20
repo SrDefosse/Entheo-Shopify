@@ -64,54 +64,54 @@
     .full-height--desktop .group-block {
       align-self: var(--details-position, 'flex-start');
     }
+  }
 
-    /* Glassmorphism background effect for product details */
+  /* Glassmorphism background effect for product details */
+  .product-details--glassmorphism {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow:
+      0 8px 32px 0 rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    /* Use transform for proper layering without interfering with sticky behavior */
+    transform: translateZ(0);
+    will-change: transform;
+    /* Mobile margins for better spacing */
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  /* Desktop glassmorphism - no extra margins needed */
+  @media screen and (min-width: 750px) {
     .product-details--glassmorphism {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 16px;
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  /* Dark mode adjustments for product details */
+  @media (prefers-color-scheme: dark) {
+    .product-details--glassmorphism {
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       box-shadow:
-        0 8px 32px 0 rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-      /* Use transform for proper layering without interfering with sticky behavior */
-      transform: translateZ(0);
-      will-change: transform;
-      /* Mobile margins for better spacing */
-      margin-left: 16px;
-      margin-right: 16px;
+        0 8px 32px 0 rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
+  }
 
-    /* Desktop glassmorphism - no extra margins needed */
-    @media screen and (min-width: 750px) {
-      .product-details--glassmorphism {
-        margin-left: 0;
-        margin-right: 0;
-      }
-    }
-
-    /* Dark mode adjustments for product details */
-    @media (prefers-color-scheme: dark) {
-      .product-details--glassmorphism {
-        background: rgba(0, 0, 0, 0.2);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow:
-          0 8px 32px 0 rgba(0, 0, 0, 0.3),
-          inset 0 1px 0 rgba(255, 255, 255, 0.1);
-      }
-    }
-
-    /* Mobile responsive adjustments for product details */
-    @media screen and (max-width: 749px) {
-      .product-details--glassmorphism {
-        /* Ensure minimum margins for mobile viewport */
-        margin-left: max(16px, env(safe-area-inset-left, 0px));
-        margin-right: max(16px, env(safe-area-inset-right, 0px));
-        /* Ensure content doesn't overflow on very small screens */
-        max-width: calc(100vw - 32px);
-        box-sizing: border-box;
-      }
+  /* Mobile responsive adjustments for product details */
+  @media screen and (max-width: 749px) {
+    .product-details--glassmorphism {
+      /* Ensure minimum margins for mobile viewport */
+      margin-left: max(16px, env(safe-area-inset-left, 0px));
+      margin-right: max(16px, env(safe-area-inset-right, 0px));
+      /* Ensure content doesn't overflow on very small screens */
+      max-width: calc(100vw - 32px);
+      box-sizing: border-box;
     }
   }
 {% endstylesheet %}
