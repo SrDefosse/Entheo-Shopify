@@ -81,12 +81,15 @@
     /* Use transform for proper layering without interfering with sticky behavior */
     transform: translateZ(0);
     will-change: transform;
-    /* Mobile margins for better spacing - these provide external spacing */
-    margin-left: 12px;
-    margin-right: 12px;
+    /* Default: no external margins, let parent handle centering */
+    margin-left: 0;
+    margin-right: 0;
     /* Internal padding will be handled by the group component */
     padding-left: 0;
     padding-right: 0;
+    /* Ensure proper width */
+    width: 100%;
+    max-width: 100%;
   }
 
   /* Desktop glassmorphism - no extra margins needed */
@@ -120,13 +123,13 @@
   /* Mobile responsive adjustments for product details */
   @media screen and (max-width: 749px) {
     .product-details--glassmorphism {
-      /* Reduce margins for better content visibility */
-      margin-left: max(12px, env(safe-area-inset-left, 0px));
-      margin-right: max(12px, env(safe-area-inset-right, 0px));
-      /* Use a more reasonable width calculation */
-      width: calc(100vw - 24px);
+      /* Mobile: use calc for width with safe margins */
+      width: calc(100% - 24px);
       max-width: calc(100vw - 24px);
       box-sizing: border-box;
+      /* Center margins will be handled by parent flexbox */
+      margin-left: auto;
+      margin-right: auto;
 
       /* Ensure the glassmorphism container itself is visible */
       min-height: auto;
@@ -142,6 +145,8 @@
       .group-block {
         padding-left: var(--padding-inline-start, 0px);
         padding-right: var(--padding-inline-end, 0px);
+        padding-top: var(--padding-block-start, 0px);
+        padding-bottom: var(--padding-block-end, 0px);
         /* Ensure group content is visible */
         min-height: auto;
         overflow: visible;

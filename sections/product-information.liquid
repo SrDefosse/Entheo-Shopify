@@ -131,10 +131,21 @@
   @media screen and (max-width: 749px) {
     .product-information__media {
       grid-column: 1 / -1;
+      margin-bottom: 24px;
     }
 
     .product-details {
-      grid-column: 2 / 3;
+      grid-column: 1 / -1;
+      /* Center the glassmorphism details container on mobile */
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    /* Ensure glassmorphism details are centered and properly sized on mobile */
+    .product-details--glassmorphism {
+      margin-left: auto;
+      margin-right: auto;
     }
   }
 
@@ -303,6 +314,25 @@
     grid-column: auto;
     margin-top: 0;
     margin-bottom: 0;
+    /* Ensure proper display in grid context */
+    display: block;
+    width: 100%;
+  }
+
+  /* Desktop layout improvements */
+  @media screen and (min-width: 750px) {
+    .product-details {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .product-details--glassmorphism {
+      width: 100%;
+      max-width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+    }
   }
 {% endstylesheet %}
 
@@ -372,10 +402,11 @@
       "id": "gap",
       "label": "t:settings.gap",
       "min": 0,
-      "max": 48,
+      "max": 80,
       "step": 4,
       "unit": "px",
-      "default": 16
+      "default": 32,
+      "info": "Espacio entre la galería de medios y los detalles del producto"
     },
     {
       "type": "color_scheme",
@@ -462,20 +493,22 @@
       "id": "padding-block-start",
       "label": "t:settings.top",
       "min": 0,
-      "max": 100,
-      "step": 1,
+      "max": 200,
+      "step": 4,
       "unit": "px",
-      "default": 0
+      "default": 48,
+      "info": "Espacio superior de la sección"
     },
     {
       "type": "range",
       "id": "padding-block-end",
       "label": "t:settings.bottom",
       "min": 0,
-      "max": 100,
-      "step": 1,
+      "max": 200,
+      "step": 4,
       "unit": "px",
-      "default": 0
+      "default": 48,
+      "info": "Espacio inferior de la sección"
     }
   ],
   "presets": []
