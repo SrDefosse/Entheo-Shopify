@@ -409,7 +409,10 @@
         "icons_shape": "none",
         "section_width": "page-width",
         "gap": 28,
-        "color_scheme": "scheme-3",
+        "color_scheme": "scheme-58084d4c-a86e-4d0a-855e-a0966e5043f7",
+        "background_image": "shopify://shop_images/IMG_4319_6cbfce8a-2613-4816-895e-519d726c2660.jpg",
+        "background_opacity": 30,
+        "background_position": "center",
         "padding-block-start": 48,
         "padding-block-end": 48
       }
