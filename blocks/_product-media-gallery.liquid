@@ -787,7 +787,7 @@
 
   .dialog-zoomed-gallery .product-media-container--model .product-media__image {
     /* Make the height match the height of the model-viewer */
-    height: 80vh;
+    height: 100vh;
   }
 {% endstylesheet %}
 
@@ -1018,6 +1018,58 @@
       "step": 1,
       "unit": "px",
       "default": 4
+    },
+    {
+      "type": "select",
+      "id": "image_size_preset",
+      "label": "t:settings.size",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:options.small"
+        },
+        {
+          "value": "medium",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "large",
+          "label": "t:options.large"
+        },
+        {
+          "value": "extra_large",
+          "label": "t:options.extra_large"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "range",
+      "id": "max_image_width",
+      "label": "t:settings.max_width",
+      "info": "t:settings.width_desktop",
+      "min": 300,
+      "max": 1200,
+      "step": 50,
+      "unit": "px",
+      "default": 800,
+      "visible_if": "{{ block.settings.image_size_preset == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "max_image_width_mobile",
+      "label": "t:settings.mobile_width",
+      "info": "t:settings.width_mobile",
+      "min": 200,
+      "max": 800,
+      "step": 25,
+      "unit": "px",
+      "default": 400,
+      "visible_if": "{{ block.settings.image_size_preset == 'custom' }}"
     },
     {
       "type": "checkbox",
