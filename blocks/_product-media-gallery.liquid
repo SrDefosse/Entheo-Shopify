@@ -153,6 +153,11 @@
     /* Using transform instead for proper layering */
     transform: translateZ(0);
     will-change: transform;
+    /* Configurable margins for mobile viewport spacing */
+    margin-top: {{ block.settings.glassmorphism_margin_top | default: 0 }}px;
+    margin-bottom: {{ block.settings.glassmorphism_margin_bottom | default: 0 }}px;
+    margin-left: {{ block.settings.glassmorphism_margin_left | default: 0 }}px;
+    margin-right: {{ block.settings.glassmorphism_margin_right | default: 0 }}px;
   }
 
   /* Dark mode adjustments */
@@ -197,6 +202,25 @@
     border-radius: 12px;
     padding: 16px;
     gap: 16px;
+    /* Additional margins for mobile viewport */
+    margin-top: {{ block.settings.glassmorphism_margin_top | default: 0 }}px;
+    margin-bottom: {{ block.settings.glassmorphism_margin_bottom | default: 0 }}px;
+    margin-left: {{ block.settings.glassmorphism_margin_left | default: 0 }}px;
+    margin-right: {{ block.settings.glassmorphism_margin_right | default: 0 }}px;
+  }
+
+  /* Mobile responsive adjustments for glassmorphism margins */
+  @media screen and (max-width: 749px) {
+    .media-gallery--glassmorphism {
+      /* Increase default margins on mobile for better spacing */
+      margin-left: max({{ block.settings.glassmorphism_margin_left | default: 0 }}px, 16px);
+      margin-right: max({{ block.settings.glassmorphism_margin_right | default: 0 }}px, 16px);
+    }
+
+    .media-gallery--glassmorphism.media-gallery--grid .media-gallery__grid {
+      margin-left: max({{ block.settings.glassmorphism_margin_left | default: 0 }}px, 16px);
+      margin-right: max({{ block.settings.glassmorphism_margin_right | default: 0 }}px, 16px);
+    }
   }
 
   {% unless block_settings.aspect_ratio == 'adapt' %}
@@ -1008,6 +1032,50 @@
       "id": "hide_variants",
       "default": false,
       "label": "t:settings.hide_unselected_variant_media"
+    },
+    {
+      "type": "header",
+      "content": "t:content.glassmorphism_margins"
+    },
+    {
+      "type": "range",
+      "id": "glassmorphism_margin_top",
+      "label": "t:settings.top_margin",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "glassmorphism_margin_bottom",
+      "label": "t:settings.bottom_margin",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "glassmorphism_margin_left",
+      "label": "t:settings.left_margin",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "glassmorphism_margin_right",
+      "label": "t:settings.right_margin",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 0
     },
     {
       "type": "header",
