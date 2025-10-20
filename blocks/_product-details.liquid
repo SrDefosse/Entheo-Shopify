@@ -32,11 +32,13 @@
 </div>
 
 {% stylesheet %}
-  /* Clear padding on mobile, if not full-width */
+  /* Clear padding on mobile, if not full-width - but preserve glassmorphism margins */
   @media screen and (max-width: 749px) {
     .product-information.section--page-width .product-details > .group-block {
       padding-inline: 0;
     }
+
+    /* Glassmorphism margins work correctly with group padding - handled in mobile query below */
   }
 
   .view-product-title {
@@ -64,53 +66,87 @@
     .full-height--desktop .group-block {
       align-self: var(--details-position, 'flex-start');
     }
+  }
 
-    /* Glassmorphism background effect for product details */
+  /* Glassmorphism background effect for product details */
+  .product-details--glassmorphism {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow:
+      0 8px 32px 0 rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    /* Use transform for proper layering without interfering with sticky behavior */
+    transform: translateZ(0);
+    will-change: transform;
+    /* Mobile margins for better spacing - these provide external spacing */
+    margin-left: 12px;
+    margin-right: 12px;
+    /* Internal padding will be handled by the group component */
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* Desktop glassmorphism - no extra margins needed */
+  @media screen and (min-width: 750px) {
     .product-details--glassmorphism {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 16px;
+      margin-left: 0;
+      margin-right: 0;
+      /* Ensure desktop layout works correctly */
+      width: auto;
+      max-width: none;
+    }
+  }
+
+  /* Ensure all child elements are visible */
+  .product-details--glassmorphism * {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Dark mode adjustments for product details */
+  @media (prefers-color-scheme: dark) {
+    .product-details--glassmorphism {
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       box-shadow:
-        0 8px 32px 0 rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-      /* Use transform for proper layering without interfering with sticky behavior */
-      transform: translateZ(0);
-      will-change: transform;
-      /* Mobile margins for better spacing */
-      margin-left: 16px;
-      margin-right: 16px;
+        0 8px 32px 0 rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
+  }
 
-    /* Desktop glassmorphism - no extra margins needed */
-    @media screen and (min-width: 750px) {
-      .product-details--glassmorphism {
-        margin-left: 0;
-        margin-right: 0;
-      }
-    }
+  /* Mobile responsive adjustments for product details */
+  @media screen and (max-width: 749px) {
+    .product-details--glassmorphism {
+      /* Reduce margins for better content visibility */
+      margin-left: max(12px, env(safe-area-inset-left, 0px));
+      margin-right: max(12px, env(safe-area-inset-right, 0px));
+      /* Use a more reasonable width calculation */
+      width: calc(100vw - 24px);
+      max-width: calc(100vw - 24px);
+      box-sizing: border-box;
 
-    /* Dark mode adjustments for product details */
-    @media (prefers-color-scheme: dark) {
-      .product-details--glassmorphism {
-        background: rgba(0, 0, 0, 0.2);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow:
-          0 8px 32px 0 rgba(0, 0, 0, 0.3),
-          inset 0 1px 0 rgba(255, 255, 255, 0.1);
-      }
-    }
+      /* Ensure the glassmorphism container itself is visible */
+      min-height: auto;
+      overflow: visible;
+      position: relative;
+      z-index: 1;
 
-    /* Mobile responsive adjustments for product details */
-    @media screen and (max-width: 749px) {
-      .product-details--glassmorphism {
-        /* Ensure minimum margins for mobile viewport */
-        margin-left: max(16px, env(safe-area-inset-left, 0px));
-        margin-right: max(16px, env(safe-area-inset-right, 0px));
-        /* Ensure content doesn't overflow on very small screens */
-        max-width: calc(100vw - 32px);
-        box-sizing: border-box;
+      /* Internal padding is handled by the group component, not by glassmorphism container */
+      padding-left: 0;
+      padding-right: 0;
+
+      /* Allow group component to handle its configured padding */
+      .group-block {
+        padding-left: var(--padding-inline-start, 0px);
+        padding-right: var(--padding-inline-end, 0px);
+        /* Ensure group content is visible */
+        min-height: auto;
+        overflow: visible;
+        position: relative;
+        z-index: 2;
       }
     }
   }
