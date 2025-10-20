@@ -32,11 +32,13 @@
 </div>
 
 {% stylesheet %}
-  /* Clear padding on mobile, if not full-width */
+  /* Clear padding on mobile, if not full-width - but preserve glassmorphism margins */
   @media screen and (max-width: 749px) {
     .product-information.section--page-width .product-details > .group-block {
       padding-inline: 0;
     }
+
+    /* Glassmorphism margins work correctly with group padding - handled in mobile query below */
   }
 
   .view-product-title {
@@ -79,9 +81,12 @@
     /* Use transform for proper layering without interfering with sticky behavior */
     transform: translateZ(0);
     will-change: transform;
-    /* Mobile margins for better spacing */
+    /* Mobile margins for better spacing - these provide external spacing */
     margin-left: 16px;
     margin-right: 16px;
+    /* Internal padding will be handled by the group component */
+    padding-left: 0;
+    padding-right: 0;
   }
 
   /* Desktop glassmorphism - no extra margins needed */
@@ -112,6 +117,16 @@
       /* Ensure content doesn't overflow on very small screens */
       max-width: calc(100vw - 32px);
       box-sizing: border-box;
+
+      /* Internal padding is handled by the group component, not by glassmorphism container */
+      padding-left: 0;
+      padding-right: 0;
+
+      /* Allow group component to handle its configured padding */
+      .group-block {
+        padding-left: var(--padding-inline-start, 0px);
+        padding-right: var(--padding-inline-end, 0px);
+      }
     }
   }
 {% endstylesheet %}
