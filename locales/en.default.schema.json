@@ -661,7 +661,11 @@
     // Icon option for washing machine or laundry symbol
     "washing": "Washing",
     "wide": "Wide",
-    "youtube": "YouTube"
+    "youtube": "YouTube",
+    "no_repeat": "No repeat",
+    "repeat": "Repeat",
+    "repeat_x": "Repeat horizontally",
+    "repeat_y": "Repeat vertically"
   },
   "settings": {
     "accordion": "Accordion",
@@ -685,6 +689,7 @@
     "background_position": "Background position",
     "background_repeat": "Background repeat",
     "background_size": "Background size",
+    "show_background_overlay": "Show background overlay",
     "badge_position": "Position on cards",
     // Color scheme setting for sale badges on product cards
     "badge_sale_color_scheme": "Sale",
