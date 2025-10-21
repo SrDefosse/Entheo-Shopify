@@ -275,7 +275,8 @@
     "recipient_form_fields_visible": "Recipient form fields are now visible",
     "recipient_form_fields_hidden": "Recipient form fields are now hidden",
     "recipient_form_error": "There was an error with the form submission",
-    "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }} characters used"
+    "product_custom_property_character_count": "{{ used_chars }}/{{ max_chars }} characters used",
+    "background": "Background"
   },
   "fields": {
     // Separates min and max values in price range filter
@@ -315,5 +316,31 @@
       "sold_out": "Sold out",
       "unavailable": "Unavailable"
     }
+  },
+  "settings": {
+    "background_image": "Background image",
+    "background_size": "Background size",
+    "background_position": "Background position",
+    "background_repeat": "Background repeat",
+    "top_padding": "Top padding",
+    "bottom_padding": "Bottom padding"
+  },
+  "options": {
+    "cover": "Cover",
+    "contain": "Contain",
+    "auto": "Auto",
+    "center": "Center",
+    "top": "Top",
+    "bottom": "Bottom",
+    "left": "Left",
+    "right": "Right",
+    "top_left": "Top left",
+    "top_right": "Top right",
+    "bottom_left": "Bottom left",
+    "bottom_right": "Bottom right",
+    "no_repeat": "No repeat",
+    "repeat": "Repeat",
+    "repeat_x": "Repeat horizontally",
+    "repeat_y": "Repeat vertically"
   }
 }
