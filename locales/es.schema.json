@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "names": {
     "404": "404",
@@ -273,6 +282,10 @@
     "secondary_button_border": "Borde del botón secundario",
     "shadow_color": "Sombra",
     "background_color": "Color de fondo",
+    "background_image": "Imagen de fondo",
+    "background_position": "Posición de fondo",
+    "background_repeat": "Repetición de fondo",
+    "background_size": "Tamaño de fondo",
     "video_autoplay": "Reproducción automática",
     "video_cover_image": "Imagen de portada",
     "video_external_url": "URL",

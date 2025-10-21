@@ -188,9 +188,10 @@
         "padding-inline-start": 14,
         "padding-inline-end": 14,
         "color_scheme": "scheme-3",
+        "background_image": "shopify://shop_images/IMG_4319_6cbfce8a-2613-4816-895e-519d726c2660.jpg",
         "background_size": "cover",
         "background_position": "center",
-        "background_repeat": "no-repeat",
+        "background_repeat": "repeat-y",
         "padding-block-start": 0,
         "padding-block-end": 32
       }
