@@ -192,6 +192,7 @@
         "background_size": "cover",
         "background_position": "center",
         "background_repeat": "no-repeat",
+        "show_background_overlay": false,
         "padding-block-start": 0,
         "padding-block-end": 32
       }
