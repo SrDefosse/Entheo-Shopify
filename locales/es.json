@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "blocks": {
     "load_video": "Cargar video: {{ description }}",
@@ -294,5 +303,34 @@
       "success_moderated": "Comentario publicado y a la espera de moderación",
       "success": "Comentario publicado"
     }
+  },
+  "content": {
+    "background": "Fondo"
+  },
+  "settings": {
+    "background_image": "Imagen de fondo",
+    "background_size": "Tamaño de fondo",
+    "background_position": "Posición de fondo",
+    "background_repeat": "Repetición de fondo",
+    "top_padding": "Relleno superior",
+    "bottom_padding": "Relleno inferior"
+  },
+  "options": {
+    "cover": "Cubrir",
+    "contain": "Contener",
+    "auto": "Auto",
+    "center": "Centro",
+    "top": "Arriba",
+    "bottom": "Abajo",
+    "left": "Izquierda",
+    "right": "Derecha",
+    "top_left": "Arriba izquierda",
+    "top_right": "Arriba derecha",
+    "bottom_left": "Abajo izquierda",
+    "bottom_right": "Abajo derecha",
+    "no_repeat": "No repetir",
+    "repeat": "Repetir",
+    "repeat_x": "Repetir horizontalmente",
+    "repeat_y": "Repetir verticalmente"
   }
 }
