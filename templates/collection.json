@@ -17,7 +17,7 @@
           "name": "Image filled text",
           "settings": {
             "text": "PRODUCTOS",
-            "text_size": 80,
+            "text_size": 70,
             "text_transform": "uppercase",
             "letter_spacing": 2,
             "fill_image": "shopify://shop_images/DSC00504.jpg",
