@@ -23,7 +23,7 @@
 {% endjavascript %}
 
 {% comment %} We always render this full-width, as the child blocks have width: page/full settings {% endcomment %}
-<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div class="section-background color-{{ section.settings.color_scheme }}{% if section.settings.background_image %} has-background-image{% endif %}"{% if section.settings.background_image %} style="background-image: url('{{ section.settings.background_image | image_url: width: 1920 }}'); background-size: {{ section.settings.background_size }}; background-position: {{ section.settings.background_position }}; background-repeat: {{ section.settings.background_repeat }};"{% endif %}></div>
 <results-list
   class="section product-grid-container color-{{ section.settings.color_scheme }}"
   style="--padding-block-start: {{ section.settings.padding-block-start }}px; --padding-block-end: {{ section.settings.padding-block-end }}px;"
@@ -69,6 +69,27 @@
 </results-list>
 
 {% stylesheet %}
+  .section-background.has-background-image {
+    background-attachment: fixed;
+    position: relative;
+  }
+
+  .section-background.has-background-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+  }
+
+  .section-background.has-background-image > * {
+    position: relative;
+    z-index: 2;
+  }
+
   .main-collection-grid {
     grid-column: var(--grid-column--mobile);
 
@@ -282,6 +303,106 @@
       "id": "color_scheme",
       "label": "t:settings.color_scheme",
       "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.background"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "t:settings.background_image"
+    },
+    {
+      "type": "select",
+      "id": "background_size",
+      "label": "t:settings.background_size",
+      "options": [
+        {
+          "value": "cover",
+          "label": "t:options.cover"
+        },
+        {
+          "value": "contain",
+          "label": "t:options.contain"
+        },
+        {
+          "value": "auto",
+          "label": "t:options.auto"
+        }
+      ],
+      "default": "cover",
+      "visible_if": "{{ section.settings.background_image != blank }}"
+    },
+    {
+      "type": "select",
+      "id": "background_position",
+      "label": "t:settings.background_position",
+      "options": [
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "top",
+          "label": "t:options.top"
+        },
+        {
+          "value": "bottom",
+          "label": "t:options.bottom"
+        },
+        {
+          "value": "left",
+          "label": "t:options.left"
+        },
+        {
+          "value": "right",
+          "label": "t:options.right"
+        },
+        {
+          "value": "top left",
+          "label": "t:options.top_left"
+        },
+        {
+          "value": "top right",
+          "label": "t:options.top_right"
+        },
+        {
+          "value": "bottom left",
+          "label": "t:options.bottom_left"
+        },
+        {
+          "value": "bottom right",
+          "label": "t:options.bottom_right"
+        }
+      ],
+      "default": "center",
+      "visible_if": "{{ section.settings.background_image != blank }}"
+    },
+    {
+      "type": "select",
+      "id": "background_repeat",
+      "label": "t:settings.background_repeat",
+      "options": [
+        {
+          "value": "no-repeat",
+          "label": "t:options.no_repeat"
+        },
+        {
+          "value": "repeat",
+          "label": "t:options.repeat"
+        },
+        {
+          "value": "repeat-x",
+          "label": "t:options.repeat_x"
+        },
+        {
+          "value": "repeat-y",
+          "label": "t:options.repeat_y"
+        }
+      ],
+      "default": "no-repeat",
+      "visible_if": "{{ section.settings.background_image != blank }}"
     },
     {
       "type": "range",
