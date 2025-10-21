@@ -322,6 +322,7 @@
     "background_size": "Background size",
     "background_position": "Background position",
     "background_repeat": "Background repeat",
+    "show_background_overlay": "Show background overlay",
     "top_padding": "Top padding",
     "bottom_padding": "Bottom padding"
   },
