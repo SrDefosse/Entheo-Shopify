@@ -312,6 +312,7 @@
     "background_size": "Tamaño de fondo",
     "background_position": "Posición de fondo",
     "background_repeat": "Repetición de fondo",
+    "show_background_overlay": "Mostrar superposición de fondo",
     "top_padding": "Relleno superior",
     "bottom_padding": "Relleno inferior"
   },
