@@ -23,7 +23,7 @@
 {% endjavascript %}
 
 {% comment %} We always render this full-width, as the child blocks have width: page/full settings {% endcomment %}
-<div class="section-background color-{{ section.settings.color_scheme }}{% if section.settings.background_image %} has-background-image{% endif %}"{% if section.settings.background_image %} style="background-image: url('{{ section.settings.background_image | image_url: width: 1920 }}'); background-size: {{ section.settings.background_size }}; background-position: {{ section.settings.background_position }}; background-repeat: {{ section.settings.background_repeat }};"{% endif %}></div>
+<div class="section-background color-{{ section.settings.color_scheme }}{% if section.settings.background_image %} has-background-image{% if section.settings.show_background_overlay %} has-overlay{% endif %}{% endif %}"{% if section.settings.background_image %} style="background-image: url('{{ section.settings.background_image | image_url: width: 1920 }}'); background-size: {{ section.settings.background_size }}; background-position: {{ section.settings.background_position }}; background-repeat: {{ section.settings.background_repeat }};"{% endif %}></div>
 <results-list
   class="section product-grid-container color-{{ section.settings.color_scheme }}"
   style="--padding-block-start: {{ section.settings.padding-block-start }}px; --padding-block-end: {{ section.settings.padding-block-end }}px;"
@@ -74,7 +74,7 @@
     position: relative;
   }
 
-  .section-background.has-background-image::before {
+  .section-background.has-background-image.has-overlay::before {
     content: '';
     position: absolute;
     top: 0;
@@ -402,6 +402,13 @@
         }
       ],
       "default": "no-repeat",
+      "visible_if": "{{ section.settings.background_image != blank }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_background_overlay",
+      "label": "t:settings.show_background_overlay",
+      "default": true,
       "visible_if": "{{ section.settings.background_image != blank }}"
     },
     {
