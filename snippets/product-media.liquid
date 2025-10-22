@@ -145,12 +145,14 @@
   }
 
   /*** Media border-radius feature ****/
+  /* Apply border-radius on both mobile and desktop */
+  .media-gallery--carousel slideshow-container,
+  .media-gallery--grid .product-media > * {
+    border-radius: var(--media-radius, 0);
+    overflow: hidden;
+  }
+
   @media screen and (min-width: 750px) {
-    .media-gallery--carousel slideshow-container,
-    .media-gallery--grid .product-media > * {
-      border-radius: var(--media-radius, 0);
-      overflow: hidden;
-    }
 
     /* When the CAROUSEL is on the LEFT side */
     .product-information:not(.product-information--media-right)
