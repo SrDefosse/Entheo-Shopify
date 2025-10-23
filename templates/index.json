@@ -526,78 +526,6 @@
         "padding-block-start": 0,
         "padding-block-end": 0
       }
-    },
-    "future_collections_4HghhX": {
-      "type": "future-collections",
-      "blocks": {
-        "collection_preview_Mjrfb3": {
-          "type": "collection_preview",
-          "settings": {
-            "image": "shopify://shop_images/upcoming1.png",
-            "collection_name": "Sustancias - Las Llaves Prohibidas",
-            "season": "",
-            "year": "2025",
-            "release_date": "",
-            "short_description": "Las plantas sagradas despiertan la puerta a lo desconocido",
-            "teaser_text": "Ayahuasca. Hongos. DMT. Peyote. Bufo. La primera colección es el inicio del sacrilegio: ingerir lo sagrado y permitir que lo humano se rompa. Cada pieza es un talismán de esas llaves que destrozan la mente para abrir universos. No es joyería. Es un recordatorio de que un solo respiro puede borrarlo todo",
-            "show_badge": false,
-            "badge_text": "Coming Soon",
-            "notify_button": false,
-            "notify_text": "Notify Me"
-          }
-        },
-        "collection_preview_F3VpxX": {
-          "type": "collection_preview",
-          "settings": {
-            "image": "shopify://shop_images/upcoming2.png",
-            "collection_name": "Unwrap Your Mind - El Desgarro",
-            "season": "",
-            "year": "",
-            "release_date": "",
-            "short_description": "La mente se abre y lo surreal envuelve cada pensamiento",
-            "teaser_text": "Las puertas se quiebran. De pronto, lo real ya no es real. Lo familiar se derrumba y lo imposible se vuelve inevitable. Las piezas nacen de ese desgarro: fracturas, luces líquidas, símbolos que sangran belleza. No abres tu mente: la desgarras hasta que grita.",
-            "show_badge": false,
-            "badge_text": "Coming Soon",
-            "notify_button": false,
-            "notify_text": "Notify Me"
-          }
-        },
-        "collection_preview_8dnG6a": {
-          "type": "collection_preview",
-          "settings": {
-            "image": "shopify://shop_images/upcoming3.png",
-            "collection_name": "Peak - Disolución del Ego",
-            "season": "",
-            "year": "",
-            "release_date": "",
-            "short_description": "El ego se disuelve, el laberinto interno se recorre y el cosmos se revela",
-            "teaser_text": "El ego se disuelve, el laberinto interno se recorre y el cosmos se revela",
-            "show_badge": false,
-            "badge_text": "Coming Soon",
-            "notify_button": false,
-            "notify_text": "Notify Me"
-          }
-        }
-      },
-      "block_order": [
-        "collection_preview_Mjrfb3",
-        "collection_preview_F3VpxX",
-        "collection_preview_8dnG6a"
-      ],
-      "disabled": true,
-      "settings": {
-        "heading": "Próximas Colecciones",
-        "heading_size": "h2",
-        "description": "<p>No son solo colecciones.<br/>Son capítulos de un rito.<br/>Una odisea que cada año abre otra puerta, hasta deshacerte y rehacerte.</p>",
-        "columns_desktop": 3,
-        "columns_mobile": "1",
-        "gap": 24,
-        "footer_text": "<p>¿Quieres acceso anticipado? Suscríbete a nuestra lista para recibir previews exclusivos y notificaciones de lanzamiento.</p>",
-        "section_width": "page-width",
-        "color_scheme": "scheme-5",
-        "padding-block-start": 60,
-        "padding-block-end": 80
-      }
     }
   },
   "order": [
@@ -606,7 +534,6 @@
     "17605015599aff6bd7",
     "17606837088c2e5812",
     "section_qJ3fAX",
-    "1760506132d8e34172",
-    "future_collections_4HghhX"
+    "1760506132d8e34172"
   ]
 }
