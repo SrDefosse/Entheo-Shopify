@@ -29,10 +29,17 @@
     padding: 20px 0;
     /* Improve touch handling */
     touch-action: pan-x pinch-zoom;
+    /* Ensure smooth transitions */
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform-style: preserve-3d;
   }
 
   .ai-product-carousel__track-{{ ai_gen_id }}.is-dragging {
     touch-action: pan-y pinch-zoom;
+    will-change: transform;
+    cursor: grabbing;
   }
 
   .ai-product-carousel__track-{{ ai_gen_id }}.is-dragging * {
@@ -386,10 +393,18 @@
         this.initialTransform = 0;
         this.totalCards = 0;
         this.resizeTimeout = null;
+        this.initTimeout = null;
         this.dragThreshold = 10; // Minimum pixels to consider it a drag vs click
       }
 
       connectedCallback() {
+        // Use setTimeout to ensure DOM is fully ready
+        this.initTimeout = setTimeout(() => {
+          this.initialize();
+        }, 0);
+      }
+
+      initialize() {
         this.track = this.querySelector('[data-track]');
         this.cards = Array.from(this.querySelectorAll('[data-card]'));
         this.prevButton = this.querySelector('[data-prev]');
@@ -417,22 +432,35 @@
       }
 
       setupEventListeners() {
-        // Mouse events - only on track element to avoid conflicts
-        this.track.addEventListener('mousedown', this.handleStart.bind(this));
-        this.track.addEventListener('mousemove', this.handleMove.bind(this));
-        this.track.addEventListener('mouseup', this.handleEnd.bind(this));
+        // Mouse events - listen on document to capture events even when mouse leaves track
+        document.addEventListener('mousedown', this.handleMouseDown.bind(this));
+        document.addEventListener('mousemove', this.handleMouseMove.bind(this));
+        document.addEventListener('mouseup', this.handleMouseUp.bind(this));
 
-        // Touch events - only on track element, not document
+        // Backup mouse events on window (for edge cases)
+        window.addEventListener('mouseup', this.handleMouseUp.bind(this));
+        window.addEventListener('contextmenu', () => this.forceEndDrag());
+
+        // Touch events - only on track element, not document (touch works better locally)
         this.track.addEventListener('touchstart', this.handleStart.bind(this), { passive: true });
         this.track.addEventListener('touchmove', this.handleMove.bind(this), { passive: false });
         this.track.addEventListener('touchend', this.handleEnd.bind(this), { passive: true });
 
+        // Mouse leave handler for track
+        this.track.addEventListener('mouseleave', this.handleMouseLeave.bind(this));
+
         // Arrow navigation
         if (this.prevButton) {
-          this.prevButton.addEventListener('click', () => this.goToPrevSlide());
+          this.prevButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.goToPrevSlide();
+          });
         }
         if (this.nextButton) {
-          this.nextButton.addEventListener('click', () => this.goToNextSlide());
+          this.nextButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.goToNextSlide();
+          });
         }
 
         // Prevent default drag behavior
@@ -443,10 +471,69 @@
       }
 
       disconnectedCallback() {
-        // Clean up event listeners
+        // Clean up timeouts
+        if (this.initTimeout) {
+          clearTimeout(this.initTimeout);
+        }
         if (this.resizeTimeout) {
           clearTimeout(this.resizeTimeout);
         }
+
+        // Clean up event listeners
+        document.removeEventListener('mousedown', this.handleMouseDown);
+        document.removeEventListener('mousemove', this.handleMouseMove);
+        document.removeEventListener('mouseup', this.handleMouseUp);
+        window.removeEventListener('mouseup', this.handleMouseUp);
+        window.removeEventListener('contextmenu', this.forceEndDrag);
+        window.removeEventListener('resize', this.handleResize);
+
+        // Reset any stuck state
+        this.forceEndDrag();
+        if (this.track) {
+          this.track.style.transition = '';
+          this.track.style.transform = '';
+        }
+      }
+
+      handleMouseDown(e) {
+        // Only handle left mouse button
+        if (e.button !== 0) return;
+
+        // Don't start drag if clicking on interactive elements within the carousel
+        if (this.track && this.track.contains(e.target) && !e.target.closest('a, button, [role="button"], input, textarea, select')) {
+          this.startDrag(e);
+        }
+      }
+
+      handleMouseMove(e) {
+        if (this.isDragging) {
+          this.handleMove(e);
+        }
+      }
+
+      handleMouseUp(e) {
+        if (this.isDragging) {
+          this.handleEnd(e);
+        }
+      }
+
+      handleMouseLeave(e) {
+        // If mouse leaves the track while dragging, end the drag
+        if (this.isDragging) {
+          this.handleEnd(e);
+        }
+      }
+
+      startDrag(e) {
+        this.isDragging = true;
+        this.startX = this.getEventX(e);
+        this.currentX = this.startX; // Initialize currentX
+        this.initialTransform = this.getCurrentTransform();
+        this.track.style.transition = 'none';
+        this.track.classList.add('is-dragging');
+
+        // Prevent default to avoid text selection during drag
+        e.preventDefault();
       }
 
       handleStart(e) {
@@ -455,25 +542,12 @@
           return;
         }
 
-        // Don't start drag if it's a right click or modified click
-        if (e.button && e.button !== 0) {
-          return;
-        }
-
         // For touch events, ensure it's a single finger
         if (e.touches && e.touches.length > 1) {
           return;
         }
 
-        this.isDragging = true;
-        this.startX = this.getEventX(e);
-        this.currentX = this.startX; // Initialize currentX
-        this.initialTransform = this.getCurrentTransform();
-        this.track.style.transition = 'none';
-        this.track.classList.add('is-dragging');
-
-        // Prevent default to avoid scrolling/zooming during drag
-        e.preventDefault();
+        this.startDrag(e);
       }
 
       handleMove(e) {
@@ -490,12 +564,17 @@
         }
       }
 
-      handleEnd() {
+      handleEnd(e) {
         if (!this.isDragging) return;
 
         this.isDragging = false;
         this.track.style.transition = 'transform 0.3s ease';
         this.track.classList.remove('is-dragging');
+
+        // Get final position before ending drag
+        if (e && this.getEventX) {
+          this.currentX = this.getEventX(e);
+        }
 
         const deltaX = this.currentX - this.startX;
 
@@ -516,8 +595,27 @@
         this.updateArrows();
       }
 
+      // Force end drag - safety method in case something goes wrong
+      forceEndDrag() {
+        if (this.isDragging) {
+          this.isDragging = false;
+          this.track.style.transition = 'transform 0.3s ease';
+          this.track.classList.remove('is-dragging');
+          this.updatePosition();
+          this.updateArrows();
+        }
+      }
+
       getEventX(e) {
-        return e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+        // Handle both mouse and touch events
+        if (e.type.includes('mouse')) {
+          return e.clientX;
+        } else if (e.touches && e.touches.length > 0) {
+          return e.touches[0].clientX;
+        } else if (e.changedTouches && e.changedTouches.length > 0) {
+          return e.changedTouches[0].clientX;
+        }
+        return 0;
       }
 
       getCurrentTransform() {
