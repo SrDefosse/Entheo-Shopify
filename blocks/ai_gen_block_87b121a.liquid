@@ -417,10 +417,12 @@
       }
 
       setupEventListeners() {
-        // Mouse events - only on track element to avoid conflicts
+        // Mouse events - start on track, but move/end on document to capture events outside track
         this.track.addEventListener('mousedown', this.handleStart.bind(this));
-        this.track.addEventListener('mousemove', this.handleMove.bind(this));
-        this.track.addEventListener('mouseup', this.handleEnd.bind(this));
+        this.boundHandleMove = this.handleMove.bind(this);
+        this.boundHandleEnd = this.handleEnd.bind(this);
+        document.addEventListener('mousemove', this.boundHandleMove);
+        document.addEventListener('mouseup', this.boundHandleEnd);
 
         // Touch events - only on track element, not document
         this.track.addEventListener('touchstart', this.handleStart.bind(this), { passive: true });
@@ -447,6 +449,14 @@
         if (this.resizeTimeout) {
           clearTimeout(this.resizeTimeout);
         }
+        
+        // Remove document event listeners
+        if (this.boundHandleMove) {
+          document.removeEventListener('mousemove', this.boundHandleMove);
+        }
+        if (this.boundHandleEnd) {
+          document.removeEventListener('mouseup', this.boundHandleEnd);
+        }
       }
 
       handleStart(e) {
@@ -465,6 +475,12 @@
           return;
         }
 
+        // Force end any previous drag state (safety measure)
+        if (this.isDragging) {
+          this.isDragging = false;
+          this.track.classList.remove('is-dragging');
+        }
+
         this.isDragging = true;
         this.startX = this.getEventX(e);
         this.currentX = this.startX; // Initialize currentX
@@ -473,13 +489,19 @@
         this.track.classList.add('is-dragging');
 
         // Prevent default to avoid scrolling/zooming during drag
-        e.preventDefault();
+        if (e.cancelable) {
+          e.preventDefault();
+        }
       }
 
       handleMove(e) {
         if (!this.isDragging) return;
 
-        e.preventDefault();
+        // Only prevent default if we're actually dragging (not just hovering)
+        if (e.cancelable) {
+          e.preventDefault();
+        }
+        
         this.currentX = this.getEventX(e);
         const deltaX = this.currentX - this.startX;
 
@@ -517,7 +539,14 @@
       }
 
       getEventX(e) {
-        return e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+        if (e.type.includes('mouse')) {
+          return e.clientX;
+        } else if (e.touches && e.touches.length > 0) {
+          return e.touches[0].clientX;
+        } else if (e.changedTouches && e.changedTouches.length > 0) {
+          return e.changedTouches[0].clientX;
+        }
+        return this.currentX || 0; // Fallback to last known position
       }
 
       getCurrentTransform() {
