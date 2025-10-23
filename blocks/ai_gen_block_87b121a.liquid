@@ -27,10 +27,20 @@
     cursor: grab;
     user-select: none;
     padding: 20px 0;
+    /* Improve touch handling */
+    touch-action: pan-x pinch-zoom;
   }
 
   .ai-product-carousel__track-{{ ai_gen_id }}.is-dragging {
     touch-action: pan-y pinch-zoom;
+  }
+
+  .ai-product-carousel__track-{{ ai_gen_id }}.is-dragging * {
+    pointer-events: none;
+  }
+
+  .ai-product-carousel__track-{{ ai_gen_id }}.is-dragging .ai-product-carousel__nav-arrow-{{ ai_gen_id }} {
+    pointer-events: auto;
   }
 
   .ai-product-carousel__track-{{ ai_gen_id }}:active {
@@ -130,6 +140,10 @@
     text-decoration: none;
     display: inline-block;
     text-align: center;
+    /* Ensure button clicks take priority over carousel drag */
+    pointer-events: auto;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
   }
 
   @media (hover: hover) {
@@ -372,6 +386,7 @@
         this.initialTransform = 0;
         this.totalCards = 0;
         this.resizeTimeout = null;
+        this.dragThreshold = 10; // Minimum pixels to consider it a drag vs click
       }
 
       connectedCallback() {
@@ -385,7 +400,6 @@
 
         this.calculateDimensions();
         this.setupEventListeners();
-        this.updateMaxIndex();
         this.updateArrows();
       }
 
@@ -403,15 +417,15 @@
       }
 
       setupEventListeners() {
-        // Mouse events
+        // Mouse events - only on track element to avoid conflicts
         this.track.addEventListener('mousedown', this.handleStart.bind(this));
-        document.addEventListener('mousemove', this.handleMove.bind(this));
-        document.addEventListener('mouseup', this.handleEnd.bind(this));
+        this.track.addEventListener('mousemove', this.handleMove.bind(this));
+        this.track.addEventListener('mouseup', this.handleEnd.bind(this));
 
-        // Touch events
-        this.track.addEventListener('touchstart', this.handleStart.bind(this));
-        document.addEventListener('touchmove', this.handleMove.bind(this), { passive: false });
-        document.addEventListener('touchend', this.handleEnd.bind(this));
+        // Touch events - only on track element, not document
+        this.track.addEventListener('touchstart', this.handleStart.bind(this), { passive: true });
+        this.track.addEventListener('touchmove', this.handleMove.bind(this), { passive: false });
+        this.track.addEventListener('touchend', this.handleEnd.bind(this), { passive: true });
 
         // Arrow navigation
         if (this.prevButton) {
@@ -436,11 +450,30 @@
       }
 
       handleStart(e) {
+        // Don't start drag if clicking on interactive elements
+        if (e.target.closest('a, button, [role="button"], input, textarea, select')) {
+          return;
+        }
+
+        // Don't start drag if it's a right click or modified click
+        if (e.button && e.button !== 0) {
+          return;
+        }
+
+        // For touch events, ensure it's a single finger
+        if (e.touches && e.touches.length > 1) {
+          return;
+        }
+
         this.isDragging = true;
         this.startX = this.getEventX(e);
+        this.currentX = this.startX; // Initialize currentX
         this.initialTransform = this.getCurrentTransform();
         this.track.style.transition = 'none';
         this.track.classList.add('is-dragging');
+
+        // Prevent default to avoid scrolling/zooming during drag
+        e.preventDefault();
       }
 
       handleMove(e) {
@@ -449,9 +482,12 @@
         e.preventDefault();
         this.currentX = this.getEventX(e);
         const deltaX = this.currentX - this.startX;
-        const newTransform = this.initialTransform + deltaX;
 
-        this.track.style.transform = `translateX(${newTransform}px)`;
+        // Only update transform if movement exceeds minimum threshold
+        if (Math.abs(deltaX) > this.dragThreshold) {
+          const newTransform = this.initialTransform + deltaX;
+          this.track.style.transform = `translateX(${newTransform}px)`;
+        }
       }
 
       handleEnd() {
@@ -462,13 +498,17 @@
         this.track.classList.remove('is-dragging');
 
         const deltaX = this.currentX - this.startX;
-        const threshold = this.cardWidth * 0.3;
 
-        if (Math.abs(deltaX) > threshold) {
-          if (deltaX > 0 && this.currentIndex > 0) {
-            this.currentIndex--;
-          } else if (deltaX < 0 && this.currentIndex < this.getMaxIndex()) {
-            this.currentIndex++;
+        // Only move if the drag distance exceeds both thresholds (minimum drag and card threshold)
+        if (Math.abs(deltaX) > this.dragThreshold) {
+          const threshold = this.cardWidth * 0.3;
+
+          if (Math.abs(deltaX) > threshold) {
+            if (deltaX > 0 && this.currentIndex > 0) {
+              this.currentIndex--;
+            } else if (deltaX < 0 && this.currentIndex < this.getMaxIndex()) {
+              this.currentIndex++;
+            }
           }
         }
 
@@ -554,7 +594,6 @@
 
         this.resizeTimeout = setTimeout(() => {
           this.calculateDimensions();
-          this.updateMaxIndex();
           this.updatePosition();
           this.updateArrows();
         }, 100);
