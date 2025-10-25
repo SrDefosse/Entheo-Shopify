@@ -211,7 +211,7 @@
 
   /* Align sticky media gallery with product details when header is sticky */
   body:has(#header-group #header-component[data-sticky-state='active']) .media-gallery.sticky-content {
-    --sticky-header-offset: var(--header-height);
+    --sticky-header-offset: calc(var(--header-height) + 2rem);
   }
 
   .media-gallery--glassmorphism .slideshow-arrows {
