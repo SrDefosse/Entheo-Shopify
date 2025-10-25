@@ -153,9 +153,17 @@
     /* Using transform instead for proper layering */
     transform: translateZ(0);
     will-change: transform;
-    /* Mobile margins for better spacing */
-    margin-left: 16px;
-    margin-right: 16px;
+  }
+
+  /* Mobile responsive adjustments for glassmorphism */
+  @media screen and (max-width: 749px) {
+    .media-gallery--glassmorphism {
+      /* Ensure minimum margins for mobile viewport */
+      margin-left: 16px;
+      margin-right: 16px;
+      max-width: calc(100vw - 32px);
+      box-sizing: border-box;
+    }
   }
 
   /* Desktop glassmorphism - no extra margins needed */
@@ -163,27 +171,8 @@
     .media-gallery--glassmorphism {
       margin-left: 0;
       margin-right: 0;
-    }
-  }
-
-  /* Mobile responsive adjustments for better spacing */
-  @media screen and (max-width: 749px) {
-    .media-gallery--glassmorphism {
-      /* Ensure minimum margins for mobile viewport */
-      margin-left: max(16px, env(safe-area-inset-left, 0px));
-      margin-right: max(16px, env(safe-area-inset-right, 0px));
-    }
-
-    /* Special handling for grid layout on mobile */
-    .media-gallery--glassmorphism.media-gallery--grid {
-      margin-left: max(12px, env(safe-area-inset-left, 0px));
-      margin-right: max(12px, env(safe-area-inset-right, 0px));
-    }
-
-    /* Ensure content doesn't overflow on very small screens */
-    .media-gallery--glassmorphism {
-      max-width: calc(100vw - 32px);
-      box-sizing: border-box;
+      margin-top: 0;
+      margin-bottom: 0;
     }
   }
 
@@ -207,6 +196,13 @@
     padding: 8px 12px;
     position: relative;
     z-index: 2;
+  }
+
+  /* Sticky positioning for media gallery */
+  .media-gallery.sticky-content {
+    position: sticky;
+    top: calc(var(--sticky-header-offset, 0px) + 16px);
+    align-self: flex-start;
   }
 
   /* Align sticky media gallery with product details when header is sticky */
