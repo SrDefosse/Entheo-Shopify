@@ -153,36 +153,29 @@
     /* Using transform instead for proper layering */
     transform: translateZ(0);
     will-change: transform;
-    /* Mobile margins for better spacing */
-    margin-left: 16px;
-    margin-right: 16px;
   }
 
   /* Desktop glassmorphism - no extra margins needed */
   @media screen and (min-width: 750px) {
     .media-gallery--glassmorphism {
-      margin-left: 0;
-      margin-right: 0;
+      /* Removed margins to align with product details */
     }
   }
 
   /* Mobile responsive adjustments for better spacing */
   @media screen and (max-width: 749px) {
     .media-gallery--glassmorphism {
-      /* Ensure minimum margins for mobile viewport */
-      margin-left: max(16px, env(safe-area-inset-left, 0px));
-      margin-right: max(16px, env(safe-area-inset-right, 0px));
+      /* Removed margins to align with product details */
     }
 
     /* Special handling for grid layout on mobile */
     .media-gallery--glassmorphism.media-gallery--grid {
-      margin-left: max(12px, env(safe-area-inset-left, 0px));
-      margin-right: max(12px, env(safe-area-inset-right, 0px));
+      /* Removed margins to align with product details */
     }
 
     /* Ensure content doesn't overflow on very small screens */
     .media-gallery--glassmorphism {
-      max-width: calc(100vw - 32px);
+      max-width: 100vw;
       box-sizing: border-box;
     }
   }
@@ -234,9 +227,7 @@
     border-radius: 12px;
     padding: 16px;
     gap: 16px;
-    /* Mobile margins for grid layout */
-    margin-left: 0;
-    margin-right: 0;
+    /* Removed margins to align with product details */
   }
 
   {% unless block_settings.aspect_ratio == 'adapt' %}
