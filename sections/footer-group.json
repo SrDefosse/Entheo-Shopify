@@ -232,6 +232,7 @@
                 "social_link_JnLXB6": {
                   "type": "_social-link",
                   "name": "Facebook",
+                  "disabled": true,
                   "settings": {
                     "link": "https://www.facebook.com/"
                   },
@@ -241,7 +242,7 @@
                   "type": "_social-link",
                   "name": "Instagram ",
                   "settings": {
-                    "link": "https://www.instagram.com/"
+                    "link": "https://www.instagram.com/__entheo/"
                   },
                   "blocks": {}
                 },
@@ -256,6 +257,7 @@
                 "social_link_aAH768": {
                   "type": "_social-link",
                   "name": "YouTube",
+                  "disabled": true,
                   "settings": {
                     "link": "https://www.youtube.com/"
                   },
