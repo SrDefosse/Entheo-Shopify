@@ -5,12 +5,13 @@
 <div
   id="ProductInformation-{{ section.id }}"
   class="
+    spacing-style
     product-details
     {% if block_settings.sticky_details_desktop %} sticky-content--desktop{% endif %}
     {% if block_settings.height == 'fill' -%} full-height--desktop{% endif -%}
     product-details--glassmorphism
   "
-  style="--details-position: {{ block_settings.details_position }};"
+  style="{% render 'spacing-style', settings: block_settings %} --details-position: {{ block_settings.details_position }};"
   data-testid="product-information-details"
   {% if settings.transition_to_main_product %}
     data-view-transition-type="product-details"
@@ -499,6 +500,50 @@
       "step": 1,
       "unit": "px",
       "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:content.margin"
+    },
+    {
+      "type": "range",
+      "id": "margin-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
     }
   ],
   "presets": [
@@ -511,6 +556,10 @@
         "padding-block-end": 0,
         "padding-inline-start": 0,
         "padding-inline-end": 0,
+        "margin-block-start": 0,
+        "margin-block-end": 0,
+        "margin-inline-start": 0,
+        "margin-inline-end": 0,
         "gap": 12,
         "inherit_color_scheme": true,
         "color_scheme": "",
@@ -780,3 +829,5 @@
   ]
 }
 {% endschema %}
+
+
