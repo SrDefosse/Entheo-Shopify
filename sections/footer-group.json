@@ -249,15 +249,7 @@
                   "type": "_social-link",
                   "name": "TikTok",
                   "settings": {
-                    "link": "https://www.tiktok.com/"
-                  },
-                  "blocks": {}
-                },
-                "social_link_Qw9AXL": {
-                  "type": "_social-link",
-                  "name": "X / Twitter",
-                  "settings": {
-                    "link": "https://x.com/"
+                    "link": "https://www.tiktok.com/https://www.tiktok.com/@__entheo"
                   },
                   "blocks": {}
                 },
@@ -274,7 +266,6 @@
                 "social_link_JnLXB6",
                 "social_link_9i9EqD",
                 "social_link_kd8UUt",
-                "social_link_Qw9AXL",
                 "social_link_aAH768"
               ]
             }
