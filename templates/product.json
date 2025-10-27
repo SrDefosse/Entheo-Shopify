@@ -327,6 +327,47 @@
         "padding-block-end": 40
       }
     },
+    "marquee_ryqHix": {
+      "type": "marquee",
+      "blocks": {
+        "text_Edm9hL": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Hacemos productos que duran toda la vida</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "tight",
+            "letter_spacing": "tight",
+            "case": "none",
+            "wrap": "nowrap",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_Edm9hL"
+      ],
+      "name": "t:names.marquee_section",
+      "settings": {
+        "movement_direction": "normal",
+        "color_scheme": "scheme-3",
+        "padding-block-start": 24,
+        "padding-block-end": 24,
+        "gap_between_elements": 24
+      }
+    },
     "product_recommendations_9yPJbj": {
       "type": "product-recommendations",
       "blocks": {
@@ -476,6 +517,7 @@
   "order": [
     "blocks_9zMq9G",
     "main",
+    "marquee_ryqHix",
     "product_recommendations_9yPJbj"
   ]
 }
