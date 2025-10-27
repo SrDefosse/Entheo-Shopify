@@ -258,6 +258,9 @@
           ]
         }
       },
+      "custom_css": [
+        ".product-details {padding-left: 15px; padding-right: 15px;}"
+      ],
       "settings": {
         "content_width": "content-center-aligned",
         "desktop_media_position": "left",
