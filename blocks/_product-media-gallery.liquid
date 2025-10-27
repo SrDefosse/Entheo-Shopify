@@ -689,6 +689,26 @@
     /* Make the height match the height of the model-viewer */
     height: 100vh;
   }
+
+  /* Existing styles here... */
+
+  /* Add this at the end of the stylesheet */
+  .product-media__image {
+    width: 100% !important; /* Ensure full width */
+    height: 100% !important; /* Force height to match container */
+    object-fit: contain !important; /* Fit without distortion or overflow */
+    object-position: var(--focal-point, center center); /* Center using focal points */
+  }
+
+  /* If you have cover mode enabled in settings, override only for contain cases if needed */
+  .product-media-container.media-fit-contain .product-media__image {
+    object-fit: contain !important;
+  }
+
+  /* Optional: Smooth transition for resizing */
+  .product-media__image {
+    transition: transform 0.3s ease; /* Elegant scaling feel */
+  }
 {% endstylesheet %}
 
 {% schema %}
