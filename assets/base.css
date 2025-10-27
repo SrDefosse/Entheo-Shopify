@@ -200,6 +200,12 @@ h6 {
   overflow-wrap: break-word;
 }
 
+.wrap-text {
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+}
+
 p:empty {
   display: none;
 }
@@ -948,6 +954,19 @@ summary::-webkit-details-marker {
   display: none;
 }
 
+/* When header is transparent, pull the first main content section up to sit under the floating header */
+body:has(.header[transparent]) .content-for-layout > .shopify-section:first-child {
+  margin-top: calc(var(--header-group-height) * -1);
+}
+
+body:has(.header[transparent]) #header-group > *:not(.header-section) {
+  z-index: 1;
+}
+
+body:has(.header[transparent]) #header-group > .header-section {
+  z-index: var(--layer-sticky);
+}
+
 /* Featured collection block */
 .featured-collection-block {
   width: 100%;
@@ -1291,7 +1310,6 @@ button.shopify-payment-button__button--unbranded {
 
 .button {
   font-family: var(--button-font-family-primary);
-  font-weight: var(--button-font-weight-primary);
   text-transform: var(--button-text-case-primary);
   border-radius: var(--style-border-radius-buttons-primary);
 }
@@ -1302,14 +1320,12 @@ button.shopify-payment-button__button--unbranded {
 
 .button-secondary {
   font-family: var(--button-font-family-secondary);
-  font-weight: var(--button-font-weight-secondary);
   text-transform: var(--button-text-case-secondary);
   border-radius: var(--style-border-radius-buttons-secondary);
 }
 
 button.shopify-payment-button__button--unbranded {
   font-family: var(--button-font-family-primary);
-  font-weight: var(--button-font-weight-primary);
   text-transform: var(--button-text-case-primary);
 }
 
@@ -2317,15 +2333,17 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
   }
 
   .layout-panel-flex--row:not(.mobile-column) {
-    .text-block {
+    flex-wrap: var(--flex-wrap-mobile);
+
+    > .text-block {
       flex: 1 1 var(--max-width--display-tight);
     }
 
-    .image-block {
+    > .image-block {
       flex: 1 1 var(--size-style-width-mobile-min);
     }
 
-    .button {
+    > .button {
       flex: 0 0 fit-content;
     }
   }
@@ -2561,9 +2579,10 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
   aspect-ratio: 1;
   border-radius: 50%;
   border-width: 0;
-  display: grid;
+  display: flex;
   line-height: normal;
-  place-content: center;
+  align-items: center;
+  justify-content: center;
   color: var(--color-primary-button-text);
   padding-inline: var(--cart-padding);
 }
@@ -4265,185 +4284,3 @@ text-component {
   }
 }
 
-/* ============================================
-   BACKDROP BLUR & GLASS MORPHISM UTILITIES
-   ============================================ */
-
-/* Backdrop Blur Base */
-.backdrop-blur {
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-.backdrop-blur-sm {
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-}
-
-.backdrop-blur-md {
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-.backdrop-blur-lg {
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-}
-
-.backdrop-blur-xl {
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-}
-
-/* Glass Morphism Cards */
-.glass-card {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
-}
-
-.glass-card-dark {
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-}
-
-.glass-card-light {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 16px;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
-}
-
-/* Frosted Glass Overlay */
-.frosted-overlay {
-  background: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-}
-
-/* Minimalist Card Styles */
-.minimal-card {
-  background: rgba(var(--color-background-rgb), 0.95);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(var(--color-border-rgb), 0.1);
-  border-radius: 12px;
-  padding: 2rem;
-  transition: all 0.3s ease;
-}
-
-.minimal-card:hover {
-  background: rgba(var(--color-background-rgb), 1);
-  box-shadow: 0 10px 40px rgba(var(--color-shadow-rgb), 0.1);
-  transform: translateY(-2px);
-}
-
-/* Glass Button */
-.glass-button {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50px;
-  padding: 12px 32px;
-  color: inherit;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.glass-button:hover {
-  background: rgba(255, 255, 255, 0.25);
-  transform: translateY(-1px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* Backdrop Content Overlay */
-.backdrop-content {
-  position: relative;
-  background: rgba(var(--color-background-rgb), 0.85);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  padding: 3rem;
-  border-radius: 20px;
-}
-
-/* Blur Gradient Mask */
-.blur-gradient-mask {
-  position: relative;
-  overflow: hidden;
-}
-
-.blur-gradient-mask::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(var(--color-background-rgb), 0.5) 80%,
-    rgba(var(--color-background-rgb), 0.9) 100%
-  );
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
-  pointer-events: none;
-}
-
-/* Utility Classes */
-.bg-translucent {
-  background: rgba(var(--color-background-rgb), 0.8);
-}
-
-.bg-translucent-light {
-  background: rgba(255, 255, 255, 0.7);
-}
-
-.bg-translucent-dark {
-  background: rgba(0, 0, 0, 0.7);
-}
-
-.border-glass {
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.shadow-glass {
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
-}
-
-/* Responsive Backdrop Blur */
-@media screen and (max-width: 749px) {
-  .backdrop-blur-mobile-off {
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    background: rgba(var(--color-background-rgb), 0.95);
-  }
-}
-
-/* Animation Classes */
-.glass-fade-in {
-  animation: glassFadeIn 0.6s ease-out forwards;
-}
-
-@keyframes glassFadeIn {
-  from {
-    opacity: 0;
-    backdrop-filter: blur(0px);
-    -webkit-backdrop-filter: blur(0px);
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    transform: translateY(0);
-  }
-}
