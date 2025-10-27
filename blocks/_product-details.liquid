@@ -5,13 +5,12 @@
 <div
   id="ProductInformation-{{ section.id }}"
   class="
-    spacing-style
     product-details
     {% if block_settings.sticky_details_desktop %} sticky-content--desktop{% endif %}
     {% if block_settings.height == 'fill' -%} full-height--desktop{% endif -%}
-    product-details--glassmorphism
+    {% if glassmorphism %} product-details--glassmorphism{% endif %}
   "
-  style="{% render 'spacing-style', settings: block_settings %} --details-position: {{ block_settings.details_position }};"
+  style="--details-position: {{ block_settings.details_position }};"
   data-testid="product-information-details"
   {% if settings.transition_to_main_product %}
     data-view-transition-type="product-details"
@@ -33,11 +32,10 @@
 </div>
 
 {% stylesheet %}
-  /* Mobile padding adjustments */
+  /* Clear padding on mobile, if not full-width */
   @media screen and (max-width: 749px) {
-    /* Don't clear padding - let it work naturally */
     .product-information.section--page-width .product-details > .group-block {
-      /* Padding is handled by the group component settings */
+      padding-inline: 0;
     }
   }
 
@@ -81,15 +79,9 @@
     /* Use transform for proper layering without interfering with sticky behavior */
     transform: translateZ(0);
     will-change: transform;
-    /* Center the entire glassmorphism container itself */
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    /* Base styles - no constraints */
-    box-sizing: border-box;
-    /* Ensure proper width */
+    /* Let the grid system handle positioning and sizing */
     width: 100%;
-    max-width: 100%;
+    box-sizing: border-box;
   }
 
   /* Ensure all child elements are visible and flow naturally */
@@ -97,14 +89,12 @@
     box-sizing: border-box;
   }
 
-  /* The group component should flow naturally inside the centered container */
+  /* The group component should flow naturally inside the grid */
   .product-details--glassmorphism .group-block {
-    /* Let the group component determine its own width based on content */
-    width: auto;
+    /* Let the grid system determine width, just add some padding for the glass effect */
+    width: 100%;
     max-width: 100%;
-    /* Don't interfere with internal content alignment */
-    margin-left: 0;
-    margin-right: 0;
+    padding: 16px;
   }
 
   /* Dark mode adjustments for product details */
@@ -118,21 +108,9 @@
     }
   }
 
-  /* Mobile responsive adjustments for product details */
-  @media screen and (max-width: 749px) {
-    .product-details--glassmorphism {
-      /* Mobile: add reasonable side margins */
-      margin-left: 16px;
-      margin-right: 16px;
-      /* Keep flex centering for mobile too */
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      /* Constrain width for mobile viewport */
-      width: calc(100vw - 32px);
-      max-width: calc(100vw - 32px);
-      box-sizing: border-box;
-    }
+  /* If the header is sticky, make product details content stick underneath the header */
+  body:has(#header-group #header-component[data-sticky-state='active']) .product-details.sticky-content--desktop {
+    --sticky-header-offset: var(--header-height);
   }
 {% endstylesheet %}
 
@@ -500,50 +478,6 @@
       "step": 1,
       "unit": "px",
       "default": 0
-    },
-    {
-      "type": "header",
-      "content": "t:content.margin"
-    },
-    {
-      "type": "range",
-      "id": "margin-block-start",
-      "label": "t:settings.top",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "margin-block-end",
-      "label": "t:settings.bottom",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "margin-inline-start",
-      "label": "t:settings.left",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "margin-inline-end",
-      "label": "t:settings.right",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 0
     }
   ],
   "presets": [
@@ -556,10 +490,6 @@
         "padding-block-end": 0,
         "padding-inline-start": 0,
         "padding-inline-end": 0,
-        "margin-block-start": 0,
-        "margin-block-end": 0,
-        "margin-inline-start": 0,
-        "margin-inline-end": 0,
         "gap": 12,
         "inherit_color_scheme": true,
         "color_scheme": "",
@@ -573,7 +503,7 @@
         "text_TMtYp8": {
           "type": "text",
           "settings": {
-            "text": "<p>Home → Shirts</p>",
+            "text": "t:html_defaults.home_to_shirts",
             "alignment": "left",
             "padding-block-start": 16,
             "padding-inline-end": 0,
@@ -592,7 +522,7 @@
         "text_GMQR8L": {
           "type": "text",
           "settings": {
-            "text": "<p>★★★★★ 368 Reviews</p>",
+            "text": "t:html_defaults.reviews",
             "alignment": "left"
           }
         },
@@ -695,7 +625,7 @@
                 "text_83R7CQ": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Free shipping over $50</p>",
+                    "text": "t:html_defaults.free_shipping_over",
                     "alignment": "left",
                     "padding-block-start": 0,
                     "padding-block-end": 0,
@@ -740,7 +670,7 @@
                 "text_EmGGUV": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Free 30-day returns</p>",
+                    "text": "t:html_defaults.free_returns",
                     "alignment": "left",
                     "padding-block-start": 0,
                     "padding-block-end": 0,
@@ -761,7 +691,7 @@
             "accordion-row-1": {
               "type": "_accordion-row",
               "settings": {
-                "heading": "Materials"
+                "heading": "t:text_defaults.materials"
               },
               "blocks": {
                 "text": {
@@ -773,7 +703,7 @@
             "accordion-row-2": {
               "type": "_accordion-row",
               "settings": {
-                "heading": "Care instructions"
+                "heading": "t:text_defaults.care_instructions"
               },
               "blocks": {
                 "text": {
@@ -785,7 +715,7 @@
             "accordion-row-3": {
               "type": "_accordion-row",
               "settings": {
-                "heading": "Fit"
+                "heading": "t:text_defaults.fit"
               },
               "blocks": {
                 "text": {
@@ -806,7 +736,7 @@
             "recommendations-header": {
               "type": "text",
               "settings": {
-                "text": "<h3>Styled with</h3>",
+                "text": "t:html_defaults.styled_with",
                 "type_preset": "h5"
               }
             }
@@ -829,5 +759,3 @@
   ]
 }
 {% endschema %}
-
-

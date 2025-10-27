@@ -46,9 +46,6 @@
     assign slideshow_controls_style = 'counter'
   endif
 
-  # Glassmorphism background effect
-  assign glassmorphism_class = 'media-gallery--glassmorphism'
-
   assign render_slideshow_arrows = false
 
   if selected_product.media.size <= 1
@@ -139,106 +136,6 @@
 {%- endif -%}
 
 {% style %}
-  /* Glassmorphism background effect */
-  .media-gallery--glassmorphism {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 16px;
-    box-shadow:
-      0 8px 32px 0 rgba(0, 0, 0, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    /* Removed position: relative to preserve sticky behavior */
-    /* Using transform instead for proper layering */
-    transform: translateZ(0);
-    will-change: transform;
-    /* Mobile margins for better spacing */
-    margin-left: 16px;
-    margin-right: 16px;
-  }
-
-  /* Desktop glassmorphism - no extra margins needed */
-  @media screen and (min-width: 750px) {
-    .media-gallery--glassmorphism {
-      margin-left: 0;
-      margin-right: 0;
-    }
-  }
-
-  /* Mobile responsive adjustments for better spacing */
-  @media screen and (max-width: 749px) {
-    .media-gallery--glassmorphism {
-      /* Ensure minimum margins for mobile viewport */
-      margin-left: max(16px, env(safe-area-inset-left, 0px));
-      margin-right: max(16px, env(safe-area-inset-right, 0px));
-    }
-
-    /* Special handling for grid layout on mobile */
-    .media-gallery--glassmorphism.media-gallery--grid {
-      margin-left: max(12px, env(safe-area-inset-left, 0px));
-      margin-right: max(12px, env(safe-area-inset-right, 0px));
-    }
-
-    /* Ensure content doesn't overflow on very small screens */
-    .media-gallery--glassmorphism {
-      max-width: calc(100vw - 32px);
-      box-sizing: border-box;
-    }
-  }
-
-  /* Dark mode adjustments */
-  @media (prefers-color-scheme: dark) {
-    .media-gallery--glassmorphism {
-      background: rgba(0, 0, 0, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow:
-        0 8px 32px 0 rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    }
-  }
-
-  /* Ensure controls are visible on glassmorphism background */
-  .media-gallery--glassmorphism .slideshow-controls {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border-radius: 8px;
-    padding: 8px 12px;
-    position: relative;
-    z-index: 2;
-  }
-
-  /* Align sticky media gallery with product details when header is sticky */
-  body:has(#header-group #header-component[data-sticky-state='active']) .media-gallery.sticky-content {
-    --sticky-header-offset: var(--header-height);
-  }
-
-  .media-gallery--glassmorphism .slideshow-arrows {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    width: 44px;
-    height: 44px;
-    position: relative;
-    z-index: 2;
-  }
-
-  /* Grid layout glassmorphism styles */
-  .media-gallery--glassmorphism.media-gallery--grid .media-gallery__grid {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border-radius: 12px;
-    padding: 16px;
-    gap: 16px;
-    /* Mobile margins for grid layout */
-    margin-left: 0;
-    margin-right: 0;
-  }
-
   {% unless block_settings.aspect_ratio == 'adapt' %}
     .product-media-container {
       --media-preview-ratio: {{ block_settings.aspect_ratio }};
@@ -379,7 +276,6 @@
   class="
     spacing-style
     sticky-content
-    {{ glassmorphism_class }}
     {% if block_settings.media_presentation == 'grid' %}
       media-gallery--{{ block_settings.media_columns }}-column
       {% if block_settings.media_columns == "two" and block_settings.large_first_image%}media-gallery--large-first-image{% endif %}
