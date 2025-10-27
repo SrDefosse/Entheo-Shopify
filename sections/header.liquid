@@ -291,11 +291,14 @@
   }
 
   .header[transparent] {
-    --language-button-background-color: transparent;
-    --language-button-border-color: transparent;
+    --language-button-background-color: rgba(255, 255, 255, 0.1);
+    --language-button-border-color: rgba(255, 255, 255, 0.2);
 
-    /* used to apply transparency to .header__row, will only ever be transparent or unset */
-    --header-bg-color: transparent;
+    /* Glassmorphism effect variables */
+    --header-bg-color: rgba(255, 255, 255, 0.08);
+    --header-backdrop-blur: 20px;
+    --header-border-color: rgba(255, 255, 255, 0.1);
+    --header-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 
     /* used to display the appropriate logo based on transparency state */
     --header-logo-display: none;
@@ -306,8 +309,12 @@
     left: 0;
     right: 0;
 
-    /* transparent color scheme on .header should never apply its background color */
-    background-color: transparent;
+    /* Enhanced glassmorphism styles */
+    background-color: var(--header-bg-color);
+    backdrop-filter: blur(var(--header-backdrop-blur));
+    -webkit-backdrop-filter: blur(var(--header-backdrop-blur));
+    border-bottom: 1px solid var(--header-border-color);
+    box-shadow: var(--header-shadow);
     z-index: var(--layer-overlay);
 
     &[transparent='not-sticky'][data-sticky-state='active'],
@@ -318,7 +325,10 @@
     &:has(.menu-list__list-item[slot='overflow'] .menu-list__link:is(:hover, [aria-expanded='true'], [data-animating])) {
       --header-logo-display: unset;
       --header-logo-inverse-display: unset;
-      --header-bg-color: unset;
+      --header-bg-color: rgba(255, 255, 255, 0.15);
+      --header-backdrop-blur: 25px;
+      --header-border-color: rgba(255, 255, 255, 0.2);
+      --header-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
       --color-foreground: inherit;
       --color-foreground-rgb: inherit;
       --color-background: inherit;
@@ -326,17 +336,77 @@
       --color-border: inherit;
       --color-border-rgb: inherit;
 
+      /* Enhanced glassmorphism on interaction */
+      background-color: var(--header-bg-color);
+      backdrop-filter: blur(var(--header-backdrop-blur));
+      -webkit-backdrop-filter: blur(var(--header-backdrop-blur));
+      border-bottom-color: var(--header-border-color);
+      box-shadow: var(--header-shadow);
+
       .header__row {
         /* Faster transition for "in" animation */
         transition: color var(--animation-values-fast), border-color var(--animation-values-fast),
-          background-color var(--animation-values-fast);
+          background-color var(--animation-values-fast), backdrop-filter var(--animation-values-fast),
+          box-shadow var(--animation-values-fast);
       }
     }
 
     .header__row {
       /* Slower transition for "out" animation */
       transition: color var(--animation-values-slow), border-color var(--animation-values-slow),
-        background-color var(--animation-values-slow);
+        background-color var(--animation-values-slow), backdrop-filter var(--animation-values-slow),
+        box-shadow var(--animation-values-slow);
+    }
+
+    /* Enhanced glassmorphism for interactive elements */
+    .header-actions__action,
+    .dropdown-localization__button,
+    .search-action {
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: all var(--animation-speed) var(--animation-easing);
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.3);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        transform: translateY(-1px);
+      }
+    }
+
+    /* Glassmorphism for dropdown menus */
+    .dropdown-menu,
+    .mega-menu__list {
+      background-color: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Glassmorphism for search modal */
+    .search-modal {
+      background-color: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Subtle glow effect for better glassmorphism */
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.1) 100%);
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: -1;
     }
   }
 
@@ -355,6 +425,12 @@
     --color-border-rgb: inherit;
     --color-primary-button-background: inherit;
     --color-primary-button-text: inherit;
+
+    /* Glassmorphism background override */
+    background-color: transparent;
+    backdrop-filter: inherit;
+    -webkit-backdrop-filter: inherit;
+    border-color: var(--header-border-color, transparent);
   }
 
   .header--inherit-color-scheme-on-menu-open:has(.mega-menu__list:hover) .header__row,
@@ -392,7 +468,11 @@
   }
 
   .header[data-sticky-state] {
-    transition: opacity var(--animation-speed) var(--animation-easing);
+    transition: opacity var(--animation-speed) var(--animation-easing),
+      background-color var(--animation-speed) var(--animation-easing),
+      backdrop-filter var(--animation-speed) var(--animation-easing),
+      box-shadow var(--animation-speed) var(--animation-easing),
+      border-color var(--animation-speed) var(--animation-easing);
     opacity: 1;
   }
 
@@ -410,6 +490,34 @@
 
     /* will default to bg from its color scheme unless --header-bg-color is transparent */
     background-color: var(--header-bg-color, var(--color-background));
+  }
+
+  /* Glassmorphism for sticky header */
+  .header[sticky] {
+    --header-bg-color: rgba(255, 255, 255, 0.1);
+    --header-backdrop-blur: 15px;
+    --header-border-color: rgba(255, 255, 255, 0.15);
+    --header-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+
+    background-color: var(--header-bg-color);
+    backdrop-filter: blur(var(--header-backdrop-blur));
+    -webkit-backdrop-filter: blur(var(--header-backdrop-blur));
+    border-bottom: 1px solid var(--header-border-color);
+    box-shadow: var(--header-shadow);
+  }
+
+  /* Enhanced glassmorphism for mobile */
+  @media screen and (max-width: 749px) {
+    .header[transparent] {
+      --header-backdrop-blur: 15px;
+      --header-bg-color: rgba(255, 255, 255, 0.12);
+      --header-border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .header[sticky] {
+      --header-backdrop-blur: 12px;
+      --header-bg-color: rgba(255, 255, 255, 0.15);
+    }
   }
 
   .header__row--top:not(.divider--page-width),
