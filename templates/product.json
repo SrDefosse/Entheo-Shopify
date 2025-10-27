@@ -269,7 +269,7 @@
         "background_image": "shopify://shop_images/DSC00642.jpg",
         "background_position": "bottom",
         "background_size": "cover",
-        "padding-block-start": 45,
+        "padding-block-start": 40,
         "padding-block-end": 40
       }
     },
