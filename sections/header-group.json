@@ -57,7 +57,9 @@
           "blocks": {}
         }
       },
-      "custom_css": [],
+      "custom_css": [
+        ".header {}"
+      ],
       "settings": {
         "logo_position": "left",
         "menu_position": "center",
