@@ -33,10 +33,10 @@
             "zoom": false,
             "video_loop": false,
             "hide_variants": true,
-            "padding-block-start": 15,
-            "padding-block-end": 15,
-            "padding-inline-start": 15,
-            "padding-inline-end": 15
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
           },
           "blocks": {}
         },
@@ -258,7 +258,9 @@
           ]
         }
       },
-      "custom_css": [],
+      "custom_css": [
+        ".product-media-container {justify-content: center;}"
+      ],
       "settings": {
         "content_width": "content-center-aligned",
         "desktop_media_position": "left",
