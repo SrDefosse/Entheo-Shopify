@@ -57,9 +57,7 @@
           "blocks": {}
         }
       },
-      "custom_css": [
-        ".header {}"
-      ],
+      "custom_css": [],
       "settings": {
         "logo_position": "left",
         "menu_position": "center",
@@ -80,7 +78,7 @@
         "divider_width": 0,
         "divider_size": "page-width",
         "border_width": 0,
-        "color_scheme_top": "scheme-3",
+        "color_scheme_top": "scheme-5",
         "color_scheme_bottom": "",
         "color_scheme_transparent": "",
         "enable_transparent_header_home": false,
