@@ -58,7 +58,7 @@
     {% assign render_order_array = render_order | split: ',' %}
     {% capture media %}
       <div
-        class="product-information__media"
+        class="product-information__media media-gallery--glassmorphism"
         data-testid="product-information-media"
       >
         {%- content_for 'block',
@@ -73,7 +73,8 @@
       {% content_for 'block',
         type: '_product-details',
         id: 'product-details',
-        closest.product: closest.product
+        closest.product: closest.product,
+        glassmorphism: true
       %}
     {% endcapture %}
 
@@ -91,7 +92,7 @@
 
 {% stylesheet %}
   .product-information {
-    gap: var(--gap) 0;
+    gap: 0;
   }
 
   /* Background image styles */
@@ -109,11 +110,125 @@
     z-index: 1;
   }
 
+  /* Glassmorphism background effect for media gallery */
+  .media-gallery--glassmorphism {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow:
+      0 8px 32px 0 rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    /* Removed position: relative to preserve sticky behavior */
+    /* Using transform instead for proper layering */
+    transform: translateZ(0);
+    will-change: transform;
+    /* Let the grid system handle positioning and sizing */
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Dark mode adjustments */
+  @media (prefers-color-scheme: dark) {
+    .media-gallery--glassmorphism {
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow:
+        0 8px 32px 0 rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  /* Ensure controls are visible on glassmorphism background */
+  .media-gallery--glassmorphism .slideshow-controls {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border-radius: 8px;
+    padding: 8px 12px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Align sticky media gallery with product details when header is sticky */
+  body:has(#header-group #header-component[data-sticky-state='active']) .media-gallery.sticky-content {
+    --sticky-header-offset: var(--header-height);
+  }
+
+  .media-gallery--glassmorphism .slideshow-arrows {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Grid layout glassmorphism styles */
+  .media-gallery--glassmorphism.media-gallery--grid .media-gallery__grid {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border-radius: 12px;
+    padding: 16px;
+    gap: 16px;
+    /* Mobile margins for grid layout */
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  /* Glassmorphism background effect for product details */
+  .product-details--glassmorphism {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow:
+      0 8px 32px 0 rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    /* Use transform for proper layering without interfering with sticky behavior */
+    transform: translateZ(0);
+    will-change: transform;
+    /* Let the grid system handle positioning and sizing */
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Ensure all child elements are visible and flow naturally */
+  .product-details--glassmorphism * {
+    box-sizing: border-box;
+  }
+
+  /* The group component should flow naturally inside the grid */
+  .product-details--glassmorphism .group-block {
+    /* Let the grid system determine width, just add some padding for the glass effect */
+    width: 100%;
+    max-width: 100%;
+    padding: 16px;
+  }
+
+  /* Dark mode adjustments for product details */
+  @media (prefers-color-scheme: dark) {
+    .product-details--glassmorphism {
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow:
+        0 8px 32px 0 rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+  }
+
   /* Base grid layout */
   .product-information__grid {
     display: grid;
     grid-template-columns: subgrid;
     grid-column: 1 / -1;
+    gap: 0;
   }
 
   /* Default column positions */
@@ -136,7 +251,6 @@
 
     .product-details {
       grid-column: 1 / -1;
-      /* No flex interference - let content flow naturally */
       width: 100%;
     }
   }
@@ -145,6 +259,11 @@
   @media screen and (min-width: 750px) {
     .product-information__grid {
       grid-column: 2;
+      /* Ensure gap is applied correctly in desktop */
+      gap: var(--gap);
+      /* Maintain proper centering with gap */
+      justify-content: center;
+      align-items: start;
     }
 
     /* Position when there is no media */
@@ -162,14 +281,6 @@
       &.product-information--media-left {
         grid-template-columns: 1fr min(50vw, var(--sidebar-width));
 
-        .product-information__media {
-          padding-right: calc(var(--gap, 0) / 2);
-        }
-
-        .product-details {
-          padding-left: calc(var(--gap, 0) / 2);
-        }
-
         &:has(.media-gallery--extend) {
           grid-column: 1 / 3;
         }
@@ -180,12 +291,10 @@
         grid-template-columns: min(50vw, var(--sidebar-width)) 1fr;
 
         .product-information__media {
-          padding-left: calc(var(--gap, 0) / 2);
           order: 1;
         }
 
         .product-details {
-          padding-right: calc(var(--gap, 0) / 2);
           order: 0;
         }
 
@@ -299,20 +408,6 @@
   body:has(#header-group #header-component[data-sticky-state='active']) .product-details.sticky-content--desktop {
     --sticky-header-offset: var(--header-height);
   }
-
-  /* Ensure glassmorphism product details work correctly in grid layout */
-  .product-information__grid .product-details--glassmorphism {
-    /* Let it flow naturally within the grid */
-    display: block;
-  }
-
-  /* Desktop layout improvements */
-  @media screen and (min-width: 750px) {
-    .product-details {
-      /* Let content flow naturally */
-      width: 100%;
-    }
-  }
 {% endstylesheet %}
 
 {% schema %}
@@ -381,11 +476,10 @@
       "id": "gap",
       "label": "t:settings.gap",
       "min": 0,
-      "max": 80,
+      "max": 48,
       "step": 4,
       "unit": "px",
-      "default": 32,
-      "info": "Espacio entre la galería de medios y los detalles del producto"
+      "default": 16
     },
     {
       "type": "color_scheme",
@@ -472,22 +566,20 @@
       "id": "padding-block-start",
       "label": "t:settings.top",
       "min": 0,
-      "max": 200,
-      "step": 4,
+      "max": 100,
+      "step": 1,
       "unit": "px",
-      "default": 48,
-      "info": "Espacio superior de la sección"
+      "default": 0
     },
     {
       "type": "range",
       "id": "padding-block-end",
       "label": "t:settings.bottom",
       "min": 0,
-      "max": 200,
-      "step": 4,
+      "max": 100,
+      "step": 1,
       "unit": "px",
-      "default": 48,
-      "info": "Espacio inferior de la sección"
+      "default": 0
     }
   ],
   "presets": []
