@@ -358,10 +358,10 @@
         box-shadow var(--animation-values-slow);
     }
 
-    /* Enhanced glassmorphism for interactive elements */
-    .header-actions__action,
-    .dropdown-localization__button,
-    .search-action {
+    /* Enhanced glassmorphism for interactive elements - Only when header is NOT transparent */
+    .header:not([transparent]) .header-actions__action,
+    .header:not([transparent]) .dropdown-localization__button,
+    .header:not([transparent]) .search-action {
       background-color: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.2);
       backdrop-filter: blur(10px);
@@ -376,23 +376,61 @@
       }
     }
 
+    /* When header IS transparent (glassmorphism), buttons should be more subtle */
+    .header[transparent] .header-actions__action,
+    .header[transparent] .dropdown-localization__button,
+    .header[transparent] .search-action {
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      transition: all var(--animation-speed) var(--animation-easing);
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.25);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        transform: translateY(-1px);
+      }
+    }
+
     /* Glassmorphism for dropdown menus */
-    .dropdown-menu,
-    .mega-menu__list {
-      background-color: rgba(255, 255, 255, 0.9);
+    /* Glassmorphism for dropdown menus - Only when header is NOT transparent */
+    .header:not([transparent]) .dropdown-menu,
+    .header:not([transparent]) .mega-menu__list {
+      background-color: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(15px);
       -webkit-backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
     }
 
-    /* Glassmorphism for search modal */
-    .search-modal {
+    /* When header IS transparent, dropdowns should be more opaque for readability */
+    .header[transparent] .dropdown-menu,
+    .header[transparent] .mega-menu__list {
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Glassmorphism for search modal - Only when header is NOT transparent */
+    .header:not([transparent]) .search-modal {
       background-color: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(255, 255, 255, 0.15);
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+
+    /* When header IS transparent, search modal should be more opaque */
+    .header[transparent] .search-modal {
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.2);
     }
 
     /* Subtle glow effect for better glassmorphism */
@@ -517,6 +555,71 @@
     .header[sticky] {
       --header-backdrop-blur: 12px;
       --header-bg-color: rgba(255, 255, 255, 0.15);
+    }
+  }
+
+  /* Dark mode glassmorphism adjustments */
+  :root[color-scheme='dark'] .header[transparent],
+  .header[transparent].color-inverse {
+    --header-bg-color: rgba(0, 0, 0, 0.1);
+    --header-border-color: rgba(255, 255, 255, 0.05);
+    --header-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+    /* Dark mode - buttons when header is NOT transparent */
+    .header:not([transparent]) .header-actions__action,
+    .header:not([transparent]) .dropdown-localization__button,
+    .header:not([transparent]) .search-action {
+      background-color: rgba(0, 0, 0, 0.15);
+      border-color: rgba(255, 255, 255, 0.1);
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.25);
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+    }
+
+    /* Dark mode - buttons when header IS transparent */
+    .header[transparent] .header-actions__action,
+    .header[transparent] .dropdown-localization__button,
+    .header[transparent] .search-action {
+      background-color: rgba(0, 0, 0, 0.08);
+      border-color: rgba(255, 255, 255, 0.08);
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.18);
+        border-color: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    /* Dark mode - dropdowns when header is NOT transparent */
+    .header:not([transparent]) .dropdown-menu,
+    .header:not([transparent]) .mega-menu__list {
+      background-color: rgba(0, 0, 0, 0.08);
+      border-color: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Dark mode - dropdowns when header IS transparent */
+    .header[transparent] .dropdown-menu,
+    .header[transparent] .mega-menu__list {
+      background-color: rgba(0, 0, 0, 0.95);
+      border-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Dark mode - search modal when header is NOT transparent */
+    .header:not([transparent]) .search-modal {
+      background-color: rgba(0, 0, 0, 0.08);
+      border-color: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Dark mode - search modal when header IS transparent */
+    .header[transparent] .search-modal {
+      background-color: rgba(0, 0, 0, 0.95);
+      border-color: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
     }
   }
 
